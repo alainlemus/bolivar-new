@@ -11,7 +11,7 @@
                 </a>
 
                 <div class="hidden xl:flex items-center space-x-6">
-                    <a href="{{ route('nosotros') }}" class="{{ Route::is('nosotros') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Nosotros</a>
+                    <a href="{{ route('nosotros') }}" class="{{ Route::is('nosotros', '/') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Nosotros</a>
                     <a href="{{ route('servicios') }}" class="{{ Route::is('servicios') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Servicios</a>
                     <a href="{{ route('planes') }}" class="{{ Route::is('planes') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Planes</a>
                     <a href="{{ route('obituario') }}" class="{{ Route::is('obituario*') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Obituario</a>
@@ -43,7 +43,7 @@
 
             <div id="mobile-menu" class="hidden xl:hidden mt-4 pb-4 border-t pt-4">
                 <div class="flex flex-col space-y-3">
-                    <a href="{{ route('nosotros') }}" class="{{ Route::is('nosotros') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Nosotros</a>
+                    <a href="{{ route('nosotros') }}" class="{{ Route::is('nosotros', '/') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Nosotros</a>
                     <a href="{{ route('servicios') }}" class="{{ Route::is('servicios') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Servicios</a>
                     <a href="{{ route('planes') }}" class="{{ Route::is('planes') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Planes</a>
                     <a href="{{ route('obituario') }}" class="{{ Route::is('obituario*') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Obituario</a>
