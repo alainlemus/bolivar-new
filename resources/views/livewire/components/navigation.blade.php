@@ -11,13 +11,13 @@
                 </a>
 
                 <div class="hidden xl:flex items-center space-x-6">
-                    <a href="{{ route('nosotros') }}" @routeIs('nosotros') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Nosotros</a>
-                    <a href="{{ route('servicios') }}" @routeIs('servicios') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Servicios</a>
-                    <a href="{{ route('planes') }}" @routeIs('planes') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Planes</a>
-                    <a href="{{ route('obituario') }}" @routeIs('obituario', 'obituario.*') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Obituario</a>
-                    <a href="{{ route('testimonios') }}" @routeIs('testimonios') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Testimonios</a>
-                    <a href="{{ route('guia') }}" @routeIs('guia') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Guía</a>
-                    <a href="{{ route('contacto') }}" @routeIs('contacto') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Contacto</a>
+                    <a href="{{ route('nosotros') }}" class="{{ Route::is('nosotros') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Nosotros</a>
+                    <a href="{{ route('servicios') }}" class="{{ Route::is('servicios') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Servicios</a>
+                    <a href="{{ route('planes') }}" class="{{ Route::is('planes') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Planes</a>
+                    <a href="{{ route('obituario') }}" class="{{ Route::is('obituario*') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Obituario</a>
+                    <a href="{{ route('testimonios') }}" class="{{ Route::is('testimonios') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Testimonios</a>
+                    <a href="{{ route('guia') }}" class="{{ Route::is('guia') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Guía</a>
+                    <a href="{{ route('contacto') }}" class="{{ Route::is('contacto') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition">Contacto</a>
                 </div>
 
                 <div class="hidden lg:flex items-center space-x-4">
@@ -43,13 +43,13 @@
 
             <div id="mobile-menu" class="hidden xl:hidden mt-4 pb-4 border-t pt-4">
                 <div class="flex flex-col space-y-3">
-                    <a href="{{ route('nosotros') }}" @routeIs('nosotros') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Nosotros</a>
-                    <a href="{{ route('servicios') }}" @routeIs('servicios') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Servicios</a>
-                    <a href="{{ route('planes') }}" @routeIs('planes') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Planes</a>
-                    <a href="{{ route('obituario') }}" @routeIs('obituario', 'obituario.*') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Obituario</a>
-                    <a href="{{ route('testimonios') }}" @routeIs('testimonios') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Testimonios</a>
-                    <a href="{{ route('guia') }}" @routeIs('guia') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Guía</a>
-                    <a href="{{ route('contacto') }}" @routeIs('contacto') class="text-amber-600" @else class="text-gray-700 hover:text-amber-600" @endif font-medium transition>Contacto</a>
+                    <a href="{{ route('nosotros') }}" class="{{ Route::is('nosotros') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Nosotros</a>
+                    <a href="{{ route('servicios') }}" class="{{ Route::is('servicios') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Servicios</a>
+                    <a href="{{ route('planes') }}" class="{{ Route::is('planes') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Planes</a>
+                    <a href="{{ route('obituario') }}" class="{{ Route::is('obituario*') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Obituario</a>
+                    <a href="{{ route('testimonios') }}" class="{{ Route::is('testimonios') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Testimonios</a>
+                    <a href="{{ route('guia') }}" class="{{ Route::is('guia') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Guía</a>
+                    <a href="{{ route('contacto') }}" class="{{ Route::is('contacto') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }} font-medium transition block">Contacto</a>
                     @if($siteInfo && $siteInfo->phone)
                     <div class="pt-3 border-t">
                         <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="flex items-center text-amber-600 font-bold">
