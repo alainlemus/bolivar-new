@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Obituary extends Model
 {
     protected $fillable = [
         'deceased_name',
+        'slug',
         'date_of_death',
         'date_of_birth',
         'age',
@@ -35,4 +37,24 @@ class Obituary extends Model
         'burial_date' => 'datetime',
         'is_active' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function ($obituary) {
+            if (empty($obituary->slug)) {
+                $obituary->slug = Str::slug($obituary->deceased_name);
+            }
+        });
+
+        static::updating(function ($obituary) {
+            if ($obituary->isDirty('deceased_name') && !$obituary->isDirty('slug')) {
+                $obituary->slug = Str::slug($obituary->deceased_name);
+            }
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
