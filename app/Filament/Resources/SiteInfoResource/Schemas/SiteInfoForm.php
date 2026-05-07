@@ -55,9 +55,11 @@ class SiteInfoForm
                     ->placeholder('URL de Instagram'),
                 FileUpload::make('site_logo')
                     ->label('Logo del Sitio')
+                    ->disk('public')
                     ->image(),
                 FileUpload::make('favicon')
                     ->label('Favicon')
+                    ->disk('public')
                     ->image(),
             ]);
     }

@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\SiteInfo;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $siteInfo = SiteInfo::getSiteInfo();
+    return view('welcome', compact('siteInfo'));
 });

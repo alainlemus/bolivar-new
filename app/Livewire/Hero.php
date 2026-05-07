@@ -2,13 +2,17 @@
 
 namespace App\Livewire;
 
-use App\Models\Slide;
+use App\Models\SiteInfo;
 use Livewire\Component;
 
 class Hero extends Component
 {
     public function render()
     {
-        return view('livewire.hero');
+        $siteInfo = SiteInfo::getSiteInfo();
+
+        return view('livewire.hero', [
+            'siteInfo' => $siteInfo,
+        ]);
     }
 }

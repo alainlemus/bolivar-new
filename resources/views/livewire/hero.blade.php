@@ -3,7 +3,11 @@
         <nav class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <a href="/" class="flex items-center">
+                    @if($siteInfo && $siteInfo->site_logo)
+                    <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="García de Bolívar" class="h-16">
+                    @else
                     <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="h-16">
+                    @endif
                 </a>
 
                 <div class="hidden md:flex items-center space-x-8">
@@ -13,12 +17,14 @@
                     <a href="#contacto" class="text-gray-700 hover:text-amber-600 font-medium transition">Contacto</a>
                 </div>
 
-                <a href="tel:+52555308108" class="hidden md:inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+                @if($siteInfo && $siteInfo->phone)
+                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="hidden md:inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                     </svg>
                     Llamar ahora
                 </a>
+                @endif
 
                 <button id="mobile-menu-btn" class="md:hidden text-gray-700">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

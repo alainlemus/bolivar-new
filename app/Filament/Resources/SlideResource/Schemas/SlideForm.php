@@ -22,6 +22,7 @@ class SlideForm
                     ->placeholder('Subtítulo de la diapositiva'),
                 FileUpload::make('image')
                     ->label('Imagen')
+                    ->disk('public')
                     ->image()
                     ->required(),
                 TextInput::make('order')
