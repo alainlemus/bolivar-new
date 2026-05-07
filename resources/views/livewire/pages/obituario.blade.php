@@ -1,141 +1,108 @@
 <div>
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <a href="{{ route('home') }}" class="flex items-center">
-                    <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="h-16">
-                </a>
+    <livewire:components.navigation />
 
-                <div class="hidden lg:flex items-center space-x-8">
-                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Inicio</a>
-                    <a href="{{ route('nosotros') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Nosotros</a>
-                    <a href="{{ route('servicios') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Servicios</a>
-                    <a href="{{ route('planes') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Planes</a>
-                    <a href="{{ route('obituario') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Obituario</a>
-                    <a href="{{ route('testimonios') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Testimonios</a>
-                    <a href="{{ route('guia') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Guía</a>
-                    <a href="{{ route('contacto') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Contacto</a>
-                </div>
+    <section class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">Obituario</h1>
+            <p class="text-xl text-gray-300 mb-8">Consulta la información del Homenaje® de tu ser amado</p>
 
-                <a href="tel:+524421234567" class="hidden lg:inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            <div class="max-w-md mx-auto">
+                <div class="relative">
+                    <input type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre..." class="w-full px-5 py-3 pr-12 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    <svg class="w-5 h-5 absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
-                    Llamar ahora
-                </a>
-
-                <button id="mobile-menu-btn" class="lg:hidden text-gray-700">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-            </div>
-
-            <div id="mobile-menu" class="hidden lg:hidden mt-4 pb-4 border-t pt-4">
-                <div class="flex flex-col space-y-3">
-                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-amber-600 font-medium">Inicio</a>
-                    <a href="{{ route('nosotros') }}" class="text-gray-700 hover:text-amber-600 font-medium">Nosotros</a>
-                    <a href="{{ route('servicios') }}" class="text-gray-700 hover:text-amber-600 font-medium">Servicios</a>
-                    <a href="{{ route('planes') }}" class="text-gray-700 hover:text-amber-600 font-medium">Planes</a>
-                    <a href="{{ route('obituario') }}" class="text-gray-700 hover:text-amber-600 font-medium">Obituario</a>
-                    <a href="{{ route('testimonios') }}" class="text-gray-700 hover:text-amber-600 font-medium">Testimonios</a>
-                    <a href="{{ route('guia') }}" class="text-gray-700 hover:text-amber-600 font-medium">Guía</a>
-                    <a href="{{ route('contacto') }}" class="text-gray-700 hover:text-amber-600 font-medium">Contacto</a>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </section>
 
-    <div class="py-16 bg-gray-50">
+    <section class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-serif text-gray-800">Obituario</h2>
-            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Registro de difuntos con servicios próximos</p>
-
+            @if($obituaries->count() > 0)
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @forelse($obituaries as $obituary)
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition border border-gray-100">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2 font-serif">{{ $obituary->deceased_name }}</h3>
-
-                    @if($obituary->chapel)
-                    <div class="mb-3">
-                        <p class="text-sm text-gray-500"><span class="font-medium">Capilla:</span> {{ $obituary->chapel }}</p>
+                @foreach($obituaries as $obituary)
+                <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition border border-gray-100 overflow-hidden">
+                    <div class="bg-amber-600 px-4 py-2">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-white mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-2H8l4-4v2h2l-4 4v2z"/>
+                            </svg>
+                            <span class="text-white font-medium text-sm">Homenaje®</span>
+                        </div>
                     </div>
-                    @endif
 
-                    @if($obituary->burial_date)
-                    <div class="bg-amber-50 p-3 rounded-lg mb-3">
-                        <p class="text-sm font-medium text-amber-700">
-                            <span class="font-bold">Inhumación:</span> {{ $obituary->burial_date->format('d/m/Y H:i') }}
-                        </p>
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1 font-serif">{{ $obituary->deceased_name }}</h3>
+
+                        @if($obituary->age)
+                        <p class="text-sm text-gray-500 mb-3">Edad: {{ $obituary->age }} años</p>
+                        @endif
+
+                        @if($obituary->chapel)
+                        <div class="flex items-center text-sm text-gray-600 mb-2">
+                            <svg class="w-4 h-4 mr-2 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                            {{ $obituary->chapel }}
+                        </div>
+                        @endif
+
+                        @if($obituary->burial_date)
+                        <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                            <p class="text-sm">
+                                <span class="font-semibold text-gray-700">Inhumación:</span>
+                                <span class="text-amber-600 font-bold">{{ $obituary->burial_date->format('d/m/Y') }}</span>
+                                <span class="text-gray-500">a las {{ $obituary->burial_date->format('H:i') }}</span>
+                            </p>
+                        </div>
+                        @endif
+
+                        @if($obituary->cemetery)
+                        <div class="flex items-center text-sm text-gray-600 mb-4">
+                            <svg class="w-4 h-4 mr-2 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            {{ $obituary->cemetery }}
+                        </div>
+                        @endif
+
+                        <a href="{{ route('obituario-detalle', $obituary) }}" class="inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition text-sm font-medium">
+                            Ver detalles
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
                     </div>
-                    @endif
-
-                    @if($obituary->cemetery)
-                    <p class="text-sm text-gray-500"><span class="font-medium">Cementerio:</span> {{ $obituary->cemetery }}</p>
-                    @endif
-
-                    <a href="{{ route('obituario.detalle', $obituary) }}" class="inline-flex items-center text-amber-600 hover:text-amber-700 mt-4 font-medium">
-                        Ver detalles
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </a>
                 </div>
-                @empty
-                <div class="col-span-full text-center py-12 bg-white rounded-lg">
-                    <p class="text-gray-500">No hay servicios programados actualmente</p>
-                </div>
-                @endforelse
+                @endforeach
             </div>
+
+            <div class="mt-8">
+                @if($obituaries->hasPages())
+                <div class="flex justify-center">
+                    <div class="bg-white px-4 py-3 rounded-lg shadow-sm">
+                        {{ $obituaries->links() }}
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            @else
+            <div class="text-center py-16 bg-white rounded-lg shadow-sm">
+                <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                </svg>
+                <p class="text-gray-500 text-lg">No hay servicios programados actualmente</p>
+                @if($search)
+                <p class="text-gray-400 mt-2">No se encontraron resultados para "{{ $search }}"</p>
+                @endif
+            </div>
+            @endif
         </div>
-    </div>
+    </section>
 
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <div class="mb-4">
-                        <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="h-12 mb-4">
-                    </div>
-                    <div class="flex items-center mb-2">
-                        <svg class="w-5 h-5 mr-3 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                        </svg>
-                        <a href="tel:+524421234567" class="text-gray-400 hover:text-amber-400 transition">+52 442 123 4567</a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold mb-4 text-white">Ubicación</h4>
-                    <p class="text-gray-400 mb-4">Av. Universidad No. 123, Centro, Querétaro, Qro.</p>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold mb-4 text-white">Navegación</h4>
-                    <ul class="space-y-2">
-                        <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-amber-400 transition">Inicio</a></li>
-                        <li><a href="{{ route('nosotros') }}" class="text-gray-400 hover:text-amber-400 transition">Nosotros</a></li>
-                        <li><a href="{{ route('servicios') }}" class="text-gray-400 hover:text-amber-400 transition">Servicios</a></li>
-                        <li><a href="{{ route('planes') }}" class="text-gray-400 hover:text-amber-400 transition">Planes</a></li>
-                        <li><a href="{{ route('obituario') }}" class="text-gray-400 hover:text-amber-400 transition">Obituario</a></li>
-                        <li><a href="{{ route('testimonios') }}" class="text-gray-400 hover:text-amber-400 transition">Testimonios</a></li>
-                        <li><a href="{{ route('guia') }}" class="text-gray-400 hover:text-amber-400 transition">Guía</a></li>
-                        <li><a href="{{ route('contacto') }}" class="text-gray-400 hover:text-amber-400 transition">Contacto</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
-                <p>&copy; {{ date('Y') }} Todos los derechos reservados | Funeraria García de Bolívar</p>
-            </div>
-        </div>
-    </footer>
-
+    <livewire:components.footer />
     <livewire:floating-whatsapp />
-
-    <script>
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-    </script>
 </div>

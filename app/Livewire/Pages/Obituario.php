@@ -4,16 +4,24 @@ namespace App\Livewire\Pages;
 
 use App\Models\Obituary;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Obituario extends Component
 {
+    use WithPagination;
+
+    public $search = '';
+
     public function render()
     {
-        $obituaries = Obituary::where('is_active', true)
-            ->whereNotNull('burial_date')
-            ->where('burial_date', '>=', now())
-            ->orderBy('burial_date')
-            ->get();
+        $query = Obituary::where('is_active', true)
+            ->orderBy('burial_date', 'desc');
+
+        if ($this->search) {
+            $query->where('deceased_name', 'like', '%' . $this->search . '%');
+        }
+
+        $obituaries = $query->paginate(12);
 
         return view('livewire.pages.obituario', compact('obituaries'));
     }

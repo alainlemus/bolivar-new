@@ -6,6 +6,7 @@ use App\Models\SiteInfo;
 use App\Models\Service;
 use App\Models\Plan;
 use App\Models\Obituary;
+use App\Models\Testimonial;
 use App\Models\Slide;
 use Livewire\Component;
 
@@ -21,6 +22,7 @@ class Home extends Component
             ->orderBy('burial_date', 'desc')
             ->limit(4)
             ->get();
+        $testimonials = Testimonial::where('is_active', true)->limit(3)->get();
         $slides = Slide::where('is_active', true)->orderBy('order')->get();
 
         return view('livewire.pages.home', [
@@ -28,6 +30,7 @@ class Home extends Component
             'services' => $services,
             'plans' => $plans,
             'obituaries' => $obituaries,
+            'testimonials' => $testimonials,
             'slides' => $slides,
             'aboutText' => $siteInfo->about_text,
             'missionText' => $siteInfo->mission_text,

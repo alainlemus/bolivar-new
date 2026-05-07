@@ -1,56 +1,5 @@
 <div>
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <a href="{{ route('home') }}" class="flex items-center">
-                    @if($siteInfo && $siteInfo->site_logo)
-                    <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}" class="h-16">
-                    @else
-                    <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="h-16">
-                    @endif
-                </a>
-
-                <div class="hidden lg:flex items-center space-x-8">
-                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Inicio</a>
-                    <a href="{{ route('nosotros') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Nosotros</a>
-                    <a href="{{ route('servicios') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Servicios</a>
-                    <a href="{{ route('planes') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Planes</a>
-                    <a href="{{ route('obituario') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Obituario</a>
-                    <a href="{{ route('testimonios') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Testimonios</a>
-                    <a href="{{ route('guia') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Guía</a>
-                    <a href="{{ route('contacto') }}" class="text-gray-700 hover:text-amber-600 font-medium transition">Contacto</a>
-                </div>
-
-                @if($siteInfo && $siteInfo->phone)
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="hidden lg:inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                    </svg>
-                    {{ $siteInfo->phone }}
-                </a>
-                @endif
-
-                <button id="mobile-menu-btn" class="lg:hidden text-gray-700">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-            </div>
-
-            <div id="mobile-menu" class="hidden lg:hidden mt-4 pb-4 border-t pt-4">
-                <div class="flex flex-col space-y-3">
-                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-amber-600 font-medium">Inicio</a>
-                    <a href="{{ route('nosotros') }}" class="text-gray-700 hover:text-amber-600 font-medium">Nosotros</a>
-                    <a href="{{ route('servicios') }}" class="text-gray-700 hover:text-amber-600 font-medium">Servicios</a>
-                    <a href="{{ route('planes') }}" class="text-gray-700 hover:text-amber-600 font-medium">Planes</a>
-                    <a href="{{ route('obituario') }}" class="text-gray-700 hover:text-amber-600 font-medium">Obituario</a>
-                    <a href="{{ route('testimonios') }}" class="text-gray-700 hover:text-amber-600 font-medium">Testimonios</a>
-                    <a href="{{ route('guia') }}" class="text-gray-700 hover:text-amber-600 font-medium">Guía</a>
-                    <a href="{{ route('contacto') }}" class="text-gray-700 hover:text-amber-600 font-medium">Contacto</a>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <livewire:components.navigation />
 
     <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white py-24 md:py-32">
         <div class="absolute inset-0 bg-black/40"></div>
@@ -169,9 +118,111 @@
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-serif text-gray-800">Nuestros Planes</h2>
             <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Planes diseñados para proteger a tu familia</p>
 
-            <div class="text-center mb-12">
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                @forelse($plans as $plan)
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                    @if($plan->icon)
+                    <div class="text-6xl py-6 bg-amber-50 text-center">{{ $plan->icon }}</div>
+                    @endif
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2 font-serif">{{ $plan->name }}</h3>
+                        @if($plan->price)
+                        <p class="text-3xl font-bold text-amber-600 mb-4">${{ number_format($plan->price, 2) }} <span class="text-sm text-gray-500 font-normal">MXN</span></p>
+                        @endif
+                        @if($plan->description)
+                        <p class="text-gray-600 text-sm mb-4">{{ $plan->description }}</p>
+                        @endif
+                        @if($plan->features)
+                        <ul class="space-y-2 mb-6">
+                            @foreach(json_decode($plan->features) as $feature)
+                            <li class="flex items-start text-sm text-gray-700">
+                                <span class="text-amber-500 mr-2">✓</span> {{ $feature }}
+                            </li>
+                            @endforeach
+                        </ul>
+                        @endif
+                        <a href="{{ route('planes') }}" class="block text-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-amber-100 hover:text-amber-700 transition font-medium text-sm">
+                            Ver plan
+                        </a>
+                    </div>
+                </div>
+                @empty
+                <div class="col-span-3 text-center text-gray-500">No hay planes disponibles</div>
+                @endforelse
+            </div>
+
+            <div class="text-center">
                 <a href="{{ route('planes') }}" class="inline-flex items-center px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium">
                     Ver todos los planes
+                </a>
+            </div>
+        </div>
+    </section>
+
+    @if($obituaries && $obituaries->count() > 0)
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-serif text-gray-800">Obituario</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Consulta la información del Homenaje® de tu ser amado</p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                @foreach($obituaries->take(4) as $obituary)
+                <div class="bg-gray-50 rounded-lg p-5 hover:shadow-md transition">
+                    <div class="flex items-center mb-3">
+                        <svg class="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-2H8l4-4v2h2l-4 4v2z"/>
+                        </svg>
+                        <span class="text-xs text-amber-600 font-medium">Homenaje®</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">{{ $obituary->deceased_name }}</h3>
+                    @if($obituary->chapel)
+                    <p class="text-sm text-gray-500 mb-2">{{ $obituary->chapel }}</p>
+                    @endif
+                    @if($obituary->burial_date)
+                    <p class="text-sm text-amber-600 font-medium">{{ $obituary->burial_date->format('d/m/Y') }}</p>
+                    @endif
+                </div>
+                @endforeach
+            </div>
+
+            <div class="text-center">
+                <a href="{{ route('obituario') }}" class="inline-flex items-center px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition font-medium">
+                    Ver todos los obituarios
+                </a>
+            </div>
+        </div>
+    </section>
+    @endif
+
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-serif text-gray-800">Lo que nuestros clientes opinan</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Conoce algunas experiencias de familias que han confiado en nosotros</p>
+
+            @if($testimonials && $testimonials->count() > 0)
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                @foreach($testimonials as $testimonial)
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <div class="flex mb-3">
+                        @for($i = 1; $i <= 5; $i++)
+                            <svg class="w-5 h-5 {{ $i <= $testimonial->rating ? 'text-amber-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        @endfor
+                    </div>
+                    <p class="text-gray-600 italic mb-4">"{{ $testimonial->text }}"</p>
+                    <p class="font-bold text-gray-800">{{ $testimonial->name }}</p>
+                    @if($testimonial->branch)
+                    <p class="text-sm text-gray-500">{{ $testimonial->branch }}</p>
+                    @endif
+                </div>
+                @endforeach
+            </div>
+            @endif
+
+            <div class="text-center">
+                <a href="{{ route('testimonios') }}" class="inline-flex items-center px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium">
+                    Ver todos los testimonios
                 </a>
             </div>
         </div>
@@ -207,77 +258,6 @@
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <div class="mb-4">
-                        @if($siteInfo && $siteInfo->site_logo)
-                        <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'García de Bolívar' }}" class="h-12 mb-4">
-                        @else
-                        <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="h-12 mb-4">
-                        @endif
-                    </div>
-                    @if($siteInfo && $siteInfo->phone)
-                    <div class="flex items-center mb-2">
-                        <svg class="w-5 h-5 mr-3 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                        </svg>
-                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="text-gray-400 hover:text-amber-400 transition">
-                            {{ $siteInfo->phone }}
-                        </a>
-                    </div>
-                    @endif
-                    @if($siteInfo && $siteInfo->email)
-                    <div class="flex items-center mb-2">
-                        <svg class="w-5 h-5 mr-3 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                        <a href="mailto:{{ $siteInfo->email }}" class="text-gray-400 hover:text-amber-400 transition">
-                            {{ $siteInfo->email }}
-                        </a>
-                    </div>
-                    @endif
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold mb-4 text-white">Ubicación</h4>
-                    @if($siteInfo && $siteInfo->address)
-                    <p class="text-gray-400 mb-4">{{ $siteInfo->address }}</p>
-                    @endif
-                    @if($siteInfo && $siteInfo->map_url)
-                    <div class="rounded-lg overflow-hidden">
-                        {!! $siteInfo->map_url !!}
-                    </div>
-                    @endif
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold mb-4 text-white">Navegación</h4>
-                    <ul class="space-y-2">
-                        <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-amber-400 transition">Inicio</a></li>
-                        <li><a href="{{ route('nosotros') }}" class="text-gray-400 hover:text-amber-400 transition">Nosotros</a></li>
-                        <li><a href="{{ route('servicios') }}" class="text-gray-400 hover:text-amber-400 transition">Servicios</a></li>
-                        <li><a href="{{ route('planes') }}" class="text-gray-400 hover:text-amber-400 transition">Planes</a></li>
-                        <li><a href="{{ route('obituario') }}" class="text-gray-400 hover:text-amber-400 transition">Obituario</a></li>
-                        <li><a href="{{ route('testimonios') }}" class="text-gray-400 hover:text-amber-400 transition">Testimonios</a></li>
-                        <li><a href="{{ route('guia') }}" class="text-gray-400 hover:text-amber-400 transition">Guía</a></li>
-                        <li><a href="{{ route('contacto') }}" class="text-gray-400 hover:text-amber-400 transition">Contacto</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
-                <p>&copy; {{ date('Y') }} Todos los derechos reservados | Funeraria García de Bolívar</p>
-            </div>
-        </div>
-    </footer>
-
+    <livewire:components.footer />
     <livewire:floating-whatsapp />
-
-    <script>
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-    </script>
 </div>
