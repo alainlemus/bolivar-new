@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Settings\Pages;
+namespace App\Filament\Resources\SiteInfos\Pages;
 
-use App\Filament\Resources\Settings\SettingResource;
+use App\Filament\Resources\SiteInfos\SiteInfoResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditSetting extends EditRecord
+class EditSiteInfo extends EditRecord
 {
-    protected static string $resource = SettingResource::class;
+    protected static string $resource = SiteInfoResource::class;
 
     protected function getHeaderActions(): array
     {
