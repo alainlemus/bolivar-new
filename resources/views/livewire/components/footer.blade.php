@@ -5,9 +5,9 @@
                 <div>
                     <div class="mb-4">
                         @if($siteInfo && $siteInfo->site_logo)
-                        <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}" class="h-12 mb-4">
+                        <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}" class="h-28 mb-4">
                         @else
-                        <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="h-12 mb-4">
+                        <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="h-28 mb-4">
                         @endif
                         <p class="text-gray-400 text-sm leading-relaxed">
                             {{ $siteInfo->about_text ?? 'Más de 50 años cuidando a las familias mexicanas en sus momentos más importantes.' }}
