@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="view-transition" content="same-origin">
     <title>{{ $title ?? 'Funeraria García de Bolívar' }}</title>
     @if(isset($siteInfo) && $siteInfo && $siteInfo->favicon)
     <link rel="icon" href="{{ asset('storage/' . $siteInfo->favicon) }}" type="image/x-icon" />
