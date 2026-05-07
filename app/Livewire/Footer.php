@@ -12,7 +12,7 @@ class Footer extends Component
         $siteInfo = SiteInfo::getSiteInfo();
 
         return view('livewire.footer', [
-            'phone' => $siteInfo->phone,
+            'siteInfo' => $siteInfo,
         ]);
     }
 }
