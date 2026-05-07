@@ -9,11 +9,6 @@ class SiteInfo extends Model
 {
     protected $guarded = [];
 
-    protected $casts = [
-        'social_links' => 'array',
-        'schedules' => 'array',
-    ];
-
     protected static function booted(): void
     {
         static::saved(function () {

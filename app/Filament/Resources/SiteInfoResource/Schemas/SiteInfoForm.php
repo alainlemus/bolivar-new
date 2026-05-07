@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\SiteInfoResource\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
@@ -13,26 +14,51 @@ class SiteInfoForm
         return $schema
             ->components([
                 TextInput::make('site_name')
+                    ->label('Nombre del Sitio')
                     ->required()
                     ->default('Funeraria García de Bolívar'),
-                TextInput::make('tagline'),
-                TextInput::make('address'),
+                TextInput::make('tagline')
+                    ->label('Lema')
+                    ->placeholder('Lema del sitio'),
+                TextInput::make('address')
+                    ->label('Dirección')
+                    ->placeholder('Dirección de la funeraria'),
                 TextInput::make('phone')
-                    ->tel(),
-                TextInput::make('whatsapp'),
+                    ->label('Teléfono')
+                    ->tel()
+                    ->placeholder('Teléfono de contacto'),
+                TextInput::make('whatsapp')
+                    ->label('WhatsApp')
+                    ->tel()
+                    ->placeholder('Número de WhatsApp'),
                 TextInput::make('email')
-                    ->label('Email address')
-                    ->email(),
+                    ->label('Correo electrónico')
+                    ->email()
+                    ->placeholder('correo@ejemplo.com'),
                 Textarea::make('about_text')
+                    ->label('Texto About')
+                    ->placeholder('Texto para la sección Nosotros')
                     ->columnSpanFull(),
                 Textarea::make('mission_text')
+                    ->label('Texto Misión')
+                    ->placeholder('Texto de la misión')
                     ->columnSpanFull(),
                 Textarea::make('vision_text')
+                    ->label('Texto Visión')
+                    ->placeholder('Texto de la visión')
                     ->columnSpanFull(),
-                TextInput::make('facebook'),
-                TextInput::make('instagram'),
-                TextInput::make('site_logo'),
-                TextInput::make('favicon'),
+                TextInput::make('facebook')
+                    ->label('Facebook')
+                    ->placeholder('URL de Facebook'),
+                TextInput::make('instagram')
+                    ->label('Instagram')
+                    ->placeholder('URL de Instagram'),
+                FileUpload::make('site_logo')
+                    ->label('Logo del Sitio')
+                    ->image(),
+                FileUpload::make('favicon')
+                    ->label('Favicon')
+                    ->image(),
             ]);
     }
 }

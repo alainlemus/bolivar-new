@@ -18,7 +18,11 @@ class SiteInfoResource extends Resource
 {
     protected static ?string $model = SiteInfo::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $modelLabel = 'Información del Sitio';
+    protected static ?string $pluralModelLabel = 'Información del Sitio';
+    protected static ?string $navigationLabel = 'Configuración';
+    protected static ?int $navigationSort = 1;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog;
 
     public static function form(Schema $schema): Schema
     {

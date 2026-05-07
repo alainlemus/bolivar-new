@@ -15,32 +15,37 @@ class SiteInfosTable
         return $table
             ->columns([
                 TextColumn::make('site_name')
+                    ->label('Nombre del Sitio')
                     ->searchable(),
                 TextColumn::make('tagline')
+                    ->label('Lema')
                     ->searchable(),
                 TextColumn::make('address')
+                    ->label('Dirección')
                     ->searchable(),
                 TextColumn::make('phone')
+                    ->label('Teléfono')
                     ->searchable(),
                 TextColumn::make('whatsapp')
+                    ->label('WhatsApp')
                     ->searchable(),
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label('Correo electrónico')
                     ->searchable(),
                 TextColumn::make('facebook')
+                    ->label('Facebook')
                     ->searchable(),
                 TextColumn::make('instagram')
-                    ->searchable(),
-                TextColumn::make('site_logo')
-                    ->searchable(),
-                TextColumn::make('favicon')
+                    ->label('Instagram')
                     ->searchable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Creado')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Actualizado')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

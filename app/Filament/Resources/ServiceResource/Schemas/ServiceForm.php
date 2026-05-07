@@ -14,16 +14,24 @@ class ServiceForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->required(),
+                    ->label('Nombre')
+                    ->required()
+                    ->placeholder('Nombre del servicio'),
                 Textarea::make('description')
+                    ->label('Descripción')
+                    ->placeholder('Descripción del servicio')
                     ->columnSpanFull(),
-                TextInput::make('icon'),
+                TextInput::make('icon')
+                    ->label('Icono')
+                    ->placeholder('Emoji o icono'),
                 TextInput::make('order')
+                    ->label('Orden')
                     ->required()
                     ->numeric()
                     ->default(0),
                 Toggle::make('is_active')
-                    ->required(),
+                    ->label('Activo')
+                    ->default(true),
             ]);
     }
 }

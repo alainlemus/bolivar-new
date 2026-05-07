@@ -13,17 +13,25 @@ class SlideForm
     {
         return $schema
             ->components([
-                TextInput::make('title'),
-                TextInput::make('subtitle'),
+                TextInput::make('title')
+                    ->label('Título')
+                    ->required()
+                    ->placeholder('Título de la diapositiva'),
+                TextInput::make('subtitle')
+                    ->label('Subtítulo')
+                    ->placeholder('Subtítulo de la diapositiva'),
                 FileUpload::make('image')
+                    ->label('Imagen')
                     ->image()
                     ->required(),
                 TextInput::make('order')
+                    ->label('Orden')
                     ->required()
                     ->numeric()
                     ->default(0),
                 Toggle::make('is_active')
-                    ->required(),
+                    ->label('Activo')
+                    ->default(true),
             ]);
     }
 }

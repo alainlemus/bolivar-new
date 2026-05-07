@@ -17,21 +17,28 @@ class SlidesTable
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label('Título')
                     ->searchable(),
                 TextColumn::make('subtitle')
+                    ->label('Subtítulo')
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label('Imagen'),
                 TextColumn::make('order')
+                    ->label('Orden')
                     ->numeric()
                     ->sortable(),
                 IconColumn::make('is_active')
+                    ->label('Activo')
                     ->boolean(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Creado')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Actualizado')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

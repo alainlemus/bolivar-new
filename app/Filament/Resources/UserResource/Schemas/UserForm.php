@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\UserResource\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -13,15 +14,25 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->required(),
+                    ->label('Nombre')
+                    ->required()
+                    ->placeholder('Nombre del usuario'),
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Correo electrónico')
                     ->email()
-                    ->required(),
-                DateTimePicker::make('email_verified_at'),
+                    ->required()
+                    ->placeholder('correo@ejemplo.com'),
+                DateTimePicker::make('email_verified_at')
+                    ->label('Verificado el'),
                 TextInput::make('password')
+                    ->label('Contraseña')
                     ->password()
-                    ->required(),
+                    ->required()
+                    ->placeholder('Contraseña'),
+                Select::make('roles')
+                    ->label('Roles')
+                    ->multiple()
+                    ->relationship('roles', 'name'),
             ]);
     }
 }

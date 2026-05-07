@@ -8,11 +8,6 @@
                     {{ $aboutText ?: 'Funeraria García de Bolívar, agencia 100% mexicana con más de 50 años de experiencia, especializada en asesorar y ayudar a las familias que atraviesan por la pérdida de un ser querido. Siempre comprometidos en brindar soluciones integrales y accesibles, cubriendo los estándares de calidad y servicio.' }}
                 </p>
             </div>
-            @if($aboutImage)
-            <div>
-                <img src="{{ asset('storage/' . $aboutImage) }}" alt="Nosotros" class="rounded-lg shadow-lg w-full">
-            </div>
-            @endif
         </div>
 
         <div class="grid md:grid-cols-2 gap-12 mb-16">
@@ -21,9 +16,6 @@
                 <p class="text-gray-700 leading-relaxed">
                     {{ $missionText ?: 'Apoyar al núcleo familiar con un servicio eficiente, humano y respetuoso ante la inevitable pérdida de nuestros seres queridos.' }}
                 </p>
-                @if($missionImage)
-                <img src="{{ asset('storage/' . $missionImage) }}" alt="Misión" class="mt-6 rounded-lg w-full">
-                @endif
             </div>
 
             <div class="bg-white p-8 rounded-lg shadow-md">
@@ -31,9 +23,6 @@
                 <p class="text-gray-700 leading-relaxed">
                     {{ $visionText ?: 'Ser una empresa, con el compromiso de ofrecer excelencia e integridad en los servicios, generando nuevas ideas y acciones que contribuyan al comercio exterior.' }}
                 </p>
-                @if($visionImage)
-                <img src="{{ asset('storage/' . $visionImage) }}" alt="Visión" class="mt-6 rounded-lg w-full">
-                @endif
             </div>
         </div>
 

@@ -6,12 +6,11 @@
             </div>
 
             <div class="flex items-center space-x-6 mb-4 md:mb-0">
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone1) }}" class="text-gray-400 hover:text-amber-400 transition">
-                    {{ $phone1 }}
+                @if($phone)
+                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}" class="text-gray-400 hover:text-amber-400 transition">
+                    {{ $phone }}
                 </a>
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone2) }}" class="text-gray-400 hover:text-amber-400 transition">
-                    {{ $phone2 }}
-                </a>
+                @endif
             </div>
         </div>
 
