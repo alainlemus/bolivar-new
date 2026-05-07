@@ -23,6 +23,10 @@ class SiteInfoForm
                 TextInput::make('address')
                     ->label('Dirección')
                     ->placeholder('Dirección de la funeraria'),
+                Textarea::make('map_url')
+                    ->label('Código embebido de Google Maps')
+                    ->placeholder('Pega aquí el código iframe de Google Maps')
+                    ->columnSpanFull(),
                 TextInput::make('phone')
                     ->label('Teléfono')
                     ->tel()

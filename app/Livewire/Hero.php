@@ -7,12 +7,15 @@ use Livewire\Component;
 
 class Hero extends Component
 {
+    public $siteInfo;
+
+    public function mount()
+    {
+        $this->siteInfo = SiteInfo::getSiteInfo();
+    }
+
     public function render()
     {
-        $siteInfo = SiteInfo::getSiteInfo();
-
-        return view('livewire.hero', [
-            'siteInfo' => $siteInfo,
-        ]);
+        return view('livewire.hero');
     }
 }

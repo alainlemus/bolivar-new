@@ -7,12 +7,15 @@ use Livewire\Component;
 
 class Footer extends Component
 {
+    public $siteInfo;
+
+    public function mount()
+    {
+        $this->siteInfo = SiteInfo::getSiteInfo();
+    }
+
     public function render()
     {
-        $siteInfo = SiteInfo::getSiteInfo();
-
-        return view('livewire.footer', [
-            'siteInfo' => $siteInfo,
-        ]);
+        return view('livewire.footer');
     }
 }
