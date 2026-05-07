@@ -11,10 +11,10 @@
                 </a>
 
                 <div class="hidden xl:flex items-center space-x-6">
-                    <a href="{{ route('nosotros') }}" class="text-gray-700 hover:text-amber-600 font-medium transition {{ request()->routeIs('nosotros') || request()->routeIs('home') ? 'text-amber-600' : '' }}">Nosotros</a>
+                    <a href="{{ route('nosotros') }}" class="text-gray-700 hover:text-amber-600 font-medium transition {{ request()->routeIs('nosotros') ? 'text-amber-600' : '' }}">Nosotros</a>
                     <a href="{{ route('servicios') }}" class="text-gray-700 hover:text-amber-600 font-medium transition {{ request()->routeIs('servicios') ? 'text-amber-600' : '' }}">Servicios</a>
                     <a href="{{ route('planes') }}" class="text-gray-700 hover:text-amber-600 font-medium transition {{ request()->routeIs('planes') ? 'text-amber-600' : '' }}">Planes</a>
-                    <a href="{{ route('obituario') }}" class="text-gray-700 hover:text-amber-600 font-medium transition {{ request()->routeIs('obituario*') ? 'text-amber-600' : '' }}">Obituario</a>
+                    <a href="{{ route('obituario') }}" class="text-gray-700 hover:text-amber-600 font-medium transition {{ request()->routeIs('obituario', 'obituario-detalle') ? 'text-amber-600' : '' }}">Obituario</a>
                     <a href="{{ route('testimonios') }}" class="text-gray-700 hover:text-amber-600 font-medium transition {{ request()->routeIs('testimonios') ? 'text-amber-600' : '' }}">Testimonios</a>
                     <a href="{{ route('guia') }}" class="text-gray-700 hover:text-amber-600 font-medium transition {{ request()->routeIs('guia') ? 'text-amber-600' : '' }}">Guía</a>
                     <a href="{{ route('contacto') }}" class="text-gray-700 hover:text-amber-600 font-medium transition {{ request()->routeIs('contacto') ? 'text-amber-600' : '' }}">Contacto</a>
@@ -43,13 +43,13 @@
 
             <div id="mobile-menu" class="hidden xl:hidden mt-4 pb-4 border-t pt-4">
                 <div class="flex flex-col space-y-3">
-                    <a href="{{ route('nosotros') }}" class="text-gray-700 hover:text-amber-600 font-medium">Nosotros</a>
-                    <a href="{{ route('servicios') }}" class="text-gray-700 hover:text-amber-600 font-medium">Servicios</a>
-                    <a href="{{ route('planes') }}" class="text-gray-700 hover:text-amber-600 font-medium">Planes</a>
-                    <a href="{{ route('obituario') }}" class="text-gray-700 hover:text-amber-600 font-medium">Obituario</a>
-                    <a href="{{ route('testimonios') }}" class="text-gray-700 hover:text-amber-600 font-medium">Testimonios</a>
-                    <a href="{{ route('guia') }}" class="text-gray-700 hover:text-amber-600 font-medium">Guía</a>
-                    <a href="{{ route('contacto') }}" class="text-gray-700 hover:text-amber-600 font-medium">Contacto</a>
+                    <a href="{{ route('nosotros') }}" class="font-medium transition {{ request()->routeIs('nosotros') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }}">Nosotros</a>
+                    <a href="{{ route('servicios') }}" class="font-medium transition {{ request()->routeIs('servicios') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }}">Servicios</a>
+                    <a href="{{ route('planes') }}" class="font-medium transition {{ request()->routeIs('planes') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }}">Planes</a>
+                    <a href="{{ route('obituario') }}" class="font-medium transition {{ request()->routeIs('obituario', 'obituario-detalle') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }}">Obituario</a>
+                    <a href="{{ route('testimonios') }}" class="font-medium transition {{ request()->routeIs('testimonios') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }}">Testimonios</a>
+                    <a href="{{ route('guia') }}" class="font-medium transition {{ request()->routeIs('guia') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }}">Guía</a>
+                    <a href="{{ route('contacto') }}" class="font-medium transition {{ request()->routeIs('contacto') ? 'text-amber-600' : 'text-gray-700 hover:text-amber-600' }}">Contacto</a>
                     @if($siteInfo && $siteInfo->phone)
                     <div class="pt-3 border-t">
                         <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="flex items-center text-amber-600 font-bold">
