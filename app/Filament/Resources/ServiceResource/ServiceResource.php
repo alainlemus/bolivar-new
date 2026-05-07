@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\Services;
+namespace App\Filament\Resources\ServiceResource;
 
-use App\Filament\Resources\Services\Pages\CreateService;
-use App\Filament\Resources\Services\Pages\EditService;
-use App\Filament\Resources\Services\Pages\ListServices;
-use App\Filament\Resources\Services\Schemas\ServiceForm;
-use App\Filament\Resources\Services\Tables\ServicesTable;
+use App\Filament\Resources\ServiceResource\Pages\CreateService;
+use App\Filament\Resources\ServiceResource\Pages\EditService;
+use App\Filament\Resources\ServiceResource\Pages\ListServices;
+use App\Filament\Resources\ServiceResource\Schemas\ServiceForm;
+use App\Filament\Resources\ServiceResource\Tables\ServicesTable;
 use App\Models\Service;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,7 +18,7 @@ class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog;
 
     public static function form(Schema $schema): Schema
     {
@@ -32,9 +32,7 @@ class ServiceResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

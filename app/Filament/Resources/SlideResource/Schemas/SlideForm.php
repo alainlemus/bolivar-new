@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Slides\Schemas;
+namespace App\Filament\Resources\SlideResource\Schemas;
 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;

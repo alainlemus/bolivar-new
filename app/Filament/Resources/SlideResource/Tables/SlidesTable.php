@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Slides\Tables;
+namespace App\Filament\Resources\SlideResource\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;

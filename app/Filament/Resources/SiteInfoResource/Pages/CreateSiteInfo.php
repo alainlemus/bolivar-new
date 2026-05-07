@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\SiteInfos\Pages;
+namespace App\Filament\Resources\SiteInfoResource\Pages;
 
-use App\Filament\Resources\SiteInfos\SiteInfoResource;
+use App\Filament\Resources\SiteInfoResource\SiteInfoResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateSiteInfo extends CreateRecord

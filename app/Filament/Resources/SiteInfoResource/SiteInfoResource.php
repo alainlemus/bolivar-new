@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\SiteInfos;
+namespace App\Filament\Resources\SiteInfoResource;
 
-use App\Filament\Resources\SiteInfos\Pages\CreateSiteInfo;
-use App\Filament\Resources\SiteInfos\Pages\EditSiteInfo;
-use App\Filament\Resources\SiteInfos\Pages\ListSiteInfos;
-use App\Filament\Resources\SiteInfos\Schemas\SiteInfoForm;
-use App\Filament\Resources\SiteInfos\Tables\SiteInfosTable;
+use App\Filament\Resources\SiteInfoResource\Pages\CreateSiteInfo;
+use App\Filament\Resources\SiteInfoResource\Pages\EditSiteInfo;
+use App\Filament\Resources\SiteInfoResource\Pages\ListSiteInfos;
+use App\Filament\Resources\SiteInfoResource\Schemas\SiteInfoForm;
+use App\Filament\Resources\SiteInfoResource\Tables\SiteInfosTable;
 use App\Models\SiteInfo;
 use BackedEnum;
 use Filament\Resources\Resource;

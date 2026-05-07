@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\Slides;
+namespace App\Filament\Resources\SlideResource;
 
-use App\Filament\Resources\Slides\Pages\CreateSlide;
-use App\Filament\Resources\Slides\Pages\EditSlide;
-use App\Filament\Resources\Slides\Pages\ListSlides;
-use App\Filament\Resources\Slides\Schemas\SlideForm;
-use App\Filament\Resources\Slides\Tables\SlidesTable;
+use App\Filament\Resources\SlideResource\Pages\CreateSlide;
+use App\Filament\Resources\SlideResource\Pages\EditSlide;
+use App\Filament\Resources\SlideResource\Pages\ListSlides;
+use App\Filament\Resources\SlideResource\Schemas\SlideForm;
+use App\Filament\Resources\SlideResource\Tables\SlidesTable;
 use App\Models\Slide;
 use BackedEnum;
 use Filament\Resources\Resource;
