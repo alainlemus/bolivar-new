@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ObituaryResource extends Resource
 {
@@ -21,6 +22,7 @@ class ObituaryResource extends Resource
     protected static ?string $modelLabel = 'Obituario';
     protected static ?string $pluralModelLabel = 'Obituarios';
     protected static ?string $navigationLabel = 'Obituarios';
+    protected static string|UnitEnum|null $navigationGroup = 'Secciones';
     protected static ?int $navigationSort = 4;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUser;
 

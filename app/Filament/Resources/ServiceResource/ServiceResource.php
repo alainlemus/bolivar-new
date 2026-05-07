@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ServiceResource extends Resource
 {
@@ -21,8 +22,9 @@ class ServiceResource extends Resource
     protected static ?string $modelLabel = 'Servicio';
     protected static ?string $pluralModelLabel = 'Servicios';
     protected static ?string $navigationLabel = 'Servicios';
+    protected static string|UnitEnum|null $navigationGroup = 'Secciones';
     protected static ?int $navigationSort = 2;
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
 
     public static function form(Schema $schema): Schema
     {

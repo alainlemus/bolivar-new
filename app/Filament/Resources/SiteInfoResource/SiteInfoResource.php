@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class SiteInfoResource extends Resource
 {
@@ -21,6 +22,7 @@ class SiteInfoResource extends Resource
     protected static ?string $modelLabel = 'Información del Sitio';
     protected static ?string $pluralModelLabel = 'Información del Sitio';
     protected static ?string $navigationLabel = 'Configuración';
+    protected static string|UnitEnum|null $navigationGroup = 'Configuración del Sitio';
     protected static ?int $navigationSort = 1;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog;
 

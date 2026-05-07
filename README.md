@@ -1,59 +1,168 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Funeraria García de Bolívar
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel 12 + Livewire + Filament v4 CMS para funeraria.
 
-## About Laravel
+## Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Laravel 12** con OPcache
+- **Livewire** para frontend
+- **Filament v4** (v4.11.2) para panel de administración
+- **Filament Shield** para autenticación y permisos
+- **Herencia de tablas** (polymorphic relations) para contenido reutilizable
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## URLs
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Sitio**: http://bolivarnew.test
+- **Admin**: http://bolivarnew.test/admin
+- **Usuario admin**: admin@garciadebolivar.com
+- **Obituario detalle**: /obituario/{slug}
 
-## Learning Laravel
+## Admin - Estructura de Navegación
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```
+Configuración del Sitio
+├── Configuración (SiteInfo)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Secciones
+├── Servicios (ServiceResource)
+├── Diapositivas (SlideResource)
+├── Obituarios (ObituaryResource)
+├── Artículos de Guía (ArticleResource)
+├── Planes (PlanResource)
+└── Testimonios (TestimonialResource)
 
-## Laravel Sponsors
+Usuarios, Roles y Permisos
+├── Usuarios (UserResource)
+└── Roles (Shield)
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Recursos Filament
 
-### Premium Partners
+| Recurso | Modelo | Notas |
+|---------|--------|-------|
+| SiteInfoResource | SiteInfo | Configuración global del sitio |
+| ServiceResource | Service | Servicios funerarios |
+| SlideResource | Slide | Diapositivas del hero |
+| ArticleResource | Article | Artículos de la guía |
+| PlanResource | Plan | Planes funerarios |
+| TestimonialResource | Testimonial | Testimonios de clientes |
+| ObituaryResource | Obituary | Obituarios con slug para URL |
+| UserResource | User | Usuarios con permisos Shield |
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Decisiones Técnicas Importantes
 
-## Contributing
+### Tipo navigationGroup
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Filament v4 requiere `string|UnitEnum|null` para `$navigationGroup`. Usar `use UnitEnum;` para evitar errores de tipo.
 
-## Code of Conduct
+```php
+use UnitEnum;
+protected static string|UnitEnum|null $navigationGroup = 'MiGrupo';
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Para grupos traducidos o dinámicos, usar el método estático:
 
-## Security Vulnerabilities
+```php
+public static function getNavigationGroup(): ?string
+{
+    return __('filament-shield::filament-shield.nav.group');
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Herencia de Contenido (Table Inheritance)
 
-## License
+Se usa `ContentBlock` con morphs para campos reutilizables:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- `title`, `content`, `image`, `button_text`, `button_url`
+- Cada recurso que necesita bloques hereda de `HasContentBlocks` trait
+- Método `getBlockFields()` define qué campos mostrar en cada contexto
+
+### Slug en Obituarios
+
+Obituary tiene campo `slug` con `getRouteKeyName()` retornando `'slug'`.
+URLs son `/obituario/nombre-slug` en lugar de `/obituario/1`.
+
+### Navegación del Sitio
+
+`resources/views/livewire/components/navigation.blade.php`:
+- Resalta página actual con `Route::is()`
+- Menú hamburguesa en móvil
+- Dropdown para Servicios
+
+### View Transitions
+
+Configuradas en `resources/views/layouts/app.blade.php` para transiciones suaves entre páginas.
+
+## Traducciones
+
+### Filament Shield
+
+Archivo: `lang/vendor/filament-shield/es/filament-shield.php`
+
+```php
+'nav.group' => 'Usuarios, Roles y Permisos',
+```
+
+### Publicar traducciones
+
+```bash
+php artisan lang:publish
+```
+
+## Comandos de Mantenimiento
+
+```bash
+# Limpiar cachés
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan optimize:clear
+
+# Regenerar cachés
+php artisan optimize
+
+# Reiniciar OPcache (si hay errores de tipo persistentes)
+# En Herd: redémtodo el servicio o `herd restart`
+```
+
+## Resolver Problemas Comunes
+
+### Errores de tipo después de editar recursos
+
+1. `php artisan config:clear && php artisan optimize:clear && php artisan optimize`
+2. Si persiste, reiniciar OPcache (Herd: `herd restart`)
+
+### Cambios en navegación no aparecen
+
+Refrescar con Ctrl+Shift+R (hard refresh) o abrir en modo incógnito.
+
+### Navegación en grupo incorrecto
+
+- Verificar que `navigationGroup` coincida con el grupo definido en `AdminPanelProvider`
+- Para Shield: usar `NavigationGroup::make(__('filament-shield::filament-shield.nav.group'))`
+
+## Archivos Clave
+
+```
+app/
+├── Filament/Resources/*/Resource.php  # Recursos con navigationGroup
+├── Models/*.php                       # Modelos Eloquent
+├── Providers/Filament/AdminPanelProvider.php  # Config panel Filament
+lang/vendor/filament-shield/es/filament-shield.php  # Traducciones Shield
+resources/views/
+├── layouts/app.blade.php              # Layout principal
+├── livewire/components/
+│   ├── navigation.blade.php            # Navegación sitio
+│   └── footer.blade.php                # Footer
+routes/web.php                          # Rutas web
+```
+
+## Permisos (Shield)
+
+Roles disponibles:
+- `super_admin`: Acceso total
+- `admin`: Administrador
+- `editor`: Editor de contenido
+- `viewer`: Solo lectura
+
+Los permisos se asignan por recurso en la configuración de Shield.
