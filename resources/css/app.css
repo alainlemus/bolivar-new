@@ -9,27 +9,3 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
-
-::view-transition-old(root),
-::view-transition-new(root) {
-    animation-duration: 200ms;
-    animation-timing-function: ease-out;
-}
-
-::view-transition-old(root) {
-    animation-name: fade-out;
-}
-
-::view-transition-new(root) {
-    animation-name: fade-in;
-}
-
-@keyframes fade-out {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-8px); }
-}
-
-@keyframes fade-in {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
