@@ -8,6 +8,7 @@ use App\Livewire\Pages\ObituarioDetalle;
 use App\Livewire\Pages\ContactoPagina;
 use App\Livewire\Pages\Testimonios;
 use App\Livewire\Pages\Articulos;
+use App\Livewire\Pages\AvisoPrivacidad;
 use App\Livewire\Components\Navigation;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::get('/obituario/{id}', ObituarioDetalle::class)->name('obituario-detalle'
 Route::get('/contacto', ContactoPagina::class)->name('contacto');
 Route::get('/testimonios', Testimonios::class)->name('testimonios');
 Route::get('/guia', Articulos::class)->name('guia');
+Route::get('/aviso-de-privacidad', AvisoPrivacidad::class)->name('aviso-privacidad');

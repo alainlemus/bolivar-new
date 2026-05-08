@@ -1,7 +1,7 @@
 <div>
     <livewire:components.navigation />
 
-    <main class="py-16 bg-gray-50">
+    <main class="pt-16 py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">
                 <a href="{{ route('obituario') }}" class="inline-flex items-center text-amber-600 hover:text-amber-700 mb-8 font-medium">

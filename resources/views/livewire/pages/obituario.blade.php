@@ -1,7 +1,7 @@
 <div>
     <livewire:components.navigation />
 
-    <section class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">
+    <section class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16 pt-16">
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">Obituario</h1>
             <p class="text-xl text-gray-300 mb-8">Consulta la información del Homenaje® de tu ser amado</p>

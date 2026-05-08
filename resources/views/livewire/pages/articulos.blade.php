@@ -1,7 +1,7 @@
 <div>
     <livewire:components.navigation />
 
-    <div class="bg-gradient-to-r from-amber-600 to-amber-700 py-16">
+    <div class="pt-16 bg-gradient-to-r from-amber-600 to-amber-700 py-16">
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-3xl md:text-4xl font-bold text-white mb-4 font-serif">Guía Tanatológica</h1>
             <p class="text-amber-100 max-w-2xl mx-auto">Recursos y orientaciones para atravesar el proceso de duelo con información útil y respetuosa</p>

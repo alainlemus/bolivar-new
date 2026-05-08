@@ -1,7 +1,7 @@
 <div>
     <livewire:components.navigation />
 
-    <div class="py-16 bg-white">
+    <div class="pt-16 py-16 bg-white">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-serif text-gray-800">Nuestros Servicios</h2>
             <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Servicios funerarios completos para cuidar a tu familia</p>

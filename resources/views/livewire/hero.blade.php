@@ -3,10 +3,10 @@
         <nav class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <a href="/" class="flex items-center">
-                    @if($siteInfo && $siteInfo->site_logo)
-                    <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="García de Bolívar" class="h-16">
+                    @if ($siteInfo && $siteInfo->site_logo)
+                        <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="García de Bolívar" class="h-16">
                     @else
-                    <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="h-16">
+                        <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="h-16">
                     @endif
                 </a>
 
@@ -17,18 +17,21 @@
                     <a href="#contacto" class="text-gray-700 hover:text-amber-600 font-medium transition">Contacto</a>
                 </div>
 
-                @if($siteInfo && $siteInfo->phone)
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="hidden md:inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                    </svg>
-                    Llamar ahora
-                </a>
+                @if ($siteInfo && $siteInfo->phone)
+                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}"
+                        class="hidden md:inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        Llamar ahora
+                    </a>
                 @endif
 
                 <button id="mobile-menu-btn" class="md:hidden text-gray-700">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
             </div>
@@ -50,13 +53,16 @@
             <div class="max-w-3xl">
                 <h1 class="text-4xl md:text-6xl font-bold mb-6 font-serif">García de Bolívar</h1>
                 <p class="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed">
-                    Nace de una necesidad de la familia mexicana ante un acontecimiento que nadie desea; pero sin embargo sucede.
+                    Nace de una necesidad de la familia mexicana ante un acontecimiento que nadie desea; pero sin
+                    embargo sucede.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#contacto" class="inline-flex items-center justify-center px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium">
+                    <a href="#contacto"
+                        class="inline-flex items-center justify-center px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium">
                         Contáctanos
                     </a>
-                    <a href="#servicios" class="inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-gray-900 transition font-medium">
+                    <a href="#servicios"
+                        class="inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-gray-900 transition font-medium">
                         Ver Servicios
                     </a>
                 </div>

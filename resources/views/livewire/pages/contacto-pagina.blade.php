@@ -1,18 +1,7 @@
 <div>
     <livewire:components.navigation />
 
-    <div class="bg-amber-600 py-4">
-        <div class="container mx-auto px-4">
-            <a href="tel:+524421234567" class="flex items-center justify-center text-white font-bold text-lg">
-                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                </svg>
-                ¿Necesitas ayuda? Llámanos: +52 442 123 4567
-            </a>
-        </div>
-    </div>
-
-    <div class="py-16 bg-white">
+    <div class="pt-40 py-16 bg-white">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-serif text-gray-800">Contáctanos</h2>
             <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Estamos a su disposición para cualquier consulta o duda</p>
@@ -88,28 +77,48 @@
                 </div>
 
                 <div>
-                    <div class="bg-gray-50 p-8 rounded-lg">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
                         <h3 class="text-xl font-bold text-gray-800 mb-6 font-serif">Envíanos un mensaje</h3>
 
-                        <form class="space-y-4">
+                        @if(session('message'))
+                        <div class="mb-6 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200">
+                            {{ session('message') }}
+                        </div>
+                        @endif
+
+                        <form wire:submit="submit" class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                                <input type="text" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Tu nombre">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nombre *</label>
+                                <input type="text" wire:model="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Tu nombre">
+                                @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
-                                <input type="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="tu@email.com">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico *</label>
+                                <input type="email" wire:model="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="tu@email.com">
+                                @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-                                <input type="tel" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="(123) 456-7890">
+                                <input type="tel" wire:model="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="(123) 456-7890">
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
-                                <textarea name="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="¿En qué podemos ayudarte?"></textarea>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Mensaje *</label>
+                                <textarea wire:model="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="¿En qué podemos ayudarte?"></textarea>
+                                @error('message') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Captcha: ¿Cuánto es {{ $captcha_num1 }} + {{ $captcha_num2 }}? *</label>
+                                <div class="flex gap-3">
+                                    <input type="text" wire:model="captcha" class="w-24 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-center" placeholder="?">
+                                    <button type="button" wire:click="generateCaptcha" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition text-sm">
+                                        Regenerar
+                                    </button>
+                                </div>
+                                @error('captcha') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
 
                             <button type="submit" class="w-full px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium text-lg">
