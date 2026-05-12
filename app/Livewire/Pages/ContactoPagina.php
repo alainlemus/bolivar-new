@@ -2,7 +2,11 @@
 
 namespace App\Livewire\Pages;
 
+use App\Mail\ContactFormAdminMail;
+use App\Mail\ContactFormUserMail;
+use App\Models\Contact;
 use App\Models\SiteInfo;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class ContactoPagina extends Component
@@ -34,10 +38,10 @@ class ContactoPagina extends Component
     public function submit()
     {
         $this->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email',
-            'phone' => 'nullable|string',
-            'message' => 'required|min:10',
+            'name' => 'required|min:3|max:100',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'message' => 'required|min:10|max:2000',
             'captcha' => 'required',
         ]);
 
@@ -45,6 +49,39 @@ class ContactoPagina extends Component
             $this->addError('captcha', 'Respuesta incorrecta. Intenta de nuevo.');
             $this->generateCaptcha();
             return;
+        }
+
+        $siteInfo = SiteInfo::getSiteInfo();
+
+        $logoUrl = null;
+        if ($siteInfo->site_logo) {
+            $logoUrl = asset('storage/' . $siteInfo->site_logo);
+        }
+
+        Contact::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'message' => $this->message,
+            'status' => 'pending',
+        ]);
+
+        Mail::to($this->email)->send(new ContactFormUserMail(
+            $this->name,
+            $this->email,
+            $this->phone,
+            $this->message,
+            $logoUrl,
+        ));
+
+        if ($siteInfo->admin_email) {
+            Mail::to($siteInfo->admin_email)->send(new ContactFormAdminMail(
+                $this->name,
+                $this->email,
+                $this->phone,
+                $this->message,
+                $logoUrl,
+            ));
         }
 
         $this->reset(['name', 'email', 'phone', 'message', 'captcha']);

@@ -45,6 +45,11 @@ class SiteInfoForm
                     ->label('Correo electrónico')
                     ->email()
                     ->placeholder('correo@ejemplo.com'),
+                TextInput::make('admin_email')
+                    ->label('Correo del Admin')
+                    ->email()
+                    ->placeholder('Correo donde recibir mensajes de contacto')
+                    ->helperText('Recibirás una copia de los mensajes enviados desde el formulario de contacto'),
                 Textarea::make('about_text')
                     ->label('Texto About')
                     ->placeholder('Texto para la sección Nosotros')
@@ -84,11 +89,12 @@ class SiteInfoForm
                 FileUpload::make('site_logo')
                     ->label('Logo del Sitio')
                     ->disk('public')
-                    ->image(),
+                    ->acceptedFileTypes(['image/svg+xml', 'image/svg', 'image/png', 'image/jpeg', 'image/webp'])
+                    ->helperText('Formatos: SVG, PNG, JPEG, WebP'),
                 FileUpload::make('favicon')
                     ->label('Favicon')
                     ->disk('public')
-                    ->image(),
+                    ->acceptedFileTypes(['image/svg+xml', 'image/svg', 'image/x-icon', 'image/png']),
                 Section::make('SEO')
                     ->description('Configuración para motores de búsqueda y redes sociales')
                     ->collapsed()
