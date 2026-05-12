@@ -1,15 +1,16 @@
 <div>
     <livewire:components.navigation />
 
-    <div class="pt-42 pb-20 bg-gradient-to-b from-gray-50 to-white">
+    <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-24 pb-12 md:pt-32 md:pb-16">
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold mb-4 font-serif">Aviso de Privacidad</h1>
+            <p class="text-lg md:text-xl text-gray-200">Protección de datos personales</p>
+        </div>
+    </section>
+
+    <div class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6 font-serif text-gray-800">Aviso de Privacidad</h1>
-                    <div class="w-24 h-1 bg-amber-600 mx-auto mb-6"></div>
-                    <p class="text-gray-500">Protección de datos personales</p>
-                </div>
-
                 @if ($siteInfo->privacy_notice)
                     <div class="prose prose-lg max-w-none text-gray-700 space-y-8">
                         {!! $siteInfo->privacy_notice !!}

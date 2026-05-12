@@ -15,6 +15,13 @@ class Home extends Component
     public $currentIndex = 0;
     public $selectedObituary = null;
     public $showObituaryModal = false;
+    public $selectedImageIndex = null;
+    public $showGalleryModal = false;
+    public $galleryImages = [];
+
+    protected $seoTitle = 'Funeraria García de Bolívar | Servicios Funerarios de Calidad';
+    protected $seoDescription = 'Funeraria García de Bolívar - Más de 50 años de experiencia ofreciendo servicios funerarios integrales, planes de protección familiar y atención personalizada las 24 horas.';
+    protected $seoKeywords = 'funeraria, servicios funerarios, planes funerarios, inhumación, cremación, ataúdes, atención 24/7, protección familiar, México';
 
     public function nextSlide()
     {
@@ -49,6 +56,34 @@ class Home extends Component
         $this->showObituaryModal = false;
     }
 
+    public function openGalleryModal($index)
+    {
+        $this->selectedImageIndex = $index;
+        $this->showGalleryModal = true;
+    }
+
+    public function closeGalleryModal()
+    {
+        $this->selectedImageIndex = null;
+        $this->showGalleryModal = false;
+    }
+
+    public function nextGalleryImage()
+    {
+        $total = count($this->galleryImages);
+        if ($total > 0) {
+            $this->selectedImageIndex = ($this->selectedImageIndex + 1) % $total;
+        }
+    }
+
+    public function prevGalleryImage()
+    {
+        $total = count($this->galleryImages);
+        if ($total > 0) {
+            $this->selectedImageIndex = ($this->selectedImageIndex - 1 + $total) % $total;
+        }
+    }
+
     public function render()
     {
         $siteInfo = SiteInfo::getSiteInfo();
@@ -67,6 +102,7 @@ class Home extends Component
         $slides = Slide::where('is_active', true)->orderBy('order')->get();
 
         $galleryImages = $siteInfo->gallery_images ?? [];
+        $this->galleryImages = $galleryImages;
 
         return view('livewire.pages.home', [
             'siteInfo' => $siteInfo,
@@ -82,6 +118,7 @@ class Home extends Component
             'phone' => $siteInfo->phone,
             'address' => $siteInfo->address,
             'whatsapp' => $siteInfo->whatsapp,
+            'nosotrosBanner' => $siteInfo->nosotros_banner,
         ]);
     }
 }

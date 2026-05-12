@@ -14,8 +14,9 @@ class QrCodeForm
             ->components([
                 TextInput::make('name')
                     ->label('Nombre del QR')
-                    ->required()
-                    ->placeholder('ej: Folleto 2024'),
+                    ->required('El nombre es obligatorio.')
+                    ->placeholder('ej: Folleto 2024')
+                    ->maxLength(100),
                 Toggle::make('is_active')
                     ->label('Activo')
                     ->default(true),

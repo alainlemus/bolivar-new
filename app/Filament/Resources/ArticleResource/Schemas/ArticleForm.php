@@ -17,25 +17,29 @@ class ArticleForm
             ->components([
                 TextInput::make('title')
                     ->label('Título')
-                    ->required()
-                    ->placeholder('Título del artículo'),
+                    ->required('El título es obligatorio.')
+                    ->placeholder('Título del artículo')
+                    ->maxLength(200),
                 TextInput::make('slug')
                     ->label('Slug')
-                    ->required()
-                    ->placeholder('url-slug-unico'),
+                    ->required('El slug es obligatorio.')
+                    ->placeholder('url-slug-unico')
+                    ->unique('articles', 'slug', ignoreRecord: true),
                 Textarea::make('excerpt')
                     ->label('Extracto')
                     ->placeholder('Breve descripción del artículo...')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->maxLength(500),
                 Textarea::make('content')
                     ->label('Contenido')
-                    ->required()
+                    ->required('El contenido es obligatorio.')
                     ->placeholder('Contenido completo del artículo...')
                     ->columnSpanFull()
                     ->rows(10),
                 TextInput::make('category')
                     ->label('Categoría')
-                    ->placeholder('Guía del duelo, Necesidad inmediata, etc.'),
+                    ->placeholder('Guía del duelo, Necesidad inmediata, etc.')
+                    ->maxLength(100),
                 FileUpload::make('image')
                     ->label('Imagen')
                     ->disk('public')

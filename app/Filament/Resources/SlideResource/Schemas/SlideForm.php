@@ -15,20 +15,22 @@ class SlideForm
             ->components([
                 TextInput::make('title')
                     ->label('Título')
-                    ->required()
-                    ->placeholder('Título de la diapositiva'),
+                    ->required('El título es obligatorio.')
+                    ->placeholder('Título de la diapositiva')
+                    ->maxLength(100),
                 TextInput::make('subtitle')
                     ->label('Subtítulo')
-                    ->placeholder('Subtítulo de la diapositiva'),
+                    ->placeholder('Subtítulo de la diapositiva')
+                    ->maxLength(200),
                 FileUpload::make('image')
                     ->label('Imagen')
                     ->disk('public')
                     ->image()
-                    ->required(),
+                    ->required('La imagen es obligatoria.'),
                 TextInput::make('order')
                     ->label('Orden')
-                    ->required()
-                    ->numeric()
+                    ->required('El orden es obligatorio.')
+                    ->numeric('El orden debe ser un número.')
                     ->default(0),
                 Toggle::make('is_active')
                     ->label('Activo')

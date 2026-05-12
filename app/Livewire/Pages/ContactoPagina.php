@@ -15,6 +15,10 @@ class ContactoPagina extends Component
     public $captcha_num1;
     public $captcha_num2;
 
+    protected $seoTitle = 'Contacto | Funeraria García de Bolívar';
+    protected $seoDescription = 'Contáctanos para más información sobre nuestros servicios funerarios. Atención personalizada, teléfono, WhatsApp y ubicación. Estamos disponibles 24/7.';
+    protected $seoKeywords = 'contacto funeraria, teléfono funeraria, WhatsApp funeraria, ubicación funeraria, atención 24/7';
+
     public function mount()
     {
         $this->generateCaptcha();

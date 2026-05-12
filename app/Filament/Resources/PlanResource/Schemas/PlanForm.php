@@ -16,29 +16,34 @@ class PlanForm
             ->components([
                 TextInput::make('name')
                     ->label('Nombre')
-                    ->required()
-                    ->placeholder('Nombre del plan'),
+                    ->required('El nombre es obligatorio.')
+                    ->placeholder('Nombre del plan')
+                    ->maxLength(100),
                 Textarea::make('description')
                     ->label('Descripción')
                     ->placeholder('Descripción del plan')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->maxLength(500),
                 TextInput::make('price')
                     ->label('Precio (MXN)')
-                    ->required()
-                    ->numeric()
-                    ->placeholder('0.00'),
+                    ->required('El precio es obligatorio.')
+                    ->numeric('El precio debe ser un número.')
+                    ->placeholder('0.00')
+                    ->minValue(0),
                 FileUpload::make('icon')
                     ->label('Imagen')
                     ->image()
-                    ->directory('plan-images'),
+                    ->directory('plan-images')
+                    ->helperText('Imagen JPG o PNG para el plan'),
                 Textarea::make('features')
                     ->label('Características')
                     ->placeholder('["Característica 1", "Característica 2"]')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->helperText('Ingresa las características en formato JSON'),
                 TextInput::make('order')
                     ->label('Orden')
-                    ->required()
-                    ->numeric()
+                    ->required('El orden es obligatorio.')
+                    ->numeric('El orden debe ser un número.')
                     ->default(0),
                 Toggle::make('is_active')
                     ->label('Activo')

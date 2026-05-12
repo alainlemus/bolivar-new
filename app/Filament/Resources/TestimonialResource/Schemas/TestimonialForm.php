@@ -15,17 +15,20 @@ class TestimonialForm
             ->components([
                 TextInput::make('name')
                     ->label('Nombre')
-                    ->required()
-                    ->placeholder('Nombre del cliente'),
+                    ->required('El nombre es obligatorio.')
+                    ->placeholder('Nombre del cliente')
+                    ->maxLength(100),
                 Textarea::make('text')
                     ->label('Testimonio')
-                    ->required()
+                    ->required('El testimonio es obligatorio.')
                     ->placeholder('Contenido del testimonio')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->minLength(10)
+                    ->maxLength(1000),
                 TextInput::make('rating')
                     ->label('Calificación')
-                    ->required()
-                    ->numeric()
+                    ->required('La calificación es obligatoria.')
+                    ->numeric('La calificación debe ser un número.')
                     ->minValue(1)
                     ->maxValue(5)
                     ->default(5),

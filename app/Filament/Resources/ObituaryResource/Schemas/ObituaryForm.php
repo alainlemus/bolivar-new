@@ -16,34 +16,42 @@ class ObituaryForm
             ->components([
                 TextInput::make('deceased_name')
                     ->label('Nombre del Fallecido')
-                    ->required()
-                    ->placeholder('Nombre completo'),
+                    ->required('El nombre es obligatorio.')
+                    ->placeholder('Nombre completo')
+                    ->maxLength(200),
                 DateTimePicker::make('date_of_death')
                     ->label('Fecha de Fallecimiento')
-                    ->required(),
+                    ->required('La fecha de fallecimiento es obligatoria.'),
                 TextInput::make('age')
                     ->label('Edad')
-                    ->numeric()
-                    ->placeholder('Edad'),
+                    ->numeric('La edad debe ser un número.')
+                    ->placeholder('Edad')
+                    ->minValue(0)
+                    ->maxValue(150),
                 TextInput::make('chapel')
                     ->label('Lugar de Último Descanso')
-                    ->placeholder('Capilla o lugar'),
+                    ->placeholder('Capilla o lugar')
+                    ->maxLength(200),
                 DateTimePicker::make('velatorio_start')
                     ->label('Fecha y Hora de Ingreso al Velatorio'),
                 DateTimePicker::make('velatorio_end')
                     ->label('Fecha y Hora de Salida del Velatorio'),
                 TextInput::make('departure_time')
-                    ->label('Hora de Salida'),
+                    ->label('Hora de Salida')
+                    ->placeholder('Ej: 10:00')
+                    ->maxLength(20),
                 TextInput::make('destination')
                     ->label('Destino')
-                    ->placeholder('Cementerio / Horno crematorio / Traslado a provincia'),
+                    ->placeholder('Cementerio / Horno crematorio / Traslado a provincia')
+                    ->maxLength(300),
                 DateTimePicker::make('burial_date')
                     ->label('Fecha y Hora del Destino')
                     ->helperText('Fecha y hora de inhumación, cremación o traslado'),
                 Textarea::make('obituary_text')
                     ->label('Mensaje de la Familia')
                     ->placeholder('Mensaje para el obituario...')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->maxLength(2000),
                 Toggle::make('is_active')
                     ->label('Activo')
                     ->default(true),

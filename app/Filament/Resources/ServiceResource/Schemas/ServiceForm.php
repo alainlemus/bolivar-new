@@ -15,19 +15,22 @@ class ServiceForm
             ->components([
                 TextInput::make('name')
                     ->label('Nombre')
-                    ->required()
-                    ->placeholder('Nombre del servicio'),
+                    ->required('El nombre es obligatorio.')
+                    ->placeholder('Nombre del servicio')
+                    ->maxLength(100),
                 Textarea::make('description')
                     ->label('Descripción')
                     ->placeholder('Descripción del servicio')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->maxLength(500),
                 TextInput::make('icon')
                     ->label('Icono')
-                    ->placeholder('Emoji o icono'),
+                    ->placeholder('Emoji o SVG del icono')
+                    ->maxLength(50),
                 TextInput::make('order')
                     ->label('Orden')
-                    ->required()
-                    ->numeric()
+                    ->required('El orden es obligatorio.')
+                    ->numeric('El orden debe ser un número.')
                     ->default(0),
                 Toggle::make('is_active')
                     ->label('Activo')

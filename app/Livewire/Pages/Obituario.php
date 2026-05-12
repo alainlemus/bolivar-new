@@ -12,6 +12,10 @@ class Obituario extends Component
 
     public $search = '';
 
+    protected $seoTitle = 'Obituario | Honora a tu ser querido';
+    protected $seoDescription = 'Consulta los obituarios y avisos fúnebres de Funeraria García de Bolívar. Información sobre homenaje, capilla, fecha y hora de sepelio.';
+    protected $seoKeywords = 'obituario, avisos funerarios, homenaje, sepelio, capilla, funeral';
+
     public function render()
     {
         $query = Obituary::active()

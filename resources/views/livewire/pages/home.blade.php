@@ -1,14 +1,23 @@
 <div>
     <livewire:components.navigation />
 
-    <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-40 pb-32 md:pt-56 md:pb-40">
-        <div class="container
-        mx-auto px-4 relative z-10">
+    <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-40 pb-32 md:pt-56 md:pb-40 overflow-hidden">
+        @if ($nosotrosBanner)
+            @if (str_contains($nosotrosBanner, '.mp4') || str_contains($nosotrosBanner, '.webm') || str_contains($nosotrosBanner, '.mov'))
+                <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline>
+                    <source src="{{ asset('storage/' . $nosotrosBanner) }}" type="video/{{ str_contains($nosotrosBanner, '.webm') ? 'webm' : 'mp4' }}">
+                </video>
+            @else
+                <img src="{{ asset('storage/' . $nosotrosBanner) }}" alt="Banner" class="absolute inset-0 w-full h-full object-cover">
+            @endif
+            <div class="absolute inset-0 bg-gray-900/60"></div>
+        @endif
+        <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-3xl">
                 <h1 class="text-4xl md:text-6xl font-bold mb-6 font-serif">
                     {{ $siteInfo->site_name ?? 'García de Bolívar' }}</h1>
                 <p class="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed">
-                    {{ $siteInfo->tagline ?? 'Nace de una necesidad de la familia mexicana ante un acontecimiento que nadie desea; pero sin embargo sucede.' }}
+                    {{ $siteInfo->tagline ?? 'Nace de una necesidad de la familia mexicana ante un acontecimientos que nadie desea; pero sin embargo sucede.' }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
                     <a href="{{ route('contacto') }}"
@@ -34,13 +43,13 @@
                 </p>
             </div>
 
-            <div class="mb-16">
+<div class="mb-16">
                 <h3 class="text-2xl font-bold text-center mb-8 font-serif text-gray-800">Nuestra Galería</h3>
                 @if (count($galleryImages) > 0)
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @foreach ($galleryImages as $index => $image)
-                            <div
-                                class="{{ $index === 0 ? 'col-span-2 row-span-2' : '' }} rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 aspect-square">
+                            <div wire:click="openGalleryModal({{ $index }})"
+                                class="{{ $index === 0 ? 'col-span-2 row-span-2' : '' }} rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 aspect-square cursor-pointer">
                                 <img src="{{ asset('storage/' . $image) }}" alt="Galería {{ $index + 1 }}"
                                     class="w-full h-full object-cover">
                             </div>
@@ -94,95 +103,58 @@
                     </div>
                 @endif
             </div>
-
-            <div class="grid md:grid-cols-2 gap-12 mb-16">
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-bold mb-4 font-serif text-amber-600">Misión</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        {{ $missionText ?: 'Apoyar al núcleo familiar con un servicio eficiente, humano y respetuoso ante la inevitable pérdida de nuestros seres queridos.' }}
-                    </p>
-                </div>
-
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-bold mb-4 font-serif text-amber-600">Visión</h3>
-                    <p class="text-gray-700 leading-relaxed">
-                        {{ $visionText ?: 'Ser una empresa, con el compromiso de ofrecer excelencia e integridad en los servicios, generando nuevas ideas y acciones que contribuyan al comercio exterior.' }}
-                    </p>
-                </div>
-            </div>
-
-            <div class="bg-amber-50 border-l-4 border-amber-600 p-6 rounded-r-lg">
-                <h4 class="text-xl font-bold text-gray-800 mb-3">Beneficios</h4>
-                <ul class="grid md:grid-cols-2 gap-2 text-gray-700">
-                    <li class="flex items-center"><span class="text-amber-600 mr-2">✓</span> Atención personalizada</li>
-                    <li class="flex items-center"><span class="text-amber-600 mr-2">✓</span> Protección para sus seres
-                        queridos</li>
-                    <li class="flex items-center"><span class="text-amber-600 mr-2">✓</span> Tranquilidad y confianza
-                    </li>
-                    <li class="flex items-center"><span class="text-amber-600 mr-2">✓</span> Evitamos angustias
-                        financieras</li>
-                    <li class="flex items-center"><span class="text-amber-600 mr-2">✓</span> Servicios de calidad</li>
-                    <li class="flex items-center"><span class="text-amber-600 mr-2">✓</span> Evitamos malas decisiones
-                    </li>
-                </ul>
-            </div>
         </div>
     </section>
 
-    <section class="py-12 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="relative overflow-hidden rounded-lg shadow-xl">
-                @if ($slides->count() > 0)
-                    <div class="flex transition-transform duration-500"
-                        style="transform: translateX(-{{ $currentIndex * 100 }}%)">
-                        @foreach ($slides as $slide)
-                            <div class="w-full flex-shrink-0">
-                                <img src="{{ asset('storage/' . $slide->image) }}"
-                                    alt="{{ $slide->title ?? 'Slide' }}" class="w-full h-64 md:h-96 object-cover">
-                            </div>
+    @if ($showGalleryModal && $selectedImageIndex !== null)
+        <div x-data="{ show: @entangle('showGalleryModal') }" x-show="show"
+            x-on:keydown.escape.window="show = false; Livewire.dispatch('closeGalleryModal')"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm" x-cloak>
+            <div class="relative max-w-5xl w-full">
+                <button wire:click="closeGalleryModal"
+                    class="absolute -top-12 right-0 text-white hover:text-amber-400 transition">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <div class="flex items-center justify-center">
+                    <button wire:click="prevGalleryImage"
+                        class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 text-white hover:text-amber-400 transition p-2">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+
+                    <img src="{{ asset('storage/' . $galleryImages[$selectedImageIndex]) }}" alt="Galería {{ $selectedImageIndex + 1 }}"
+                        class="max-h-[85vh] max-w-full object-contain rounded-lg">
+
+                    <button wire:click="nextGalleryImage"
+                        class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 text-white hover:text-amber-400 transition p-2">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="text-center mt-4 text-white">
+                    <span class="text-amber-400">{{ $selectedImageIndex + 1 }}</span> / {{ count($galleryImages) }}
+                </div>
+
+                @if (count($galleryImages) > 1)
+                    <div class="flex justify-center gap-2 mt-4">
+                        @foreach ($galleryImages as $idx => $image)
+                            <button wire:click="openGalleryModal({{ $idx }})"
+                                class="w-16 h-16 rounded-lg overflow-hidden border-2 {{ $idx === $selectedImageIndex ? 'border-amber-500' : 'border-transparent hover:border-white/50' }}">
+                                <img src="{{ asset('storage/' . $image) }}" alt="Miniatura {{ $idx + 1 }}"
+                                    class="w-full h-full object-cover">
+                            </button>
                         @endforeach
-                    </div>
-
-                    @if ($slides->count() > 1)
-                        <button wire:click="prevSlide"
-                            class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition">
-                            <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </button>
-                        <button wire:click="nextSlide"
-                            class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition">
-                            <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
-
-                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-                            @foreach ($slides as $index => $slide)
-                                <button wire:click="goToSlide({{ $index }})"
-                                    class="w-3 h-3 rounded-full {{ $index === $currentIndex ? 'bg-amber-600' : 'bg-white/60' }} transition"></button>
-                            @endforeach
-                        </div>
-                    @endif
-                @else
-                    <div
-                        class="w-full h-64 md:h-96 bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
-                        <div class="text-center text-white/60">
-                            <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            <p class="text-sm">Imagen predeterminada</p>
-                        </div>
                     </div>
                 @endif
             </div>
         </div>
-    </section>
+    @endif
 
     <section id="servicios" class="py-16 bg-white">
         <div class="container mx-auto px-4">
