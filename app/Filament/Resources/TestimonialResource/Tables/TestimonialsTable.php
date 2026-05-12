@@ -20,9 +20,7 @@ class TestimonialsTable
                     ->searchable(),
                 TextColumn::make('text')
                     ->label('Testimonio')
-                    ->truncate(50),
-                TextColumn::make('branch')
-                    ->label('Sucursal'),
+                    ->limit(50),
                 TextColumn::make('rating')
                     ->label('Calificación')
                     ->formatStateUsing(fn ($state) => str_repeat('★', $state))

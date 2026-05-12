@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PlanResource\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
@@ -22,13 +23,14 @@ class PlanForm
                     ->placeholder('Descripción del plan')
                     ->columnSpanFull(),
                 TextInput::make('price')
-                    ->label('Precio')
+                    ->label('Precio (MXN)')
                     ->required()
                     ->numeric()
                     ->placeholder('0.00'),
-                TextInput::make('icon')
-                    ->label('Icono')
-                    ->placeholder('Emoji o icono'),
+                FileUpload::make('icon')
+                    ->label('Imagen')
+                    ->image()
+                    ->directory('plan-images'),
                 Textarea::make('features')
                     ->label('Características')
                     ->placeholder('["Característica 1", "Característica 2"]')

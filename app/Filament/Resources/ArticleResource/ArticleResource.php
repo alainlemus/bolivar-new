@@ -25,6 +25,8 @@ class ArticleResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
     protected static ?int $navigationSort = 5;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
+    protected static ?string $recordTitleAttribute = 'title';
+    protected static int $globalSearchResultsLimit = 10;
 
     public static function form(Schema $schema): Schema
     {
@@ -48,5 +50,10 @@ class ArticleResource extends Resource
             'create' => CreateArticle::route('/create'),
             'edit' => EditArticle::route('/{record}/edit'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title', 'slug', 'category'];
     }
 }

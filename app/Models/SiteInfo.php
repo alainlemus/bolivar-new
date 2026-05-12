@@ -8,6 +8,10 @@ class SiteInfo extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'gallery_images' => 'array',
+    ];
+
     public static function getSiteInfo(): self
     {
         return SiteInfo::first() ?? new SiteInfo();

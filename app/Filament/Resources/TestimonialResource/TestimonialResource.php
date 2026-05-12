@@ -25,6 +25,8 @@ class TestimonialResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
     protected static ?int $navigationSort = 7;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftEllipsis;
+    protected static ?string $recordTitleAttribute = 'name';
+    protected static int $globalSearchResultsLimit = 10;
 
     public static function form(Schema $schema): Schema
     {
@@ -48,5 +50,10 @@ class TestimonialResource extends Resource
             'create' => CreateTestimonial::route('/create'),
             'edit' => EditTestimonial::route('/{record}/edit'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'text'];
     }
 }

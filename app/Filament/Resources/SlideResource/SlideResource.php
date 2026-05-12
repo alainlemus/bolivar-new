@@ -25,6 +25,8 @@ class SlideResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
     protected static ?int $navigationSort = 3;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $recordTitleAttribute = 'title';
+    protected static int $globalSearchResultsLimit = 10;
 
     public static function form(Schema $schema): Schema
     {
@@ -50,5 +52,10 @@ class SlideResource extends Resource
             'create' => CreateSlide::route('/create'),
             'edit' => EditSlide::route('/{record}/edit'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title', 'subtitle'];
     }
 }

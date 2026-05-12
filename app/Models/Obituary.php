@@ -27,6 +27,8 @@ class Obituary extends Model
         'burial_date',
         'image',
         'is_active',
+        'start_date',
+        'end_date',
     ];
 
     protected $casts = [
@@ -36,6 +38,8 @@ class Obituary extends Model
         'velatorio_end' => 'datetime',
         'burial_date' => 'datetime',
         'is_active' => 'boolean',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
     protected static function booted(): void
@@ -56,5 +60,17 @@ class Obituary extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where(function ($q) {
+            $now = now();
+            $q->where('is_active', true)
+              ->whereNotNull('start_date')
+              ->whereNotNull('end_date')
+              ->where('start_date', '<=', $now)
+              ->where('end_date', '>=', $now);
+        });
     }
 }

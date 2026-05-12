@@ -9,9 +9,9 @@ class ObituarioDetalle extends Component
 {
     public Obituary $obituary;
 
-    public function mount(Obituary $obituary)
+    public function mount($slug)
     {
-        $this->obituary = $obituary;
+        $this->obituary = Obituary::where('slug', $slug)->firstOrFail();
     }
 
     public function render()

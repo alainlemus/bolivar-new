@@ -25,6 +25,8 @@ class ObituaryResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
     protected static ?int $navigationSort = 4;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUser;
+    protected static ?string $recordTitleAttribute = 'deceased_name';
+    protected static int $globalSearchResultsLimit = 10;
 
     public static function form(Schema $schema): Schema
     {
@@ -48,5 +50,10 @@ class ObituaryResource extends Resource
             'create' => CreateObituary::route('/create'),
             'edit' => EditObituary::route('/{record}/edit'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['deceased_name', 'slug', 'responsible_name', 'chapel'];
     }
 }

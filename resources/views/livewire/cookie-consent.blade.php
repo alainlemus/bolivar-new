@@ -1,6 +1,4 @@
-<div x-data="{ show: false }" x-init="if (!document.cookie.includes('cookie_consent')) {
-    setTimeout(() => { show = true }, 500);
-}">
+<div x-data="{ show: @entangle('show').defer }">
     <div x-show="show" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
@@ -24,7 +22,7 @@
                         </p>
                         <div class="flex flex-wrap gap-3">
                             <button
-                                x-on:click="document.cookie='cookie_consent=true;path=/;max-age='+(365*24*60*60); show=false; document.body.style.overflow=''"
+                                wire:click="accept"
                                 class="px-6 py-3 bg-amber-600 text-white rounded-xl hover:bg-amber-700 transition font-medium shadow-lg font-semibold cursor-pointer">
                                 Aceptar y continuar
                             </button>

@@ -4,7 +4,9 @@ namespace App\Filament\Widgets;
 
 use App\Models\PageView;
 use App\Models\Service;
-use App\Models\Setting;
+use App\Models\Testimonial;
+use App\Models\Obituary;
+use App\Models\Article;
 use App\Models\Slide;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -18,37 +20,33 @@ class StatsOverviewWidget extends BaseWidget
     protected function getStats(): array
     {
         $visitasHoy = PageView::whereDate('created_at', today())->count();
-        $visitasSemana = PageView::where('created_at', '>=', now()->subDays(7))->count();
         $visitasTotal = PageView::count();
-
-        $totalSlides = Slide::count();
-        $activeSlides = Slide::where('is_active', true)->count();
-
-        $totalServices = Service::count();
-        $activeServices = Service::where('is_active', true)->count();
-
-        $settingsCount = Setting::count();
+        $testimoniosTotal = Testimonial::count();
+        $testimoniosPendientes = Testimonial::where('is_active', false)->count();
+        $ratingPromedio = round(Testimonial::avg('rating') ?? 0, 1);
+        $serviciosTotal = Service::count();
+        $obituariesActivos = Obituary::active()->count();
 
         return [
-            Stat::make('Visitas hoy', $visitasHoy)
-                ->description("Esta semana: {$visitasSemana} | Total: {$visitasTotal}")
+            Stat::make('Visitas de Hoy', $visitasHoy)
+                ->description("Total histórico: {$visitasTotal}")
                 ->descriptionIcon('heroicon-m-eye')
                 ->color('info'),
 
-            Stat::make('Slides activos', "{$activeSlides}/{$totalSlides}")
-                ->description('Imágenes del carousel')
-                ->descriptionIcon('heroicon-m-photo')
-                ->color('success'),
-
-            Stat::make('Servicios activos', "{$activeServices}/{$totalServices}")
-                ->description('Servicios y beneficios')
-                ->descriptionIcon('heroicon-m-cog')
+            Stat::make('Testimonios', $testimoniosTotal)
+                ->description("{$testimoniosPendientes} pendientes | Rating: {$ratingPromedio} ⭐")
+                ->descriptionIcon('heroicon-m-star')
                 ->color('warning'),
 
-            Stat::make('Configuraciones', $settingsCount)
-                ->description('Ajustes del sitio')
-                ->descriptionIcon('heroicon-m-adjustments-horizontal')
+            Stat::make('Servicios', $serviciosTotal)
+                ->description('servicios disponibles')
+                ->descriptionIcon('heroicon-m-cog')
                 ->color('gray'),
+
+            Stat::make('Obituarios Activos', $obituariesActivos)
+                ->description('publicados actualmente')
+                ->descriptionIcon('heroicon-m-archive-box')
+                ->color('success'),
         ];
     }
 }

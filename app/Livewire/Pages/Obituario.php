@@ -14,7 +14,7 @@ class Obituario extends Component
 
     public function render()
     {
-        $query = Obituary::where('is_active', true)
+        $query = Obituary::active()
             ->orderBy('burial_date', 'desc');
 
         if ($this->search) {

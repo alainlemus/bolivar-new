@@ -57,6 +57,12 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                \App\Filament\Widgets\StatsOverviewWidget::class,
+                \App\Filament\Widgets\ObituariesChartWidget::class,
+                \App\Filament\Widgets\PageVisitsChartWidget::class,
+                \App\Filament\Widgets\RecentObituariesWidget::class,
+                \App\Filament\Widgets\RecentTestimonialsWidget::class,
+                \App\Filament\Widgets\RecentPageViewsWidget::class,
             ])
             ->plugins([
                 FilamentShieldPlugin::make()

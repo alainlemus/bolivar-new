@@ -13,6 +13,8 @@ use Livewire\Component;
 class Home extends Component
 {
     public $currentIndex = 0;
+    public $selectedObituary = null;
+    public $showObituaryModal = false;
 
     public function nextSlide()
     {
@@ -35,22 +37,36 @@ class Home extends Component
         $this->currentIndex = $index;
     }
 
+    public function openObituaryModal($id)
+    {
+        $this->selectedObituary = Obituary::find($id);
+        $this->showObituaryModal = true;
+    }
+
+    public function closeObituaryModal()
+    {
+        $this->selectedObituary = null;
+        $this->showObituaryModal = false;
+    }
+
     public function render()
     {
         $siteInfo = SiteInfo::getSiteInfo();
         $services = Service::where('is_active', true)->orderBy('order')->limit(8)->get();
         $plans = Plan::where('is_active', true)->orderBy('order')->limit(3)->get();
-        $obituaries = Obituary::where('is_active', true)
+        $obituaries = Obituary::active()
             ->whereNotNull('burial_date')
             ->orderBy('burial_date', 'desc')
             ->limit(4)
             ->get();
-        $testimonials = Testimonial::where('is_active', true)->limit(3)->get();
+        $testimonials = Testimonial::where('is_active', true)
+            ->whereIn('rating', [4, 5])
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
         $slides = Slide::where('is_active', true)->orderBy('order')->get();
 
-        $galleryImages = $siteInfo->gallery_images
-            ? json_decode($siteInfo->gallery_images, true)
-            : [];
+        $galleryImages = $siteInfo->gallery_images ?? [];
 
         return view('livewire.pages.home', [
             'siteInfo' => $siteInfo,

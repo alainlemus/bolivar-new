@@ -1,7 +1,7 @@
 <div>
     <livewire:components.navigation />
 
-    <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-24 pb-16 md:pt-32 md:pb-24">
+    <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-40 pb-32 md:pt-56 md:pb-40">
         <div class="container
         mx-auto px-4 relative z-10">
             <div class="max-w-3xl">
@@ -40,17 +40,17 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @foreach ($galleryImages as $index => $image)
                             <div
-                                class="{{ $index === 0 ? 'col-span-2 row-span-2' : '' }} rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                                class="{{ $index === 0 ? 'col-span-2 row-span-2' : '' }} rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 aspect-square">
                                 <img src="{{ asset('storage/' . $image) }}" alt="Galería {{ $index + 1 }}"
-                                    class="w-full h-full object-cover {{ $index === 0 ? 'h-64 md:h-full' : 'h-32 md:h-40' }}">
+                                    class="w-full h-full object-cover">
                             </div>
                         @endforeach
                     </div>
                 @else
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="col-span-2 row-span-2 rounded-lg overflow-hidden shadow-md">
+                        <div class="col-span-2 row-span-2 rounded-lg overflow-hidden shadow-md aspect-square">
                             <div
-                                class="w-full h-64 md:h-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
+                                class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
                                 <div class="text-center text-white/60">
                                     <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
@@ -61,9 +61,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="rounded-lg overflow-hidden shadow-md">
+                        <div class="rounded-lg overflow-hidden shadow-md aspect-square">
                             <div
-                                class="w-full h-32 md:h-40 bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center">
+                                class="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center">
                                 <svg class="w-8 h-8 text-white/40" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -71,9 +71,9 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="rounded-lg overflow-hidden shadow-md">
+                        <div class="rounded-lg overflow-hidden shadow-md aspect-square">
                             <div
-                                class="w-full h-32 md:h-40 bg-gradient-to-br from-gray-500 to-gray-700 flex items-center justify-center">
+                                class="w-full h-full bg-gradient-to-br from-gray-500 to-gray-700 flex items-center justify-center">
                                 <svg class="w-8 h-8 text-white/40" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -81,9 +81,9 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="rounded-lg overflow-hidden shadow-md">
+                        <div class="rounded-lg overflow-hidden shadow-md aspect-square">
                             <div
-                                class="w-full h-32 md:h-40 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+                                class="w-full h-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
                                 <svg class="w-8 h-8 text-white/40" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -224,11 +224,19 @@
 
             <div class="grid md:grid-cols-3 gap-8 mb-12">
                 @forelse($plans as $plan)
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition flex flex-col">
                         @if ($plan->icon)
-                            <div class="text-6xl py-6 bg-amber-50 text-center">{{ $plan->icon }}</div>
+                            <div class="h-40 bg-amber-50 flex items-center justify-center overflow-hidden shrink-0">
+                                <img src="{{ asset('storage/' . $plan->icon) }}" alt="{{ $plan->name }}" class="w-full h-full object-contain p-4">
+                            </div>
+                        @else
+                            <div class="h-40 bg-amber-50 flex items-center justify-center shrink-0">
+                                <svg class="w-16 h-16 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
                         @endif
-                        <div class="p-6">
+                        <div class="p-6 flex flex-col flex-1">
                             <h3 class="text-2xl font-bold text-gray-800 mb-2 font-serif">{{ $plan->name }}</h3>
                             @if ($plan->price)
                                 <p class="text-3xl font-bold text-amber-600 mb-4">
@@ -239,7 +247,7 @@
                                 <p class="text-gray-600 text-sm mb-4">{{ $plan->description }}</p>
                             @endif
                             @if ($plan->features)
-                                <ul class="space-y-2 mb-6">
+                                <ul class="space-y-2 mb-6 flex-1">
                                     @foreach (json_decode($plan->features) as $feature)
                                         <li class="flex items-start text-sm text-gray-700">
                                             <span class="text-amber-500 mr-2">✓</span> {{ $feature }}
@@ -248,7 +256,7 @@
                                 </ul>
                             @endif
                             <a href="{{ route('planes') }}"
-                                class="block text-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-amber-100 hover:text-amber-700 transition font-medium text-sm">
+                                class="block text-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-amber-100 hover:text-amber-700 transition font-medium text-sm mt-auto">
                                 Ver plan
                             </a>
                         </div>
@@ -271,18 +279,19 @@
         <section class="py-16 bg-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-serif text-gray-800">Obituario</h2>
-                <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Consulta la información del Homenaje® de
+                <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Consulta la información del Homenaje de
                     tu ser amado</p>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     @foreach ($obituaries->take(4) as $obituary)
-                        <div class="bg-gray-50 rounded-lg p-5 hover:shadow-md transition">
+                        <div wire:click="openObituaryModal({{ $obituary->id }})"
+                            class="bg-gray-50 rounded-lg p-5 hover:shadow-md transition cursor-pointer">
                             <div class="flex items-center mb-3">
                                 <svg class="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                     <path
                                         d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-2H8l4-4v2h2l-4 4v2z" />
                                 </svg>
-                                <span class="text-xs text-amber-600 font-medium">Homenaje®</span>
+                                <span class="text-xs text-amber-600 font-medium">Homenaje</span>
                             </div>
                             <h3 class="font-bold text-gray-800 mb-1">{{ $obituary->deceased_name }}</h3>
                             @if ($obituary->chapel)
@@ -304,6 +313,93 @@
                 </div>
             </div>
         </section>
+    @endif
+
+@if ($selectedObituary)
+        <div x-data="{ show: @entangle('showObituaryModal') }" x-show="show" x-on:keydown.escape.window="show = false"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" x-cloak>
+            <div class="bg-white rounded-2xl shadow-2xl max-w-xl w-full overflow-hidden">
+                <div class="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-2H8l4-4v2h2l-4 4v2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-amber-400 text-sm font-medium">Homenaje</span>
+                                <h3 class="text-xl font-bold font-serif">{{ $selectedObituary->deceased_name }}</h3>
+                            </div>
+                        </div>
+                        <button wire:click="closeObituaryModal" class="text-white/70 hover:text-white transition">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    @if ($selectedObituary->age)
+                        <div class="flex items-center justify-center mb-6 pb-4 border-b border-gray-100">
+                            <span class="text-gray-500 text-sm">Edad: {{ $selectedObituary->age }} años</span>
+                        </div>
+                    @endif
+
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            @if ($selectedObituary->burial_date)
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <p class="text-xs text-amber-600 font-medium mb-1">Fecha de Sepelio</p>
+                                    <p class="text-gray-800 font-semibold">{{ $selectedObituary->burial_date->format('d/m/Y') }}</p>
+                                </div>
+                            @endif
+                            @if ($selectedObituary->departure_time)
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <p class="text-xs text-amber-600 font-medium mb-1">Hora de Salida</p>
+                                    <p class="text-gray-800 font-semibold">{{ $selectedObituary->departure_time }}</p>
+                                </div>
+                            @endif
+                        </div>
+
+                        @if ($selectedObituary->destination)
+                            <div class="bg-amber-50 rounded-lg p-4 border-l-4 border-amber-500">
+                                <p class="text-xs text-amber-600 font-medium mb-1">Destino</p>
+                                <p class="text-gray-800 font-semibold">{{ $selectedObituary->destination }}</p>
+                            </div>
+                        @endif
+
+                        @if ($selectedObituary->chapel)
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="text-xs text-gray-500 font-medium mb-1">Capilla</p>
+                                <p class="text-gray-700">{{ $selectedObituary->chapel }}</p>
+                            </div>
+                        @endif
+
+                        @if ($selectedObituary->location)
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="text-xs text-gray-500 font-medium mb-1">Ubicación</p>
+                                <p class="text-gray-700">{{ $selectedObituary->location }}</p>
+                            </div>
+                        @endif
+
+                        @if ($selectedObituary->message)
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="text-xs text-gray-500 font-medium mb-1">Mensaje</p>
+                                <p class="text-gray-600 italic">"{{ $selectedObituary->message }}"</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex justify-center">
+                        <button wire:click="closeObituaryModal"
+                            class="px-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition font-medium">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
 
     <section class="py-16 bg-gray-50">
@@ -328,9 +424,6 @@
                             </div>
                             <p class="text-gray-600 italic mb-4">"{{ $testimonial->text }}"</p>
                             <p class="font-bold text-gray-800">{{ $testimonial->name }}</p>
-                            @if ($testimonial->branch)
-                                <p class="text-sm text-gray-500">{{ $testimonial->branch }}</p>
-                            @endif
                         </div>
                     @endforeach
                 </div>

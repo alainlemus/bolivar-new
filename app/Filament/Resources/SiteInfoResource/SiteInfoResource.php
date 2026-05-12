@@ -25,6 +25,8 @@ class SiteInfoResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Configuración del Sitio';
     protected static ?int $navigationSort = 1;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog;
+    protected static ?string $recordTitleAttribute = 'site_name';
+    protected static int $globalSearchResultsLimit = 5;
 
     public static function form(Schema $schema): Schema
     {
@@ -38,9 +40,7 @@ class SiteInfoResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -50,5 +50,10 @@ class SiteInfoResource extends Resource
             'create' => CreateSiteInfo::route('/create'),
             'edit' => EditSiteInfo::route('/{record}/edit'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['site_name', 'site_tagline'];
     }
 }

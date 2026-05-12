@@ -25,6 +25,8 @@ class PlanResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
     protected static ?int $navigationSort = 6;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCurrencyDollar;
+    protected static ?string $recordTitleAttribute = 'name';
+    protected static int $globalSearchResultsLimit = 10;
 
     public static function form(Schema $schema): Schema
     {
@@ -48,5 +50,10 @@ class PlanResource extends Resource
             'create' => CreatePlan::route('/create'),
             'edit' => EditPlan::route('/{record}/edit'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'description'];
     }
 }

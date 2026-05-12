@@ -21,7 +21,7 @@
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-white text-gray-900">
+<body class="font-sans antialiased bg-white text-gray-900 flex flex-col min-h-screen">
     {{ $slot }}
     <livewire:cookie-consent />
     @vite('resources/js/app.js')

@@ -22,9 +22,6 @@ class TestimonialForm
                     ->required()
                     ->placeholder('Contenido del testimonio')
                     ->columnSpanFull(),
-                TextInput::make('branch')
-                    ->label('Sucursal')
-                    ->placeholder('Ej: Casa Prim, Sucursal Aeropuerto'),
                 TextInput::make('rating')
                     ->label('Calificación')
                     ->required()

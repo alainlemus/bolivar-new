@@ -25,6 +25,8 @@ class ServiceResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
     protected static ?int $navigationSort = 2;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
+    protected static ?string $recordTitleAttribute = 'name';
+    protected static int $globalSearchResultsLimit = 10;
 
     public static function form(Schema $schema): Schema
     {
@@ -48,5 +50,10 @@ class ServiceResource extends Resource
             'create' => CreateService::route('/create'),
             'edit' => EditService::route('/{record}/edit'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'description'];
     }
 }

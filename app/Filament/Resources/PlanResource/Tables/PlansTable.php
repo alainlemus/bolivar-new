@@ -22,7 +22,7 @@ class PlansTable
                     ->label('Icono'),
                 TextColumn::make('price')
                     ->label('Precio')
-                    ->money('USD')
+                    ->money('MXN')
                     ->sortable(),
                 TextColumn::make('order')
                     ->label('Orden')
