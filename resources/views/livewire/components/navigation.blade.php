@@ -1,12 +1,12 @@
-<div x-data="{ scrolled: false, atTop: true }" x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 10; atTop = window.scrollY <= 10 })">
-    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" :class="scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'">
+<div x-data="{ scrolled: false, atTop: true, mobile: window.innerWidth < 1280 }" x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 10; atTop = window.scrollY <= 10 }); window.addEventListener('resize', () => { mobile = window.innerWidth < 1280 })">
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" :class="mobile || scrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'">
         <nav class="container mx-auto px-4">
             <div class="flex items-center justify-between">
                 <a href="{{ route('home') }}" class="flex items-center transition-all duration-300">
                     @if($siteInfo && $siteInfo->site_logo)
-                    <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}" class="transition-all duration-300" :class="scrolled ? 'h-12' : 'h-20'">
+                    <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}" class="transition-all duration-300" :class="mobile || scrolled ? 'h-12' : 'h-20'">
                     @else
-                    <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="transition-all duration-300" :class="scrolled ? 'h-12' : 'h-20'">
+                    <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="transition-all duration-300" :class="mobile || scrolled ? 'h-12' : 'h-20'">
                     @endif
                 </a>
 
@@ -59,7 +59,7 @@
                     @if($siteInfo && ($siteInfo->phone || $siteInfo->phone_2))
                     <div class="flex items-center space-x-3">
                         @if($siteInfo->phone)
-                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="flex items-center font-bold" :class="scrolled ? 'text-amber-600' : 'text-white'">
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="flex items-center font-bold" :class="atTop ? 'text-white' : 'text-amber-600'">
                             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                             </svg>
@@ -67,8 +67,8 @@
                         </a>
                         @endif
                         @if($siteInfo->phone_2)
-                        <span :class="scrolled ? 'text-gray-400' : 'text-white/60'">|</span>
-                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone_2) }}" class="flex items-center font-bold" :class="scrolled ? 'text-amber-600' : 'text-white'">
+                        <span :class="atTop ? 'text-white/60' : 'text-gray-400'">|</span>
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone_2) }}" class="flex items-center font-bold" :class="atTop ? 'text-white' : 'text-amber-600'">
                             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                             </svg>
@@ -89,7 +89,7 @@
                 </button>
             </div>
 
-            <div id="mobile-menu" class="hidden xl:hidden mt-4 pb-4 border-t pt-4" :class="scrolled ? 'border-gray-200 bg-white' : 'border-white/30'">
+            <div id="mobile-menu" class="hidden xl:hidden mt-4 pb-4 border-t pt-4" :class="atTop ? 'border-white/30' : 'border-gray-200 bg-white'">
                 <div class="flex flex-col space-y-3">
                     <a href="{{ route('nosotros') }}" class="font-medium transition block" :class="atTop ? 'text-white hover:text-amber-300' : 'text-gray-700 hover:text-amber-600'">Nosotros</a>
                     <a href="{{ route('servicios') }}" class="font-medium transition block" :class="atTop ? 'text-white hover:text-amber-300' : 'text-gray-700 hover:text-amber-600'">Servicios</a>
@@ -99,7 +99,7 @@
                     <a href="{{ route('guia') }}" class="font-medium transition block" :class="atTop ? 'text-white hover:text-amber-300' : 'text-gray-700 hover:text-amber-600'">Guía</a>
                     <a href="{{ route('contacto') }}" class="font-medium transition block" :class="atTop ? 'text-white hover:text-amber-300' : 'text-gray-700 hover:text-amber-600'">Contacto</a>
                     @if($siteInfo && ($siteInfo->phone || $siteInfo->phone_2))
-                    <div class="pt-3 border-t" :class="scrolled ? 'border-gray-200' : 'border-white/30'">
+                    <div class="pt-3 border-t" :class="atTop ? 'border-white/30' : 'border-gray-200'">
                         @if($siteInfo->phone)
                         <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="flex items-center font-bold" :class="atTop ? 'text-white' : 'text-amber-600'">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
