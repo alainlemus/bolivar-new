@@ -1,11 +1,944 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/playfair-display';
+@import '@fontsource-variable/source-sans-3';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/* El sitio es claro: el modo oscuro solo se activa con la clase .dark, no con la preferencia del sistema */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+    font-family: 'Playfair Fallback';
+    src: local('Georgia');
+    size-adjust: 104%;
+    ascent-override: 92%;
+    descent-override: 24%;
+    line-gap-override: 0%;
+}
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Source Sans 3 Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Playfair Display Variable', 'Playfair Fallback', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+
+    /* Ámbar más profundo: el 600 por defecto no llega a contraste AA con texto blanco */
+    --color-amber-600: #b45309;
+    --color-amber-700: #92400e;
+
+    --ease-soft: cubic-bezier(0.32, 0.72, 0, 1);
+    --color-paper: #fbf8f2;
+
+    --animate-float: float 7s ease-in-out infinite;
+    --animate-ken-burns: ken-burns 24s ease-in-out infinite alternate;
+    --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    --animate-scroll-hint: scroll-hint 2s ease-in-out infinite;
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    @keyframes ken-burns {
+        from { transform: scale(1.02) translate3d(0, 0, 0); }
+        to { transform: scale(1.12) translate3d(-1.5%, -1%, 0); }
+    }
+    @keyframes pulse-ring {
+        0% { box-shadow: 0 0 0 0 rgb(37 211 102 / 0.55); }
+        70%, 100% { box-shadow: 0 0 0 18px rgb(37 211 102 / 0); }
+    }
+    @keyframes scroll-hint {
+        0%, 100% { transform: translateY(0); opacity: 0.4; }
+        50% { transform: translateY(8px); opacity: 1; }
+    }
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    overflow-x: clip;
+    background-color: var(--color-paper);
+    -webkit-tap-highlight-color: transparent;
+}
+
+a, button, input, select, textarea, summary {
+    touch-action: manipulation;
+}
+
+h1, h2, h3 {
+    text-wrap: balance;
+}
+
+p, li, blockquote {
+    text-wrap: pretty;
+}
+
+/* Grano de papel: capa fija que no intercepta eventos ni repinta con el scroll */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.045;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-amber-600);
+    outline-offset: 3px;
+    border-radius: 0.25rem;
+}
+
+::selection {
+    background: var(--color-amber-600);
+    color: #fff;
+}
+
+/* ------------------------------------------------------------------ */
+/* View Transitions (navegación entre páginas)                         */
+/* ------------------------------------------------------------------ */
+
+@view-transition {
+    navigation: auto;
+}
+
+/* Header y botón de WhatsApp permanecen fijos mientras el contenido cambia */
+.vt-header {
+    view-transition-name: site-header;
+}
+
+.vt-whatsapp {
+    view-transition-name: whatsapp-fab;
+}
+
+::view-transition-group(site-header),
+::view-transition-group(whatsapp-fab) {
+    animation-duration: 0s;
+}
+
+::view-transition-old(root) {
+    animation: vt-out 280ms var(--ease-soft) both;
+}
+
+::view-transition-new(root) {
+    animation: vt-in 520ms var(--ease-soft) both;
+}
+
+@keyframes vt-out {
+    to {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.995);
+    }
+}
+
+@keyframes vt-in {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+}
+
+/* Transición compartida: tarjeta de obituario/artículo → título del detalle */
+.vt-title {
+    view-transition-name: var(--vt-name, none);
+}
+
+/* ------------------------------------------------------------------ */
+/* Revelado al hacer scroll (requiere clase .js en <html>)             */
+/* ------------------------------------------------------------------ */
+
+.js [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition:
+        opacity 0.9s var(--ease-soft),
+        transform 0.9s var(--ease-soft);
+    transition-delay: calc(var(--i, 0) * 90ms);
+    will-change: opacity, transform;
+}
+
+.js [data-reveal='left'] { transform: translate3d(-36px, 0, 0); }
+.js [data-reveal='right'] { transform: translate3d(36px, 0, 0); }
+.js [data-reveal='zoom'] { transform: scale(0.94); }
+.js [data-reveal='fade'] { transform: none; }
+
+.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+}
+
+/* Línea decorativa que se dibuja al entrar */
+.divider-draw {
+    display: block;
+    height: 2px;
+    width: 0;
+    margin-inline: auto;
+    background: linear-gradient(90deg, transparent, var(--color-amber-600), transparent);
+    transition: width 1.1s var(--ease-soft) 0.2s;
+}
+
+.is-visible .divider-draw,
+.divider-draw.is-visible {
+    width: 6rem;
+}
+
+.no-js .divider-draw,
+html:not(.js) .divider-draw {
+    width: 6rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Animaciones de entrada (hero)                                       */
+/* ------------------------------------------------------------------ */
+
+.hero-rise {
+    opacity: 0;
+    animation: hero-rise 1.1s var(--ease-soft) forwards;
+    animation-delay: calc(0.15s + var(--i, 0) * 0.14s);
+}
+
+@keyframes hero-rise {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+        filter: blur(6px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+        filter: blur(0);
+    }
+}
+
+/* ------------------------------------------------------------------ */
+/* Interacciones                                                       */
+/* ------------------------------------------------------------------ */
+
+/* Botón con brillo que cruza al pasar el cursor */
+.btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+        transform 0.35s var(--ease-soft),
+        box-shadow 0.35s var(--ease-soft),
+        background-color 0.25s,
+        color 0.25s,
+        border-color 0.25s;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s var(--ease-soft);
+}
+
+.btn:hover::after {
+    transform: translateX(120%);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -8px rgb(180 83 9 / 0.55);
+}
+
+.btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn .btn-arrow {
+    transition: transform 0.35s var(--ease-soft);
+}
+
+.btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* Tarjeta con elevación y "spotlight" que sigue al cursor */
+.card-lift {
+    position: relative;
+    transition:
+        transform 0.45s var(--ease-soft),
+        box-shadow 0.45s var(--ease-soft),
+        border-color 0.3s;
+}
+
+.card-lift::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+        320px circle at var(--mx, 50%) var(--my, 50%),
+        rgb(217 119 6 / 0.12),
+        transparent 70%
+    );
+    transition: opacity 0.4s;
+}
+
+.card-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 40px -20px rgb(17 24 39 / 0.35);
+}
+
+.card-lift:hover::before {
+    opacity: 1;
+}
+
+.card-lift .icon-pop {
+    transition: transform 0.5s var(--ease-soft), background-color 0.3s, color 0.3s;
+}
+
+.card-lift:hover .icon-pop {
+    transform: translateY(-3px) rotate(-6deg) scale(1.1);
+}
+
+/* Subrayado animado para enlaces del menú */
+.link-underline {
+    position: relative;
+}
+
+.link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--ease-soft);
+}
+
+.link-underline:hover::after,
+.link-underline[aria-current='page']::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Imagen con zoom suave dentro de un contenedor */
+.img-zoom img {
+    transition: transform 1.1s var(--ease-soft);
+}
+
+.img-zoom:hover img {
+    transform: scale(1.08);
+}
+
+/* Barra de progreso y parallax: CSS puro (scroll-driven) con respaldo en JS */
+.scroll-progress {
+    transform-origin: left;
+    transform: scaleX(var(--progress, 0));
+}
+
+@supports (animation-timeline: scroll()) {
+    .scroll-progress {
+        transform: scaleX(0);
+        animation: progress-grow linear both;
+        animation-timeline: scroll(root block);
+    }
+
+    .parallax-y {
+        animation: parallax-drift linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 100vh;
+    }
+}
+
+@keyframes progress-grow {
+    to { transform: scaleX(1); }
+}
+
+@keyframes parallax-drift {
+    to { transform: translate3d(0, 18vh, 0); }
+}
+
+/* Etiqueta mínima sobre los títulos de sección */
+.eyebrow {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-amber-700);
+    background: rgb(180 83 9 / 0.08);
+    box-shadow: inset 0 0 0 1px rgb(180 83 9 / 0.18);
+}
+
+/* Doble bisel: la tarjeta descansa dentro de una "bandeja" */
+.bezel {
+    padding: 0.4rem;
+    border-radius: 1.9rem;
+    background: linear-gradient(180deg, rgb(180 83 9 / 0.1), rgb(180 83 9 / 0.03));
+    box-shadow: 0 0 0 1px rgb(180 83 9 / 0.14);
+}
+
+.bezel > .bezel-core {
+    border-radius: 1.5rem;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9);
+}
+
+/* Círculo con flecha dentro del botón */
+.btn-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-left: 0.85rem;
+    margin-right: -0.6rem;
+    border-radius: 9999px;
+    background: rgb(255 255 255 / 0.2);
+    transition: transform 0.5s var(--ease-soft), background-color 0.3s;
+}
+
+.btn:hover .btn-chip {
+    transform: translate(3px, -1px) scale(1.08);
+    background: rgb(255 255 255 / 0.32);
+}
+
+/* Volver arriba: aparece tras 600px de scroll (ver app.js) */
+[data-scrolled] .back-to-top {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+/* Botón flotante de WhatsApp */
+.fab-pulse {
+    animation: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Textura sutil para las bandas oscuras */
+.bg-hero {
+    background-image:
+        radial-gradient(60rem 30rem at 85% -10%, rgb(217 119 6 / 0.18), transparent 60%),
+        radial-gradient(40rem 24rem at 0% 110%, rgb(255 255 255 / 0.06), transparent 60%),
+        linear-gradient(135deg, #111827 0%, #1f2937 100%);
+}
+
+/* Línea de tiempo del proceso (se dibuja al hacer scroll) */
+.timeline-line {
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 1.6s var(--ease-soft) 0.2s;
+}
+
+.is-visible .timeline-line,
+.timeline-line.is-visible {
+    transform: scaleY(1);
+}
+
+html:not(.js) .timeline-line {
+    transform: scaleY(1);
+}
+
+/* Número grande con trazo dorado */
+.numeral {
+    font-family: var(--font-serif);
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(251 191 36 / 0.65);
+    line-height: 1;
+}
+
+/* Acordeón accesible con apertura animada (grid 0fr → 1fr) */
+.faq-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s var(--ease-soft);
+}
+
+.faq-panel[data-open='true'] {
+    grid-template-rows: 1fr;
+}
+
+.faq-panel > div {
+    overflow: hidden;
+}
+
+/* Resplandor de vela para la banda de atención 24/7 */
+.candle-glow {
+    background:
+        radial-gradient(28rem 18rem at 12% 120%, rgb(251 191 36 / 0.45), transparent 65%),
+        radial-gradient(22rem 14rem at 95% -20%, rgb(255 255 255 / 0.12), transparent 60%),
+        linear-gradient(120deg, #78350f 0%, #92400e 45%, #b45309 100%);
+}
+
+/* Llama de vela (obituario) */
+.flame {
+    transform-origin: 50% 100%;
+    animation: flicker 2.8s ease-in-out infinite;
+}
+
+.flame-glow {
+    animation: flame-glow 2.8s ease-in-out infinite;
+}
+
+@keyframes flicker {
+    0%, 100% { transform: scale(1, 1) rotate(0deg); }
+    18% { transform: scale(0.96, 1.05) rotate(-2deg); }
+    37% { transform: scale(1.03, 0.97) rotate(1.5deg); }
+    58% { transform: scale(0.97, 1.04) rotate(-1deg); }
+    80% { transform: scale(1.02, 0.98) rotate(2deg); }
+}
+
+@keyframes flame-glow {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.12); }
+}
+
+[data-count] {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Barras de distribución: se llenan al entrar en pantalla */
+.bar-fill {
+    width: 0;
+    transition: width 1.4s var(--ease-soft) 0.3s;
+}
+
+.is-visible .bar-fill,
+.bar-fill.is-visible {
+    width: var(--w);
+}
+
+html:not(.js) .bar-fill {
+    width: var(--w);
+}
+
+/* Esqueleto de carga */
+.skeleton {
+    background: linear-gradient(90deg, #efe9de 25%, #f8f4ec 37%, #efe9de 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+/* Marquesina pausable (testimonios) */
+.marquee-track {
+    display: flex;
+    gap: 1.25rem;
+    width: max-content;
+    animation: marquee 60s linear infinite;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    to { transform: translateX(calc(-50% - 0.625rem)); }
+}
+
+/* Contenido largo de artículos (sin plugin typography) */
+.article-body {
+    font-size: 1.125rem;
+    line-height: 1.85;
+    color: var(--color-gray-700);
+}
+
+.article-body p + p,
+.article-body br + br {
+    margin-top: 1rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Movimiento reducido                                                 */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        transition-delay: 0ms !important;
+    }
+
+    .js [data-reveal] {
+        opacity: 1;
+        transform: none;
+    }
+
+    @view-transition {
+        navigation: none;
+    }
+}
+
+/* ------------------------------------------------------------------ */
+/* Mapas (Leaflet)                                                     */
+/* ------------------------------------------------------------------ */
+
+.leaflet-container {
+    font-family: var(--font-sans);
+    background: #ece7dc;
+    z-index: 0;
+}
+
+.map-canvas {
+    position: relative;
+    isolation: isolate;
+}
+
+.map-hint {
+    position: absolute;
+    inset: auto 0 1rem 0;
+    margin-inline: auto;
+    width: max-content;
+    max-width: calc(100% - 2rem);
+    z-index: 500;
+    padding: 0.45rem 1rem;
+    border-radius: 9999px;
+    background: rgb(17 24 39 / 0.82);
+    color: #fff;
+    font-size: 0.8rem;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+    transition: opacity 0.4s, transform 0.4s;
+}
+
+.map-hint.is-hidden {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+/* Pin de la funeraria */
+.pin-wrap {
+    background: none;
+    border: 0;
+}
+
+.pin-svg {
+    position: relative;
+    width: 56px;
+    height: 68px;
+    filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.35));
+    animation: pin-drop 0.9s var(--ease-soft) both;
+}
+
+.pin-pulse {
+    position: absolute;
+    left: 50%;
+    bottom: 2px;
+    width: 18px;
+    height: 18px;
+    margin-left: -9px;
+    border-radius: 9999px;
+    background: rgb(180 83 9 / 0.45);
+    animation: pin-pulse 2.2s ease-out infinite;
+}
+
+@keyframes pin-drop {
+    from { transform: translateY(-40px) scale(0.6); opacity: 0; }
+    60% { transform: translateY(4px) scale(1.04); opacity: 1; }
+    to { transform: none; }
+}
+
+@keyframes pin-pulse {
+    0% { transform: scale(0.6); opacity: 0.9; }
+    100% { transform: scale(4.2); opacity: 0; }
+}
+
+/* Puntos de panteones / crematorios */
+.dot-wrap {
+    background: none;
+    border: 0;
+}
+
+.dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9999px;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.3);
+    transition: transform 0.3s var(--ease-soft);
+}
+
+.dot svg {
+    width: 18px;
+    height: 18px;
+}
+
+.dot:hover {
+    transform: scale(1.18);
+}
+
+.dot-panteon { background: #374151; }
+.dot-crema { background: #b45309; }
+
+.dot-sm {
+    width: 30px;
+    height: 30px;
+    flex: none;
+    border-width: 2px;
+    box-shadow: none;
+}
+
+.cluster-icon {
+    background: none;
+    border: 0;
+}
+
+.cluster-icon span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 30% 30%, #fbbf24, #b45309);
+    color: #fff;
+    font-weight: 700;
+    border: 3px solid #fff;
+    box-shadow: 0 6px 14px rgb(0 0 0 / 0.3);
+}
+
+/* Ventana emergente */
+.leaflet-popup-content-wrapper {
+    border-radius: 1rem;
+    padding: 0;
+    box-shadow: 0 18px 40px -12px rgb(17 24 39 / 0.45);
+}
+
+.leaflet-popup-content {
+    margin: 0;
+}
+
+.pop {
+    padding: 1rem 1.1rem 1.1rem;
+}
+
+.pop-kicker {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-amber-700);
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+}
+
+.pop-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #111827;
+    margin: 0 0 0.4rem;
+}
+
+.pop-text {
+    margin: 0 0 0.25rem;
+    font-size: 0.85rem;
+    color: #4b5563;
+    line-height: 1.4;
+}
+
+.pop-muted {
+    color: #9ca3af;
+}
+
+.pop-link {
+    display: inline-block;
+    margin: 0.2rem 0;
+    font-size: 0.85rem;
+    color: var(--color-amber-700);
+    font-weight: 600;
+}
+
+.pop-btn {
+    display: block;
+    margin-top: 0.7rem;
+    text-align: center;
+    padding: 0.55rem 0.8rem;
+    border-radius: 0.6rem;
+    background: var(--color-amber-600);
+    color: #fff !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.pop-btn:hover {
+    background: var(--color-amber-700);
+}
+
+.leaflet-control-zoom a {
+    border-radius: 0.6rem !important;
+    color: #111827;
+}
+
+/* Lista lateral */
+.place-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    text-align: left;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.75rem;
+    transition: background-color 0.2s, transform 0.3s var(--ease-soft);
+}
+
+.place-row:hover,
+.place-row:focus-visible {
+    background: rgb(180 83 9 / 0.08);
+    transform: translateX(3px);
+}
+
+.place-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.place-name {
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.25;
+}
+
+.place-meta {
+    font-size: 0.78rem;
+    color: #6b7280;
+}
+
+.place-empty {
+    padding: 1rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.map-chip {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: #fff;
+    color: #374151;
+    box-shadow: inset 0 0 0 1px #e5e7eb;
+    transition: all 0.3s var(--ease-soft);
+}
+
+.map-chip:hover {
+    box-shadow: inset 0 0 0 1px var(--color-amber-600);
+    color: var(--color-amber-700);
+}
+
+.map-chip[aria-pressed='true'] {
+    background: #111827;
+    color: #fff;
+    box-shadow: 0 6px 14px -6px rgb(17 24 39 / 0.6);
+}
+
+/* Versión oscura del mapa claro (sección de ubicación del inicio) */
+.map-dark .maplibregl-canvas,
+.map-dark .leaflet-maplibre-gl-pane {
+    filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.95) saturate(0.7);
+}
+
+.map-dark.leaflet-container {
+    background: #1f2430;
+}
+
+.map-dark .leaflet-control-attribution {
+    background: rgb(17 24 39 / 0.7);
+    color: #9ca3af;
+}
+
+.map-dark .leaflet-control-attribution a {
+    color: #d1d5db;
+}
+
+/* Emblemas de planes: trazo que se dibuja y pétalos que se abren al entrar */
+.emblem .draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.6s var(--ease-soft) 0.2s;
+}
+
+.is-visible .emblem .draw,
+.emblem.is-visible .draw {
+    stroke-dashoffset: 0;
+}
+
+.emblem .petal,
+.emblem .leaf {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    opacity: 0;
+    scale: 0.4;
+    transition: opacity 0.8s var(--ease-soft) calc(0.3s + var(--d, 0ms)), scale 0.9s var(--ease-soft) calc(0.3s + var(--d, 0ms));
+}
+
+.is-visible .emblem .petal,
+.is-visible .emblem .leaf {
+    opacity: 1;
+    scale: 1;
+}
+
+html:not(.js) .emblem .draw { stroke-dashoffset: 0; }
+html:not(.js) .emblem .petal, html:not(.js) .emblem .leaf { opacity: 1; scale: 1; }
+
+.card-lift:hover .emblem {
+    transform: translateY(-4px) rotate(-3deg);
+}
+
+.emblem {
+    transition: transform 0.6s var(--ease-soft);
+    filter: drop-shadow(0 8px 14px rgb(180 83 9 / 0.22));
+}
+
+/* Botones de compartir en redes */
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    transition: transform 0.35s var(--ease-soft), background-color 0.25s, color 0.25s, box-shadow 0.25s;
+}
+
+.share-btn:hover {
+    transform: translateY(-3px) scale(1.06);
+    box-shadow: 0 10px 18px -8px rgb(0 0 0 / 0.45);
 }

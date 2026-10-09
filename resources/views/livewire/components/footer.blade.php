@@ -5,15 +5,15 @@
                 <div>
                     <div class="mb-4">
                         @if($siteInfo && $siteInfo->site_logo)
-                        <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}" class="w-full h-full object-contain">
+                        <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}" width="200" height="64" class="h-16 w-auto max-w-full object-contain" loading="lazy" decoding="async">
                         @else
-                        <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" class="w-full h-full object-contain">
+                        <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" width="200" height="64" class="h-16 w-auto max-w-full object-contain" loading="lazy" decoding="async">
                         @endif
                     </div>
                 </div>
 
                 <div>
-                    <h4 class="text-lg font-bold mb-4 text-white">Ubicación</h4>
+                    <h2 class="text-lg font-bold mb-4 text-white">Ubicación</h2>
                     @if($siteInfo && $siteInfo->address)
                     <p class="text-gray-400 mb-4">{{ $siteInfo->address }}</p>
                     @endif
@@ -46,7 +46,7 @@
                 </div>
 
                 <div>
-                    <h4 class="text-lg font-bold mb-4 text-white">Navegación</h4>
+                    <h2 class="text-lg font-bold mb-4 text-white">Navegación</h2>
                     <ul class="space-y-2">
                         <li><a href="{{ route('nosotros') }}" class="text-gray-400 hover:text-amber-400 transition">Nosotros</a></li>
                         <li><a href="{{ route('servicios') }}" class="text-gray-400 hover:text-amber-400 transition">Servicios</a></li>
@@ -56,10 +56,24 @@
                         <li><a href="{{ route('guia') }}" class="text-gray-400 hover:text-amber-400 transition">Guía</a></li>
                         <li><a href="{{ route('contacto') }}" class="text-gray-400 hover:text-amber-400 transition">Contacto</a></li>
                     </ul>
+                    @if ($siteInfo && ($siteInfo->facebook || $siteInfo->instagram))
+                        <div class="flex items-center gap-3 mt-6">
+                            @if ($siteInfo->facebook)
+                                <a href="{{ $siteInfo->facebook }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="share-btn bg-white/10 text-white hover:!bg-[#1877F2]">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>
+                                </a>
+                            @endif
+                            @if ($siteInfo->instagram)
+                                <a href="{{ $siteInfo->instagram }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="share-btn bg-white/10 text-white hover:!bg-gradient-to-tr hover:!from-[#f9ce34] hover:!via-[#ee2a7b] hover:!to-[#6228d7]">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+                                </a>
+                            @endif
+                        </div>
+                    @endif
                 </div>
 
                 <div>
-                    <h4 class="text-lg font-bold mb-4 text-white">Atención 24/7</h4>
+                    <h2 class="text-lg font-bold mb-4 text-white">Atención 24/7</h2>
                     <p class="text-gray-400 mb-4">Estamos disponibles las 24 horas del día, los 365 días del año para atenderte.</p>
                     @if($siteInfo && $siteInfo->phone)
                     <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteInfo->phone) }}" class="inline-flex items-center px-5 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-bold">
@@ -73,8 +87,8 @@
             </div>
 
             <div class="border-t border-gray-800 pt-6 text-center">
-                <p class="text-gray-500 text-sm">&copy; {{ date('Y') }} Funeraria García de Bolívar. Todos los derechos reservados.</p>
-                <p class="text-gray-500 text-sm mt-2">
+                <p class="text-gray-400 text-sm">&copy; {{ date('Y') }} Funeraria García de Bolívar. Todos los derechos reservados.</p>
+                <p class="text-gray-400 text-sm mt-2">
                     <a href="{{ route('aviso-privacidad') }}" class="hover:text-amber-400 transition">Aviso de Privacidad</a>
                 </p>
             </div>

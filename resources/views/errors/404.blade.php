@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
     <title>404 - Página no encontrada | García de Bolívar</title>
     @if($siteInfo && $siteInfo->favicon)
         <link rel="icon" href="{{ asset('storage/' . $siteInfo->favicon) }}" type="image/x-icon" />
     @else
-        <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/x-icon" />
+        <link rel="icon" href="{{ asset("favicon.ico") }}" />
     @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body class="font-sans antialiased text-white" style="background: linear-gradient(180deg, #1f2937 0%, #111827 100%);">
 

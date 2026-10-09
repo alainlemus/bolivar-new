@@ -1,50 +1,61 @@
 <div class="flex flex-col min-h-screen">
     <livewire:components.navigation />
 
-    <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-24 pb-12 md:pt-32 md:pb-16">
-        <div class="container mx-auto px-4 relative z-10 text-center">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4 font-serif">{{ $article->title }}</h1>
-            <p class="text-lg md:text-xl text-gray-200">{{ $article->category ?? 'Guía' }}</p>
-        </div>
-    </section>
+    <x-page-hero :eyebrow="$article->category ?? 'Guía'" :title="$article->title" :crumbs="['Guía' => route('guia'), \Illuminate\Support\Str::limit($article->title, 40) => null]">
+        {{ $article->reading_time }} min de lectura
+        @if ($article->published_at) · {{ $article->published_at->locale('es')->isoFormat('D [de] MMMM [de] YYYY') }} @endif
+    </x-page-hero>
 
-    <main class="py-16 bg-gray-50 flex-grow">
+    <main class="flex-1 bg-paper py-12 md:py-16">
         <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto">
-                <a href="{{ route('guia') }}" class="inline-flex items-center text-amber-600 hover:text-amber-700 mb-8 font-medium">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Volver a la Guía
+            <div class="max-w-3xl mx-auto">
+                <a href="{{ route('guia') }}" class="inline-flex items-center text-amber-700 hover:text-amber-800 mb-8 font-medium group">
+                    <span class="mr-2 transition-transform duration-300 group-hover:-translate-x-1" aria-hidden="true">←</span> Volver a la Guía
                 </a>
 
-                @if($article->image)
-                <div class="mb-8 rounded-xl overflow-hidden shadow-lg">
-                    <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->title }}" class="w-full h-64 md:h-96 object-cover">
-                </div>
+                @if ($article->image)
+                    <div class="mb-10 rounded-3xl overflow-hidden shadow-xl" data-reveal="zoom">
+                        <img src="{{ asset('storage/' . $article->image) }}" alt="" width="1200" height="600" fetchpriority="high" class="w-full h-64 md:h-96 object-cover">
+                    </div>
                 @endif
 
-                <div class="bg-white rounded-xl shadow-lg p-8">
-                    <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-200">
-                        @if($article->category)
-                        <span class="bg-amber-100 text-amber-700 text-sm px-4 py-2 rounded-full font-medium">
-                            {{ $article->category }}
-                        </span>
-                        @endif
-                        @if($article->published_at)
-                        <span class="text-gray-500 text-sm">
-                            {{ $article->published_at->format('d/m/Y') }}
-                        </span>
-                        @endif
-                    </div>
+                <article class="bg-white rounded-3xl shadow-sm border border-gray-100 p-7 md:p-12" data-reveal>
+                    @if ($article->excerpt)
+                        <p class="font-serif text-xl md:text-2xl text-gray-700 leading-relaxed border-l-4 border-amber-500 pl-5 mb-8">{{ $article->excerpt }}</p>
+                    @endif
 
-                    <div class="prose prose-lg max-w-none">
+                    <div class="article-body">
                         {!! nl2br(e($article->content)) !!}
                     </div>
-                </div>
+
+                    {{-- Compartir en redes --}}
+                    <div class="mt-10 pt-6 border-t border-gray-100">
+                        <x-share-bar :url="route('guia-detalle', $article->slug)" :title="$article->title"
+                            :text="$article->title . ' — Guía de Funeraria García de Bolívar'" label="¿Le servirá a alguien? Compártelo" />
+                    </div>
+                </article>
             </div>
+
+            @if ($related->count() > 0)
+                <div class="max-w-5xl mx-auto mt-16">
+                    <h2 class="font-serif text-2xl md:text-3xl text-gray-800 text-center mb-8" data-reveal>Podría interesarte</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        @foreach ($related as $item)
+                            <a href="{{ route('guia-detalle', $item->slug) }}" class="group block" data-reveal style="--i:{{ $loop->index }}">
+                                <article class="card-lift bg-white rounded-2xl border border-gray-100 shadow-sm p-6 h-full">
+                                    <p class="text-xs text-amber-700 font-medium mb-2">{{ $item->category }} · {{ $item->reading_time }} min</p>
+                                    <h3 class="font-serif text-lg font-bold text-gray-800 group-hover:text-amber-700 transition-colors">{{ $item->title }}</h3>
+                                    <span class="inline-block mt-3 text-sm font-semibold text-amber-700">Leer <span class="inline-block transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true">→</span></span>
+                                </article>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
     </main>
+
+    <x-cta-band title="¿Necesitas apoyo ahora?" text="Llámanos o escríbenos: te acompañamos paso a paso." />
 
     <livewire:components.footer />
     <livewire:floating-whatsapp />

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @php $siteInfo = \App\Models\SiteInfo::getSiteInfo(); @endphp
     <link rel="icon" href="{{ $siteInfo->favicon ? asset('storage/' . $siteInfo->favicon) : asset('favicon.ico') }}">
     <title>Deja tu Testimonio - {{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    @vite(['resources/css/app.css'])
+    <meta name="robots" content="noindex, nofollow">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md">
