@@ -1,18 +1,24 @@
 <?php
 
+use App\Http\Controllers\SeoController;
+use App\Livewire\Pages\ArticuloDetalle;
+use App\Livewire\Pages\Articulos;
+use App\Livewire\Pages\AvisoPrivacidad;
+use App\Livewire\Pages\ContactoPagina;
 use App\Livewire\Pages\Home;
-use App\Livewire\Pages\Servicios;
-use App\Livewire\Pages\Planes;
 use App\Livewire\Pages\Obituario;
 use App\Livewire\Pages\ObituarioDetalle;
-use App\Livewire\Pages\ContactoPagina;
-use App\Livewire\Pages\Testimonios;
+use App\Livewire\Pages\Planes;
+use App\Livewire\Pages\Servicios;
 use App\Livewire\Pages\TestimonioForm;
-use App\Livewire\Pages\Articulos;
-use App\Livewire\Pages\ArticuloDetalle;
-use App\Livewire\Pages\AvisoPrivacidad;
-use App\Livewire\Components\Navigation;
+use App\Livewire\Pages\Testimonios;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
+
+// Vista previa de un obituario (aunque aún no esté publicado): enlace firmado que genera el panel
+Route::get('/obituario-previa/{previewId}', ObituarioDetalle::class)->middleware('signed')->name('obituario-preview');
 
 Route::middleware(['track.page.views'])->group(function () {
     Route::get('/', Home::class)->name('home');

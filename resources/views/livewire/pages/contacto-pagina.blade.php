@@ -1,20 +1,48 @@
 <div>
     <livewire:components.navigation />
 
-    <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-24 pb-12 md:pt-32 md:pb-16">
-        <div class="container mx-auto px-4 relative z-10 text-center">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4 font-serif">Contacto</h1>
-            <p class="text-lg md:text-xl text-gray-200">Estamos a su servicio para cualquier consulta o duda</p>
-        </div>
-    </section>
+    @php $h = \App\Support\SiteContent::text('pages.contacto'); @endphp
+    <x-page-hero :eyebrow="$h['eyebrow']" :title="$h['title']" :crumbs="['Contacto' => null]">
+        {{ $h['subtitle'] }}
+    </x-page-hero>
 
-    <div class="py-16 bg-white">
+    <main class="py-12 md:py-16 bg-paper">
         <div class="container mx-auto px-4">
+            {{-- Acciones rápidas --}}
+            <div class="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-14 -mt-4">
+                @if ($phone)
+                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone) }}" class="group card-lift bg-white rounded-2xl p-6 border border-gray-100 shadow-sm text-center" data-reveal style="--i:0">
+                        <span class="icon-pop mx-auto mb-3 w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl" aria-hidden="true">☎</span>
+                        <span class="block font-serif text-lg text-gray-800">Llamar ahora</span>
+                        <span class="block text-sm text-gray-500 mt-1">{{ $phone }}</span>
+                    </a>
+                @endif
+                @if ($whatsapp)
+                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $whatsapp) }}" target="_blank" rel="noopener noreferrer" class="group card-lift bg-white rounded-2xl p-6 border border-gray-100 shadow-sm text-center" data-reveal style="--i:1">
+                        <span class="icon-pop mx-auto mb-3 w-14 h-14 rounded-2xl bg-green-100 text-green-700 flex items-center justify-center text-2xl" aria-hidden="true">✆</span>
+                        <span class="block font-serif text-lg text-gray-800">WhatsApp</span>
+                        <span class="block text-sm text-gray-500 mt-1">Respuesta inmediata</span>
+                    </a>
+                @endif
+                @if ($email)
+                    <a href="mailto:{{ $email }}" class="group card-lift bg-white rounded-2xl p-6 border border-gray-100 shadow-sm text-center" data-reveal style="--i:2">
+                        <span class="icon-pop mx-auto mb-3 w-14 h-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center text-2xl" aria-hidden="true">✉</span>
+                        <span class="block font-serif text-lg text-gray-800">Correo</span>
+                        <span class="block text-sm text-gray-500 mt-1 break-all">{{ $email }}</span>
+                    </a>
+                @endif
+            </div>
 
             <div class="grid md:grid-cols-2 gap-12">
                 <div>
-                    <div class="bg-gray-50 p-8 rounded-lg mb-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-6 font-serif">Información de contacto</h3>
+                    <div class="bg-white p-8 rounded-2xl mb-6 border border-gray-100 shadow-sm" data-reveal="left">
+                        <div class="flex items-center justify-between gap-3 mb-6">
+                            <h2 class="text-xl font-bold text-gray-800 font-serif">Información de contacto</h2>
+                            <span class="inline-flex items-center gap-2 rounded-full bg-green-50 text-green-800 text-xs font-semibold px-3 py-1 ring-1 ring-green-200">
+                                <span class="relative flex w-2 h-2"><span class="absolute inline-flex w-full h-full rounded-full bg-green-500 opacity-75 animate-ping"></span><span class="relative inline-flex w-2 h-2 rounded-full bg-green-600"></span></span>
+                                Atención 24/7
+                            </span>
+                        </div>
 
                         @if ($phone)
                             <div class="flex items-center mb-4">
@@ -81,24 +109,22 @@
                                 <div>
                                     <p class="text-sm text-gray-500">Dirección</p>
                                     <p class="text-lg text-gray-800 whitespace-pre-line">{{ $address }}</p>
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode(str_replace("\n", ' ', $address)) }}" target="_blank" rel="noopener noreferrer"
+                                        class="inline-flex items-center mt-1 text-sm font-semibold text-amber-700 hover:text-amber-800">Cómo llegar <span class="ml-1" aria-hidden="true">→</span></a>
                                 </div>
                             </div>
                         @endif
                     </div>
 
-                    @if ($siteInfo && $siteInfo->map_url)
-                        <div class="rounded-lg overflow-hidden shadow-md">
-                            {!! $siteInfo->map_url !!}
-                        </div>
-                    @endif
+                    <x-funeral-map :card="false" class="h-80" />
                 </div>
 
                 <div>
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-                        <h3 class="text-xl font-bold text-gray-800 mb-6 font-serif">Envíanos un mensaje</h3>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100" data-reveal="right">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6 font-serif">Envíanos un mensaje</h2>
 
                         @if (session('message'))
-                            <div class="mb-6 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200 flex items-center">
+                            <div role="status" class="mb-6 p-4 bg-green-50 text-green-800 rounded-xl border border-green-200 flex items-center animate-[hero-rise_0.8s_var(--ease-soft)_both]">
                                 <svg class="w-5 h-5 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
                                 {{ session('message') }}
                             </div>
@@ -106,10 +132,10 @@
 
                         <form wire:submit="submit" class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Nombre <span class="text-red-500">*</span></label>
-                                <input type="text" wire:model="name" required minlength="3"
+                                <label for="c-name" class="block text-sm font-medium text-gray-700 mb-1">Nombre <span class="text-red-500">*</span></label>
+                                <input id="c-name" name="name" type="text" autocomplete="name" wire:model="name" required minlength="3"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 @error('name') border-red-500 ring-1 ring-red-500 @enderror"
-                                    placeholder="Tu nombre">
+                                    placeholder="Tu nombre…">
                                 @error('name')
                                     <span class="text-red-500 text-sm flex items-center mt-1">
                                         <svg class="w-4 h-4 mr-1 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
@@ -125,8 +151,8 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico <span class="text-red-500">*</span></label>
-                                <input type="email" wire:model="email" required
+                                <label for="c-email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico <span class="text-red-500">*</span></label>
+                                <input id="c-email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" wire:model="email" required
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 @error('email') border-red-500 ring-1 ring-red-500 @enderror"
                                     placeholder="tu@email.com">
                                 @error('email')
@@ -138,17 +164,18 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-                                <input type="tel" wire:model="phone"
+                                <label for="c-phone" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                                <input id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" wire:model="phone"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                                    placeholder="(123) 456-7890">
+                                    placeholder="55 1234 5678">
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Mensaje <span class="text-red-500">*</span></label>
-                                <textarea wire:model="message" rows="4" required minlength="10"
+                                <label for="c-message" class="block text-sm font-medium text-gray-700 mb-1">Mensaje <span class="text-red-500">*</span></label>
+                                <textarea id="c-message" maxlength="2000" name="message" autocomplete="off" wire:model="message" rows="4" required minlength="10"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 @error('message') border-red-500 ring-1 ring-red-500 @enderror"
-                                    placeholder="¿En qué podemos ayudarte?"></textarea>
+                                    placeholder="¿En qué podemos ayudarte?…"></textarea>
+                                <p class="text-xs text-gray-400 text-right mt-1" aria-hidden="true">{{ strlen($message) }}/2000</p>
                                 @error('message')
                                     <span class="text-red-500 text-sm flex items-center mt-1">
                                         <svg class="w-4 h-4 mr-1 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
@@ -164,9 +191,9 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Captcha: ¿Cuánto es {{ $captcha_num1 }} + {{ $captcha_num2 }}? <span class="text-red-500">*</span></label>
+                                <label for="c-captcha" class="block text-sm font-medium text-gray-700 mb-2">Captcha: ¿Cuánto es {{ $captcha_num1 }} + {{ $captcha_num2 }}? <span class="text-red-500">*</span></label>
                                 <div class="flex gap-3">
-                                    <input type="text" wire:model="captcha" required
+                                    <input id="c-captcha" name="captcha" type="text" inputmode="numeric" autocomplete="off" wire:model="captcha" required
                                         class="w-24 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-center @error('captcha') border-red-500 ring-1 ring-red-500 @enderror"
                                         placeholder="?">
                                     <button type="button" wire:click="generateCaptcha"
@@ -182,16 +209,21 @@
                                 @enderror
                             </div>
 
-                            <button type="submit"
-                                class="w-full px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium text-lg">
-                                Enviar mensaje
+                            <button type="submit" wire:loading.attr="disabled" wire:target="submit"
+                                class="btn w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium text-lg disabled:opacity-70 disabled:cursor-wait">
+                                <svg wire:loading wire:target="submit" class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                                <span wire:loading.remove wire:target="submit">Enviar mensaje</span>
+                                <span wire:loading wire:target="submit">Enviando…</span>
                             </button>
+                            <p class="text-xs text-gray-500 text-center">Al enviar aceptas nuestro <a href="{{ route('aviso-privacidad') }}" class="underline hover:text-amber-700">Aviso de Privacidad</a>.</p>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <x-cta-band title="¿Prefieres hablar con una persona?" text="Llámanos ahora: contesta alguien, a cualquier hora." />
 
     <livewire:components.footer />
     <livewire:floating-whatsapp />

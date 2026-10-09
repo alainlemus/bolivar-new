@@ -1,129 +1,159 @@
 <div class="flex flex-col min-h-screen">
     <livewire:components.navigation />
 
-    <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-24 pb-12 md:pt-32 md:pb-16">
-        <div class="container mx-auto px-4 relative z-10 text-center">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4 font-serif">Obituario</h1>
-            <p class="text-lg md:text-xl text-gray-200">Recordando y rindiendo homenaje</p>
-        </div>
-    </section>
+    @php $h = \App\Support\SiteContent::text('pages.obituario'); @endphp
+    <x-page-hero :eyebrow="$h['eyebrow']" :title="$h['title']" :crumbs="['Obituario' => null]">
+        {{ $h['subtitle'] }}
+    </x-page-hero>
 
-    <section class="bg-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="max-w-md mx-auto">
-                <div class="relative">
-                    <input type="text" wire:model.live.debounce.300ms="search" placeholder="Buscar por nombre..."
-                        class="w-full px-5 py-3 pr-12 rounded-lg text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
-                    <svg class="w-5 h-5 absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div>
+    <main class="flex-1 bg-paper">
+        {{-- Vela --}}
+        <div class="flex flex-col items-center -mt-2 pt-8 px-4 text-center" data-reveal="fade">
+            <div class="relative w-14 h-24" aria-hidden="true">
+                <span class="flame-glow absolute left-1/2 -translate-x-1/2 top-0 w-14 h-14 rounded-full bg-amber-300/60 blur-xl"></span>
+                <svg class="flame absolute left-1/2 -translate-x-1/2 top-1 w-5 h-8" viewBox="0 0 20 32">
+                    <path d="M10 0C10 8 2 12 2 21a8 8 0 0016 0C18 12 12 10 10 0z" fill="#f59e0b"/>
+                    <path d="M10 12c0 5-4 6-4 10a4 4 0 008 0c0-4-4-5-4-10z" fill="#fde68a"/>
+                </svg>
+                <span class="absolute left-1/2 -translate-x-1/2 top-9 w-3.5 h-14 rounded-t-sm bg-gradient-to-b from-amber-50 to-amber-100 ring-1 ring-amber-200"></span>
             </div>
+            <p class="font-serif text-2xl text-gray-700 mt-2">Cada vida merece ser recordada</p>
         </div>
-    </section>
 
-    <section class="py-12 bg-gray-50 flex-grow">
-        <div class="container mx-auto px-4">
-            @if ($obituaries->count() > 0)
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach ($obituaries as $obituary)
-                        <div
-                            class="bg-white rounded-lg shadow-md hover:shadow-xl transition border border-gray-100 overflow-hidden">
-                            <div class="bg-amber-600 px-4 py-2">
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-white mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-2H8l4-4v2h2l-4 4v2z" />
-                                    </svg>
-                                    <span class="text-white font-medium text-sm">Homenaje</span>
-                                </div>
-                            </div>
+        {{-- Búsqueda y filtros --}}
+        <section class="container mx-auto px-4 pt-8 pb-4" aria-label="Buscar y filtrar">
+            <div class="max-w-2xl mx-auto space-y-4">
+                <div class="relative">
+                    <label for="buscar-obituario" class="sr-only">Buscar obituario por nombre</label>
+                    <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input id="buscar-obituario" wire:model.live.debounce.300ms="search" type="search" autocomplete="off" placeholder="Buscar por nombre…"
+                        class="w-full pl-12 pr-12 py-3.5 rounded-full border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-amber-600 shadow-sm">
+                    <span wire:loading wire:target="search,filter,setFilter" class="absolute right-4 top-1/2 -translate-y-1/2" aria-hidden="true">
+                        <svg class="w-5 h-5 animate-spin text-amber-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
+                    </span>
+                </div>
 
-                            <div class="p-5">
-                                <h3 class="text-xl font-bold text-gray-800 mb-1 font-serif">
-                                    {{ $obituary->deceased_name }}</h3>
-
-                                @if ($obituary->age)
-                                    <p class="text-sm text-gray-500 mb-3">Edad: {{ $obituary->age }} años</p>
-                                @endif
-
-                                @if ($obituary->chapel)
-                                    <div class="flex items-center text-sm text-gray-600 mb-2">
-                                        <svg class="w-4 h-4 mr-2 text-amber-500" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                        </svg>
-                                        {{ $obituary->chapel }}
-                                    </div>
-                                @endif
-
-                                @if ($obituary->burial_date)
-                                    <div class="bg-gray-50 p-3 rounded-lg mb-3">
-                                        <p class="text-sm">
-                                            <span class="font-semibold text-gray-700">Inhumación:</span>
-                                            <span
-                                                class="text-amber-600 font-bold">{{ $obituary->burial_date->format('d/m/Y') }}</span>
-                                            <span class="text-gray-500">a las
-                                                {{ $obituary->burial_date->format('H:i') }}</span>
-                                        </p>
-                                    </div>
-                                @endif
-
-                                @if ($obituary->cemetery)
-                                    <div class="flex items-center text-sm text-gray-600 mb-4">
-                                        <svg class="w-4 h-4 mr-2 text-amber-500" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                        {{ $obituary->cemetery }}
-                                    </div>
-                                @endif
-
-                                <a href="{{ route('obituario-detalle', $obituary) }}"
-                                    class="inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition text-sm font-medium">
-                                    Ver detalles
-                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
+                <div class="flex flex-wrap justify-center gap-2" role="group" aria-label="Filtrar por fecha">
+                    @foreach (['todos' => 'Todos', 'hoy' => 'Hoy', 'semana' => 'Próximos 7 días'] as $key => $label)
+                        <button type="button" wire:click="setFilter('{{ $key }}')" aria-pressed="{{ $filter === $key ? 'true' : 'false' }}"
+                            class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 {{ $filter === $key ? 'bg-gray-900 text-white shadow-md' : 'bg-white text-gray-700 ring-1 ring-gray-200 hover:ring-amber-400 hover:text-amber-800' }}">
+                            {{ $label }}
+                        </button>
                     @endforeach
                 </div>
 
-                <div class="mt-8">
-                    @if ($obituaries->hasPages())
-                        <div class="flex justify-center">
-                            <div class="bg-white px-4 py-3 rounded-lg shadow-sm">
-                                {{ $obituaries->links() }}
+                <p class="text-center text-sm text-gray-500" role="status" aria-live="polite">
+                    {{ $obituaries->total() }} {{ $obituaries->total() === 1 ? 'aviso' : 'avisos' }}
+                    @if ($search) para «{{ $search }}» @endif
+                </p>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 py-10 md:py-14">
+            {{-- Esqueleto mientras carga --}}
+            <div wire:loading.delay wire:target="search,filter,setFilter" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6" aria-hidden="true">
+                @foreach (range(1, 3) as $i)
+                    <div class="skeleton h-64 rounded-2xl"></div>
+                @endforeach
+            </div>
+
+            @if ($obituaries->count() > 0)
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" wire:loading.class="opacity-40" wire:target="search,filter,setFilter">
+                    @foreach ($obituaries as $obituary)
+                        @php
+                            $shareText = 'Información del homenaje de ' . $obituary->deceased_name . ': ' . route('obituario-detalle', $obituary);
+                            $place = $obituary->cemetery ?: $obituary->chapel;
+                        @endphp
+                        <article class="group card-lift relative bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col" data-reveal style="--i:{{ $loop->index % 3 }}">
+                            <div class="relative bg-gradient-to-br from-gray-900 to-gray-800 px-6 pt-6 pb-10 text-white">
+                                <div class="flex items-center gap-4">
+                                    @if ($obituary->image)
+                                        <img src="{{ asset('storage/' . $obituary->image) }}" alt="" width="72" height="72" loading="lazy"
+                                            class="w-[4.5rem] h-[4.5rem] rounded-full object-cover ring-2 ring-amber-400/70 shadow-lg">
+                                    @else
+                                        <span class="w-[4.5rem] h-[4.5rem] rounded-full bg-amber-500/15 ring-1 ring-amber-400/40 flex items-center justify-center" aria-hidden="true">
+                                            <svg class="flame w-6 h-9" viewBox="0 0 20 32"><path d="M10 0C10 8 2 12 2 21a8 8 0 0016 0C18 12 12 10 10 0z" fill="#f59e0b"/><path d="M10 12c0 5-4 6-4 10a4 4 0 008 0c0-4-4-5-4-10z" fill="#fde68a"/></svg>
+                                        </span>
+                                    @endif
+                                    <div class="min-w-0">
+                                        <p class="text-[11px] uppercase tracking-[0.25em] text-amber-300">Homenaje</p>
+                                        <h2 class="font-serif text-2xl font-bold leading-tight break-words">{{ $obituary->deceased_name }}</h2>
+                                        @if ($obituary->age)
+                                            <p class="text-sm text-gray-300">{{ $obituary->age }} años</p>
+                                        @endif
+                                    </div>
+                                </div>
+                                @if ($obituary->burial_date)
+                                    <div class="absolute right-5 -bottom-7 w-16 rounded-xl bg-white text-center shadow-lg ring-1 ring-black/5 overflow-hidden">
+                                        <p class="bg-amber-600 text-white text-[10px] uppercase tracking-widest py-0.5">{{ $obituary->burial_date->locale('es')->isoFormat('MMM') }}</p>
+                                        <p class="font-serif text-2xl font-bold text-gray-800 leading-none py-1.5">{{ $obituary->burial_date->format('d') }}</p>
+                                    </div>
+                                @endif
                             </div>
-                        </div>
+
+                            <div class="p-6 pt-8 flex-1 flex flex-col">
+                                <ul class="space-y-2.5 text-sm text-gray-600 mb-6">
+                                    @if ($obituary->burial_date)
+                                        <li class="flex items-center gap-2.5"><span class="text-amber-600" aria-hidden="true">◷</span> {{ $obituary->burial_date->format('H:i') }} hrs · {{ $obituary->burial_date->locale('es')->isoFormat('dddd D [de] MMMM') }}</li>
+                                    @endif
+                                    @if ($obituary->chapel)
+                                        <li class="flex items-center gap-2.5"><span class="text-amber-600" aria-hidden="true">⛪</span> {{ $obituary->chapel }}</li>
+                                    @endif
+                                    @if ($obituary->cemetery)
+                                        <li class="flex items-center gap-2.5"><span class="text-amber-600" aria-hidden="true">⚘</span> {{ $obituary->cemetery }}</li>
+                                    @endif
+                                </ul>
+
+                                <div class="mt-auto flex items-center gap-2">
+                                    <a href="{{ route('obituario-detalle', $obituary) }}"
+                                        class="btn flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-sm font-medium">
+                                        Ver detalles
+                                    </a>
+                                    @if ($place)
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($place) }}" target="_blank" rel="noopener noreferrer"
+                                            aria-label="Cómo llegar a {{ $place }}" title="Cómo llegar"
+                                            class="w-10 h-10 rounded-lg ring-1 ring-gray-200 flex items-center justify-center text-gray-600 hover:text-amber-700 hover:ring-amber-400 transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                        </a>
+                                    @endif
+                                    <a href="https://wa.me/?text={{ urlencode($shareText) }}" target="_blank" rel="noopener noreferrer"
+                                        aria-label="Compartir por WhatsApp" title="Compartir"
+                                        class="w-10 h-10 rounded-lg ring-1 ring-gray-200 flex items-center justify-center text-gray-600 hover:text-green-700 hover:ring-green-400 transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+
+                @if ($obituaries->hasPages())
+                    <div class="mt-10 flex justify-center">
+                        <div class="w-full max-w-3xl">{{ $obituaries->links() }}</div>
+                    </div>
+                @endif
+            @else
+                <div class="max-w-xl mx-auto text-center bg-white rounded-3xl border border-gray-100 shadow-sm px-8 py-14" data-reveal="zoom">
+                    <svg class="flame w-8 h-12 mx-auto mb-5" viewBox="0 0 20 32" aria-hidden="true"><path d="M10 0C10 8 2 12 2 21a8 8 0 0016 0C18 12 12 10 10 0z" fill="#f59e0b"/><path d="M10 12c0 5-4 6-4 10a4 4 0 008 0c0-4-4-5-4-10z" fill="#fde68a"/></svg>
+                    <h2 class="font-serif text-2xl text-gray-800 mb-2">
+                        @if ($search || $filter !== 'todos') No encontramos avisos con ese criterio @else Por ahora no hay avisos publicados @endif
+                    </h2>
+                    <p class="text-gray-500 mb-6">
+                        @if ($search || $filter !== 'todos') Prueba con otro nombre o muestra todos los avisos. @else Si buscas información de un servicio, llámanos y con gusto te la confirmamos. @endif
+                    </p>
+                    @if ($search || $filter !== 'todos')
+                        <button type="button" wire:click="clearFilters" class="btn inline-flex px-6 py-3 bg-gray-900 text-white rounded-lg font-medium">Ver todos los avisos</button>
+                    @else
+                        <a href="{{ route('contacto') }}" class="btn inline-flex px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700">Contactar</a>
                     @endif
                 </div>
-            @else
-                <div class="col-span-full">
-                    <div class="text-center py-32 bg-white rounded-lg shadow-md">
-                        <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                        <p class="text-gray-500 text-lg">No hay servicios programados actualmente</p>
-                        @if ($search)
-                            <p class="text-gray-400 mt-2">No se encontraron resultados para "{{ $search }}"</p>
-                        @endif
-                    </div>
-                </div>
             @endif
-        </div>
-    </section>
+        </section>
+    </main>
+
+    <x-cta-band title="Estamos para acompañarte" text="Si necesitas ayuda con un servicio, llámanos a cualquier hora." />
 
     <livewire:components.footer />
     <livewire:floating-whatsapp />

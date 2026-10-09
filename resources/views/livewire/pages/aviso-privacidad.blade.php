@@ -1,18 +1,18 @@
 <div>
     <livewire:components.navigation />
 
-    <section class="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-24 pb-12 md:pt-32 md:pb-16">
+    <section class="relative bg-hero text-white pt-32 pb-14 md:pt-44 md:pb-20 overflow-hidden">
         <div class="container mx-auto px-4 relative z-10 text-center">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4 font-serif">Aviso de Privacidad</h1>
-            <p class="text-lg md:text-xl text-gray-200">Protección de datos personales</p>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4 font-serif hero-rise" style="--i:0">Aviso de Privacidad</h1>
+            <p class="hero-rise text-lg md:text-xl text-gray-200 max-w-2xl mx-auto" style="--i:1">Protección de datos personales</p>
         </div>
     </section>
 
-    <div class="py-16 bg-white">
+    <main class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
                 @if ($siteInfo->privacy_notice)
-                    <div class="prose prose-lg max-w-none text-gray-700 space-y-8">
+                    <div class="article-body space-y-6 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-gray-800 [&_h3]:font-bold [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_a]:text-amber-700 [&_a]:underline">
                         {!! $siteInfo->privacy_notice !!}
                     </div>
                 @else
@@ -42,7 +42,7 @@
                         cualquier pregunta sobre cómo manejamos tus datos personales.</p>
                     <div class="flex flex-wrap gap-4">
                         <a href="{{ route('contacto') }}"
-                            class="inline-flex items-center px-6 py-3 bg-amber-600 text-white rounded-xl hover:bg-amber-700 transition font-medium shadow-sm hover:shadow-md">
+                            class="btn inline-flex items-center px-6 py-3 bg-amber-600 text-white rounded-xl hover:bg-amber-700 transition font-medium shadow-sm hover:shadow-md">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <livewire:components.footer />
     <livewire:floating-whatsapp />
