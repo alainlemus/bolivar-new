@@ -1,0 +1,239 @@
+@import '@fontsource-variable/playfair-display';
+/* Inicio de sesión del panel: diseño dividido (solo estilos de esta pantalla) */
+
+.auth-split {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    background: #fff;
+}
+
+.dark .auth-split {
+    background: #0b0b0d;
+}
+
+/* ---------- Panel de marca ---------- */
+.auth-art {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+    color: #fff;
+    background:
+        linear-gradient(160deg, rgb(20 17 15 / 0.94), rgb(43 29 18 / 0.9)),
+        var(--art-image, none) center / cover no-repeat,
+        #14110f;
+}
+
+.auth-art__glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(38rem 26rem at 70% 35%, rgb(251 191 36 / 0.22), transparent 65%),
+        radial-gradient(30rem 24rem at 0% 110%, rgb(180 83 9 / 0.45), transparent 70%);
+}
+
+.auth-art__lines {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.07;
+    background-image: repeating-linear-gradient(135deg, #fff 0, #fff 1px, transparent 1px, transparent 30px);
+}
+
+.auth-art__logo {
+    height: 3.75rem;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.auth-art__name {
+    font-family: 'Playfair Display Variable', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.auth-art__body {
+    max-width: 30rem;
+}
+
+.auth-flame {
+    width: 2rem;
+    height: 3.2rem;
+    margin-bottom: 1.25rem;
+    transform-origin: 50% 100%;
+    animation: auth-flicker 2.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 14px rgb(251 191 36 / 0.7));
+}
+
+@keyframes auth-flicker {
+    0%, 100% { transform: scale(1) rotate(0); }
+    20% { transform: scale(0.96, 1.05) rotate(-2deg); }
+    45% { transform: scale(1.03, 0.97) rotate(1.5deg); }
+    70% { transform: scale(0.97, 1.04) rotate(-1deg); }
+}
+
+.auth-art__eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #fcd34d;
+    font-weight: 600;
+}
+
+.auth-art__title {
+    margin: 0 0 1rem;
+    font-family: 'Playfair Display Variable', Georgia, serif;
+    font-size: clamp(2rem, 3.4vw, 3.1rem);
+    line-height: 1.12;
+    font-weight: 700;
+}
+
+.auth-art__text {
+    margin: 0 0 1.5rem;
+    color: rgb(255 255 255 / 0.72);
+    line-height: 1.65;
+}
+
+.auth-art__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.auth-art__chips li {
+    padding: 0.4rem 0.9rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    color: #fde68a;
+    background: rgb(251 191 36 / 0.1);
+    box-shadow: inset 0 0 0 1px rgb(251 191 36 / 0.3);
+}
+
+.auth-art__foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    color: rgb(255 255 255 / 0.55);
+}
+
+.auth-art__foot a {
+    color: #fcd34d;
+    text-decoration: none;
+}
+
+.auth-art__foot a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Formulario ---------- */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    background:
+        radial-gradient(28rem 20rem at 100% 0%, rgb(251 191 36 / 0.1), transparent 70%),
+        #fbf8f2;
+}
+
+.dark .auth-form {
+    background:
+        radial-gradient(28rem 20rem at 100% 0%, rgb(251 191 36 / 0.07), transparent 70%),
+        #0f0f12;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 27rem;
+}
+
+.auth-card__logo {
+    display: none;
+    height: 3.25rem;
+    width: auto;
+    margin: 0 auto 1.5rem;
+}
+
+.auth-form__note {
+    margin: 1.5rem 0 0;
+    font-size: 0.78rem;
+    color: #9ca3af;
+    text-align: center;
+}
+
+/* El contenedor de Filament no debe imponer su propio fondo/ancho */
+.auth-card .fi-simple-page {
+    width: 100%;
+}
+
+.auth-card .fi-simple-page-content {
+    padding: 2rem;
+    border-radius: 1.5rem;
+    background: #fff;
+    box-shadow: 0 30px 60px -30px rgb(120 53 15 / 0.35), 0 0 0 1px rgb(0 0 0 / 0.05);
+}
+
+.dark .auth-card .fi-simple-page-content {
+    background: #18181b;
+    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.8), 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+/* ---------- Móvil: el panel de marca pasa a ser una cabecera ---------- */
+@media (max-width: 900px) {
+    .auth-split {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+
+    .auth-art {
+        gap: 1rem;
+        padding: 1.5rem 1.25rem 2rem;
+    }
+
+    .auth-art__body {
+        max-width: none;
+    }
+
+    .auth-art__text,
+    .auth-art__chips,
+    .auth-flame {
+        display: none;
+    }
+
+    .auth-art__title {
+        font-size: 1.6rem;
+        margin-bottom: 0;
+    }
+
+    .auth-art__foot {
+        display: none;
+    }
+
+    .auth-form {
+        padding-top: 1.5rem;
+        margin-top: -1.25rem;
+        border-radius: 1.5rem 1.5rem 0 0;
+        position: relative;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-flame {
+        animation: none;
+    }
+}
