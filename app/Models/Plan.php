@@ -11,6 +11,7 @@ class Plan extends Model
         'description',
         'price',
         'icon',
+        'emblem',
         'features',
         'order',
         'is_active',

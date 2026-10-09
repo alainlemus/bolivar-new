@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\SiteInfoResource\Schemas;
 
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -29,6 +29,7 @@ class SiteInfoForm
                 Textarea::make('map_url')
                     ->label('Código embebido de Google Maps')
                     ->placeholder('Pega aquí el código iframe de Google Maps')
+                    ->helperText('En Google Maps: Compartir → Insertar un mapa → Copiar HTML. De este código se toman las coordenadas del mapa interactivo, el pin y el botón «Cómo llegar».')
                     ->columnSpanFull(),
                 TextInput::make('phone')
                     ->label('Teléfono')
@@ -77,10 +78,11 @@ class SiteInfoForm
                     ->columnSpanFull(),
                 TextInput::make('facebook')
                     ->label('Facebook')
-                    ->placeholder('URL de Facebook'),
+                    ->placeholder('https://facebook.com/tu-pagina')
+                    ->helperText('Se enlaza en el pie de página y en los datos estructurados para buscadores.'),
                 TextInput::make('instagram')
                     ->label('Instagram')
-                    ->placeholder('URL de Instagram'),
+                    ->placeholder('https://instagram.com/tu-cuenta'),
                 RichEditor::make('privacy_notice')
                     ->label('Aviso de Privacidad')
                     ->placeholder('Contenido del aviso de privacidad...')

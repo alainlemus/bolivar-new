@@ -20,12 +20,19 @@ class ArticleResource extends Resource
     protected static ?string $model = Article::class;
 
     protected static ?string $modelLabel = 'Artículo';
+
     protected static ?string $pluralModelLabel = 'Artículos';
+
     protected static ?string $navigationLabel = 'Artículos de Guía';
+
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
-    protected static ?int $navigationSort = 5;
+
+    protected static ?int $navigationSort = 6;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
+
     protected static ?string $recordTitleAttribute = 'title';
+
     protected static int $globalSearchResultsLimit = 10;
 
     public static function form(Schema $schema): Schema

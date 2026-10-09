@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\URL;
 use UnitEnum;
 
 class ObituaryResource extends Resource
@@ -20,13 +21,26 @@ class ObituaryResource extends Resource
     protected static ?string $model = Obituary::class;
 
     protected static ?string $modelLabel = 'Obituario';
+
     protected static ?string $pluralModelLabel = 'Obituarios';
+
     protected static ?string $navigationLabel = 'Obituarios';
+
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
+
     protected static ?int $navigationSort = 4;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUser;
+
     protected static ?string $recordTitleAttribute = 'deceased_name';
+
     protected static int $globalSearchResultsLimit = 10;
+
+    /** Enlace firmado (2 h) para ver el obituario tal como quedará, aunque no esté publicado. */
+    public static function previewUrl(Obituary $record): string
+    {
+        return URL::temporarySignedRoute('obituario-preview', now()->addHours(2), ['previewId' => $record->id]);
+    }
 
     public static function form(Schema $schema): Schema
     {

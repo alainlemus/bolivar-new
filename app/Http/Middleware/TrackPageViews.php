@@ -13,7 +13,7 @@ class TrackPageViews
     {
         $response = $next($request);
 
-        if ($response->isSuccessful() && !$request->is('admin/*') && !$request->is('_debugbar/*')) {
+        if ($response->isSuccessful() && ! $request->is('admin/*') && ! $request->is('_debugbar/*')) {
             $type = $this->getPageType($request);
             $slug = $this->getPageSlug($request);
             $label = $this->getPageLabel($request);
@@ -64,7 +64,7 @@ class TrackPageViews
             return 'privacy';
         }
 
-        if (str_starts_with($path, 'planos')) {
+        if (str_starts_with($path, 'planes')) {
             return 'plans';
         }
 
@@ -79,7 +79,7 @@ class TrackPageViews
             return $matches[1];
         }
 
-        if (preg_match('#obituario-detalle/([^/]+)#', $path, $matches)) {
+        if (preg_match('#obituario/([^/]+)#', $path, $matches)) {
             return $matches[1];
         }
 

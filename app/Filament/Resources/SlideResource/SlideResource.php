@@ -20,13 +20,26 @@ class SlideResource extends Resource
     protected static ?string $model = Slide::class;
 
     protected static ?string $modelLabel = 'Diapositiva';
+
     protected static ?string $pluralModelLabel = 'Diapositivas';
+
     protected static ?string $navigationLabel = 'Diapositivas';
+
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
+
     protected static ?int $navigationSort = 3;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
     protected static ?string $recordTitleAttribute = 'title';
+
     protected static int $globalSearchResultsLimit = 10;
+
+    /** El carrusel de diapositivas ya no se usa en el sitio: se oculta del menú. */
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -3,9 +3,9 @@
 namespace App\Filament\Widgets;
 
 use App\Models\QrCode;
-use Filament\Widgets\TableWidget as BaseWidget;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Widgets\TableWidget as BaseWidget;
 
 class ActiveQRCodesWidget extends BaseWidget
 {
@@ -13,7 +13,7 @@ class ActiveQRCodesWidget extends BaseWidget
 
     protected static ?string $heading = 'Códigos QR Activos para Testimonios';
 
-    protected int | string $columns = 4;
+    protected int|string $columns = 4;
 
     protected function getTableHeight(): ?string
     {
@@ -27,8 +27,7 @@ class ActiveQRCodesWidget extends BaseWidget
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
-                    ->searchable()
-                    ->editable(),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('url')->label('URL')->limit(50),
                 Tables\Columns\TextColumn::make('created_at')->label('Creado')->date('d/m/Y'),
                 Tables\Columns\IconColumn::make('is_active')->label('Activo')->boolean(),

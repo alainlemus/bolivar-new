@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\AdminNotifier;
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
@@ -19,4 +20,9 @@ class Contact extends Model
     protected $casts = [
         'read_at' => 'datetime',
     ];
+
+    protected static function booted(): void
+    {
+        static::created(fn (self $contact) => AdminNotifier::contact($contact));
+    }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\PlanResource\Schemas;
 
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
@@ -30,16 +30,30 @@ class PlanForm
                     ->numeric('El precio debe ser un número.')
                     ->placeholder('0.00')
                     ->minValue(0),
-                FileUpload::make('icon')
-                    ->label('Imagen')
-                    ->image()
-                    ->directory('plan-images')
-                    ->helperText('Imagen JPG o PNG para el plan'),
+                Select::make('emblem')
+                    ->label('Emblema')
+                    ->options([
+                        'vela' => 'Vela (calidez esencial)',
+                        'olivo' => 'Corona de olivo (paz y protección)',
+                        'loto' => 'Flor de loto (trascendencia)',
+                    ])
+                    ->placeholder('Automático según el nombre')
+                    ->helperText('Ilustración que identifica al plan en el sitio. Vacío = se elige solo ("Básico" → vela, "Completo" → olivo, "Premium" → loto).'),
                 Textarea::make('features')
                     ->label('Características')
-                    ->placeholder('["Característica 1", "Característica 2"]')
+                    ->rows(8)
                     ->columnSpanFull()
-                    ->helperText('Ingresa las características en formato JSON'),
+                    ->placeholder("Atención 24/7\nAsesoría personalizada\nTraslado local")
+                    ->helperText('Escribe una característica por línea. Se muestran como lista y en la tabla comparativa.')
+                    ->formatStateUsing(function ($state) {
+                        $list = is_string($state) ? json_decode($state, true) : $state;
+
+                        return is_array($list) ? implode("\n", $list) : (string) $state;
+                    })
+                    ->dehydrateStateUsing(fn ($state) => json_encode(
+                        array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $state)))),
+                        JSON_UNESCAPED_UNICODE
+                    )),
                 TextInput::make('order')
                     ->label('Orden')
                     ->required('El orden es obligatorio.')

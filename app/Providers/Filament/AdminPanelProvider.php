@@ -2,6 +2,14 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Login;
+use App\Filament\Widgets\ObituariesChartWidget;
+use App\Filament\Widgets\PageVisitsChartWidget;
+use App\Filament\Widgets\RecentObituariesWidget;
+use App\Filament\Widgets\RecentPageViewsWidget;
+use App\Filament\Widgets\RecentTestimonialsWidget;
+use App\Filament\Widgets\StatsOverviewWidget;
+use App\Models\SiteInfo;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -27,20 +35,24 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Login::class)
             ->passwordReset()
-            ->brandName(fn () => \App\Models\SiteInfo::getSiteInfo()->site_name ?? 'Funeraria García de Bolívar')
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
+            ->brandName(fn () => SiteInfo::getSiteInfo()->site_name ?? 'Funeraria García de Bolívar')
             ->brandLogo(fn () => once(function () {
-                $siteInfo = \App\Models\SiteInfo::getSiteInfo();
+                $siteInfo = SiteInfo::getSiteInfo();
+
                 return $siteInfo->site_logo
-                    ? asset('storage/' . $siteInfo->site_logo)
+                    ? asset('storage/'.$siteInfo->site_logo)
                     : asset('images/logo.png');
             }))
             ->brandLogoHeight('3rem')
             ->favicon(fn () => once(function () {
-                $siteInfo = \App\Models\SiteInfo::getSiteInfo();
+                $siteInfo = SiteInfo::getSiteInfo();
+
                 return $siteInfo->favicon
-                    ? asset('storage/' . $siteInfo->favicon)
+                    ? asset('storage/'.$siteInfo->favicon)
                     : asset('favicon.ico');
             }))
             ->colors([
@@ -57,12 +69,12 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
-                \App\Filament\Widgets\StatsOverviewWidget::class,
-                \App\Filament\Widgets\ObituariesChartWidget::class,
-                \App\Filament\Widgets\PageVisitsChartWidget::class,
-                \App\Filament\Widgets\RecentObituariesWidget::class,
-                \App\Filament\Widgets\RecentTestimonialsWidget::class,
-                \App\Filament\Widgets\RecentPageViewsWidget::class,
+                StatsOverviewWidget::class,
+                ObituariesChartWidget::class,
+                PageVisitsChartWidget::class,
+                RecentObituariesWidget::class,
+                RecentTestimonialsWidget::class,
+                RecentPageViewsWidget::class,
             ])
             ->plugins([
                 FilamentShieldPlugin::make()

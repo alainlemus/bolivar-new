@@ -20,12 +20,19 @@ class PlanResource extends Resource
     protected static ?string $model = Plan::class;
 
     protected static ?string $modelLabel = 'Plan';
+
     protected static ?string $pluralModelLabel = 'Planes';
+
     protected static ?string $navigationLabel = 'Planes';
+
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
-    protected static ?int $navigationSort = 6;
+
+    protected static ?int $navigationSort = 3;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCurrencyDollar;
+
     protected static ?string $recordTitleAttribute = 'name';
+
     protected static int $globalSearchResultsLimit = 10;
 
     public static function form(Schema $schema): Schema

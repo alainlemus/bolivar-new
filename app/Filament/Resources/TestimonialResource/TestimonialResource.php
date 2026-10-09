@@ -20,13 +20,38 @@ class TestimonialResource extends Resource
     protected static ?string $model = Testimonial::class;
 
     protected static ?string $modelLabel = 'Testimonio';
+
     protected static ?string $pluralModelLabel = 'Testimonios';
+
     protected static ?string $navigationLabel = 'Testimonios';
+
     protected static string|UnitEnum|null $navigationGroup = 'Secciones';
-    protected static ?int $navigationSort = 7;
+
+    protected static ?int $navigationSort = 5;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftEllipsis;
+
     protected static ?string $recordTitleAttribute = 'name';
+
     protected static int $globalSearchResultsLimit = 10;
+
+    /** Insignia con los testimonios que esperan aprobación (los envía el público con QR). */
+    public static function getNavigationBadge(): ?string
+    {
+        $pending = Testimonial::where('is_active', false)->count();
+
+        return $pending > 0 ? (string) $pending : null;
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'warning';
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Testimonios pendientes de aprobar';
+    }
 
     public static function form(Schema $schema): Schema
     {

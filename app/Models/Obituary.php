@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Obituary extends Model
@@ -26,6 +27,8 @@ class Obituary extends Model
         'cemetery',
         'burial_date',
         'image',
+        'gallery',
+        'candles',
         'is_active',
         'start_date',
         'end_date',
@@ -37,6 +40,8 @@ class Obituary extends Model
         'velatorio_start' => 'datetime',
         'velatorio_end' => 'datetime',
         'burial_date' => 'datetime',
+        'gallery' => 'array',
+        'candles' => 'integer',
         'is_active' => 'boolean',
         'start_date' => 'datetime',
         'end_date' => 'datetime',
@@ -44,6 +49,9 @@ class Obituary extends Model
 
     protected static function booted(): void
     {
+        static::saved(fn () => Cache::forget('sitemap.xml'));
+        static::deleted(fn () => Cache::forget('sitemap.xml'));
+
         static::creating(function ($obituary) {
             if (empty($obituary->slug)) {
                 $obituary->slug = Str::slug($obituary->deceased_name);
@@ -51,7 +59,7 @@ class Obituary extends Model
         });
 
         static::updating(function ($obituary) {
-            if ($obituary->isDirty('deceased_name') && !$obituary->isDirty('slug')) {
+            if ($obituary->isDirty('deceased_name') && ! $obituary->isDirty('slug')) {
                 $obituary->slug = Str::slug($obituary->deceased_name);
             }
         });
@@ -67,10 +75,10 @@ class Obituary extends Model
         return $query->where(function ($q) {
             $now = now();
             $q->where('is_active', true)
-              ->whereNotNull('start_date')
-              ->whereNotNull('end_date')
-              ->where('start_date', '<=', $now)
-              ->where('end_date', '>=', $now);
+                ->whereNotNull('start_date')
+                ->whereNotNull('end_date')
+                ->where('start_date', '<=', $now)
+                ->where('end_date', '>=', $now);
         });
     }
 }

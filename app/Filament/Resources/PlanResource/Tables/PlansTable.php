@@ -18,8 +18,10 @@ class PlansTable
                 TextColumn::make('name')
                     ->label('Nombre')
                     ->searchable(),
-                TextColumn::make('icon')
-                    ->label('Icono'),
+                TextColumn::make('emblem')
+                    ->label('Emblema')
+                    ->badge()
+                    ->placeholder('Automático'),
                 TextColumn::make('price')
                     ->label('Precio')
                     ->money('MXN')

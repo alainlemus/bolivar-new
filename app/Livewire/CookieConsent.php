@@ -11,12 +11,12 @@ class CookieConsent extends Component
 
     public function mount()
     {
-        $this->show = !request()->cookie('cookie_consent');
+        $this->show = ! request()->cookie('cookie_consent');
     }
 
     public function accept()
     {
-        Cookie::queue('cookie_consent', 'true', 60 * 24);
+        Cookie::queue('cookie_consent', 'true', 60 * 24 * 365);
         $this->show = false;
     }
 

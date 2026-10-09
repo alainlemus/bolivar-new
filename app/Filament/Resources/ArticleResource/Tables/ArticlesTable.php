@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ArticleResource\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -16,6 +17,10 @@ class ArticlesTable
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                    ->label('Portada')
+                    ->width(90)
+                    ->height(48),
                 TextColumn::make('title')
                     ->label('Título')
                     ->searchable(),
@@ -38,6 +43,10 @@ class ArticlesTable
                 //
             ])
             ->recordActions([
+                Action::make('ver')
+                    ->label('Ver en el sitio')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->url(fn ($record) => route('guia-detalle', $record->slug), shouldOpenInNewTab: true),
                 EditAction::make(),
             ])
             ->toolbarActions([

@@ -2,25 +2,37 @@
 
 namespace App\Livewire\Pages;
 
-use App\Models\SiteInfo;
-use App\Models\Service;
-use App\Models\Plan;
+use App\Livewire\Concerns\WithSeo;
+use App\Models\Article;
+use App\Models\Faq;
 use App\Models\Obituary;
-use App\Models\Testimonial;
+use App\Models\Plan;
+use App\Models\Service;
+use App\Models\SiteInfo;
 use App\Models\Slide;
+use App\Models\Testimonial;
 use Livewire\Component;
 
 class Home extends Component
 {
+    use WithSeo;
+
     public $currentIndex = 0;
+
     public $selectedObituary = null;
+
     public $showObituaryModal = false;
+
     public $selectedImageIndex = null;
+
     public $showGalleryModal = false;
+
     public $galleryImages = [];
 
     protected $seoTitle = 'Funeraria García de Bolívar | Servicios Funerarios de Calidad';
+
     protected $seoDescription = 'Funeraria García de Bolívar - Más de 50 años de experiencia ofreciendo servicios funerarios integrales, planes de protección familiar y atención personalizada las 24 horas.';
+
     protected $seoKeywords = 'funeraria, servicios funerarios, planes funerarios, inhumación, cremación, ataúdes, atención 24/7, protección familiar, México';
 
     public function nextSlide()
@@ -100,6 +112,8 @@ class Home extends Component
             ->limit(3)
             ->get();
         $slides = Slide::where('is_active', true)->orderBy('order')->get();
+        $articles = Article::where('is_active', true)->orderBy('published_at', 'desc')->limit(3)->get();
+        $faqs = Faq::forPage('home');
 
         $galleryImages = $siteInfo->gallery_images ?? [];
         $this->galleryImages = $galleryImages;
@@ -111,6 +125,8 @@ class Home extends Component
             'obituaries' => $obituaries,
             'testimonials' => $testimonials,
             'slides' => $slides,
+            'articles' => $articles,
+            'faqs' => $faqs,
             'galleryImages' => $galleryImages,
             'aboutText' => $siteInfo->about_text,
             'missionText' => $siteInfo->mission_text,
@@ -119,6 +135,18 @@ class Home extends Component
             'address' => $siteInfo->address,
             'whatsapp' => $siteInfo->whatsapp,
             'nosotrosBanner' => $siteInfo->nosotros_banner,
-        ]);
+        ])
+            ->layout('components.layouts.app', $this->seo(array_merge(
+                request()->routeIs('nosotros') ? ['canonical' => '/'] : [],
+                ['jsonLd' => ! $faqs ? [] : [[
+                    '@context' => 'https://schema.org',
+                    '@type' => 'FAQPage',
+                    'mainEntity' => array_map(fn ($f) => [
+                        '@type' => 'Question',
+                        'name' => $f['q'],
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f['a']],
+                    ], $faqs),
+                ]]],
+            )));
     }
 }

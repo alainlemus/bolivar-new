@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\AdminNotifier;
 use Illuminate\Database\Eloquent\Model;
 
 class Testimonial extends Model
@@ -17,4 +18,9 @@ class Testimonial extends Model
         'rating' => 'integer',
         'is_active' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::created(fn (self $testimonial) => AdminNotifier::testimonial($testimonial));
+    }
 }
