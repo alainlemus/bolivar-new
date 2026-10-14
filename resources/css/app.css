@@ -65,6 +65,7 @@ html {
 }
 
 body {
+    overflow-x: hidden;
     overflow-x: clip;
     background-color: var(--color-paper);
     -webkit-tap-highlight-color: transparent;
@@ -176,6 +177,12 @@ body::after {
 .js [data-reveal='right'] { transform: translate3d(36px, 0, 0); }
 .js [data-reveal='zoom'] { transform: scale(0.94); }
 .js [data-reveal='fade'] { transform: none; }
+
+/* En móvil el desplazamiento lateral inicial ensancha la página (scroll horizontal en navegadores sin overflow-x: clip) */
+@media (max-width: 767px) {
+    .js [data-reveal='left'],
+    .js [data-reveal='right'] { transform: translate3d(0, 28px, 0); }
+}
 
 .js [data-reveal].is-visible {
     opacity: 1;

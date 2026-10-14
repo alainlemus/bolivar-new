@@ -16,9 +16,10 @@
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 mb-2">Aviso de Privacidad y Cookies</h3>
                         <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                            Utilizamos cookies y procesamos datos personales para mejorar tu experiencia en nuestro
-                            sitio. Al continuar navegando, aceptas nuestro <a href="{{ route('aviso-privacidad') }}"
-                                class="text-amber-600 hover:underline font-medium">Aviso de Privacidad</a>.
+                            Este sitio solo usa cookies necesarias para funcionar y no utiliza cookies publicitarias. Al continuar
+                            navegando, aceptas nuestro <a href="{{ route('aviso-privacidad') }}"
+                                class="text-amber-600 hover:underline font-medium">Aviso de Privacidad</a> y nuestros
+                            <a href="{{ route('terminos') }}" class="text-amber-600 hover:underline font-medium">Términos y Condiciones</a>.
                         </p>
                         <div class="flex flex-wrap gap-3">
                             <button

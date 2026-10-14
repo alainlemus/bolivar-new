@@ -4,16 +4,17 @@
     <section class="relative bg-hero text-white pt-32 pb-14 md:pt-44 md:pb-20 overflow-hidden">
         <div class="container mx-auto px-4 relative z-10 text-center">
             <h1 class="text-3xl md:text-5xl font-bold mb-4 font-serif hero-rise" style="--i:0">Aviso de Privacidad</h1>
-            <p class="hero-rise text-lg md:text-xl text-gray-200 max-w-2xl mx-auto" style="--i:1">Protección de datos personales</p>
+            <p class="hero-rise text-lg md:text-xl text-gray-200 max-w-2xl mx-auto" style="--i:1">Protección de datos personales · LFPDPPP</p>
         </div>
     </section>
 
     <main class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
-                @if ($siteInfo->privacy_notice)
-                    <div class="article-body space-y-6 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-gray-800 [&_h3]:font-bold [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_a]:text-amber-700 [&_a]:underline">
-                        {!! $siteInfo->privacy_notice !!}
+                @php $content = $siteInfo->privacy_notice ?: \App\Support\LegalDocuments::privacyNotice($siteInfo); @endphp
+                @if ($content)
+                    <div class="article-body space-y-6 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-gray-800 [&_h2]:mt-8 [&_h3]:font-bold [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_a]:text-amber-700 [&_a]:underline">
+                        {!! $content !!}
                     </div>
                 @else
                     <div class="bg-white rounded-2xl shadow-lg p-16 text-center border border-gray-100">

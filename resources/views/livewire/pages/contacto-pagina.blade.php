@@ -215,7 +215,7 @@
                                 <span wire:loading.remove wire:target="submit">Enviar mensaje</span>
                                 <span wire:loading wire:target="submit">Enviando…</span>
                             </button>
-                            <p class="text-xs text-gray-500 text-center">Al enviar aceptas nuestro <a href="{{ route('aviso-privacidad') }}" class="underline hover:text-amber-700">Aviso de Privacidad</a>.</p>
+                            <x-privacy-simple purpose="responder tu consulta y darte seguimiento. Si lo autorizas, también para enviarte información de nuestros servicios" />
                         </form>
                     </div>
                 </div>

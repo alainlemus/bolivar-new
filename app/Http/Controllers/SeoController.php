@@ -46,6 +46,7 @@ class SeoController extends Controller
                 ['loc' => $this->canonical('guia'), 'priority' => '0.7', 'changefreq' => 'weekly'],
                 ['loc' => $this->canonical('contacto'), 'priority' => '0.8', 'changefreq' => 'yearly'],
                 ['loc' => $this->canonical('aviso-privacidad'), 'priority' => '0.3', 'changefreq' => 'yearly'],
+                ['loc' => $this->canonical('terminos'), 'priority' => '0.3', 'changefreq' => 'yearly'],
             ];
 
             Article::where('is_active', true)->get(['slug', 'updated_at'])->each(function ($article) use (&$urls) {

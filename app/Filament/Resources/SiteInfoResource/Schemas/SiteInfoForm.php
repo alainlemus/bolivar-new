@@ -87,7 +87,13 @@ class SiteInfoForm
                     ->label('Aviso de Privacidad')
                     ->placeholder('Contenido del aviso de privacidad...')
                     ->columnSpanFull()
-                    ->toolbarButtons(['bold', 'italic', 'orderedList', 'bulletList', 'link', 'undo', 'redo']),
+                    ->helperText('Si se deja vacío se muestra el aviso predeterminado conforme a la LFPDPPP.')
+                    ->toolbarButtons(['h2', 'h3', 'bold', 'italic', 'orderedList', 'bulletList', 'link', 'undo', 'redo']),
+                RichEditor::make('terms_conditions')
+                    ->label('Términos y Condiciones')
+                    ->helperText('Si se deja vacío se muestran los términos predeterminados.')
+                    ->columnSpanFull()
+                    ->toolbarButtons(['h2', 'h3', 'bold', 'italic', 'orderedList', 'bulletList', 'link', 'undo', 'redo']),
                 FileUpload::make('site_logo')
                     ->label('Logo del Sitio')
                     ->disk('public')

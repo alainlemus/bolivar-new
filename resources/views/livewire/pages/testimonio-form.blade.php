@@ -78,6 +78,7 @@
             <button type="submit" class="w-full px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium text-lg">
                 Enviar testimonio
             </button>
+            <x-privacy-simple purpose="publicar tu testimonio en este sitio (con tu nombre y comentario)" />
         </form>
         @endif
     </div>

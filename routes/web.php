@@ -10,6 +10,7 @@ use App\Livewire\Pages\Obituario;
 use App\Livewire\Pages\ObituarioDetalle;
 use App\Livewire\Pages\Planes;
 use App\Livewire\Pages\Servicios;
+use App\Livewire\Pages\TerminosCondiciones;
 use App\Livewire\Pages\TestimonioForm;
 use App\Livewire\Pages\Testimonios;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,5 @@ Route::middleware(['track.page.views'])->group(function () {
     Route::get('/guia', Articulos::class)->name('guia');
     Route::get('/guia/{slug}', ArticuloDetalle::class)->name('guia-detalle');
     Route::get('/aviso-de-privacidad', AvisoPrivacidad::class)->name('aviso-privacidad');
+    Route::get('/terminos-y-condiciones', TerminosCondiciones::class)->name('terminos');
 });

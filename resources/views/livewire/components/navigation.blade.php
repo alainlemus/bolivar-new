@@ -36,7 +36,7 @@
     x-on:resize.window="if (window.innerWidth >= 1280) close()"
 >
     <header
-        class="vt-header fixed top-0 inset-x-0 z-50 transition-[transform,background-color,box-shadow,padding] duration-500 ease-[var(--ease-soft)]"
+        class="vt-header fixed top-0 inset-x-0 z-50 transition-[transform,background-color,box-shadow,padding] duration-500 ease-[var(--ease-soft)] translate-y-0 bg-gradient-to-b from-gray-900/70 to-transparent py-3"
         :class="[
             hidden ? '-translate-y-full' : 'translate-y-0',
             atTop && !open ? 'bg-gradient-to-b from-gray-900/70 to-transparent py-3' : 'bg-white/95 backdrop-blur shadow-md py-2',
@@ -46,7 +46,7 @@
             <div class="flex items-center justify-between gap-4">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0" aria-label="{{ $logoAlt }} - Inicio">
                     <img src="{{ $logo }}" alt="{{ $logoAlt }}" width="160" height="80"
-                        class="w-auto transition-[height] duration-500"
+                        class="w-auto transition-[height] duration-500 h-14 sm:h-16 xl:h-20"
                         :class="atTop && !open ? 'h-14 sm:h-16 xl:h-20' : 'h-11 sm:h-12'">
                 </a>
 
@@ -89,12 +89,13 @@
                     :aria-label="open ? 'Cerrar menú' : 'Abrir menú'">
                     <span class="sr-only">Menú</span>
                     <span class="relative block w-6 h-4" aria-hidden="true">
-                        <span class="absolute left-0 top-0 h-0.5 w-6 bg-current rounded transition-[transform,opacity,top] duration-300"
-                            :class="open ? 'top-[7px] rotate-45' : ''"></span>
-                        <span class="absolute left-0 top-[7px] h-0.5 w-6 bg-current rounded transition-[transform,opacity,top] duration-300"
+                        {{-- Posiciones fijas + translate/rotate: la X queda centrada sin depender del orden de utilidades `top-*` --}}
+                        <span class="absolute left-0 top-0 h-0.5 w-6 bg-current rounded transition-all duration-300"
+                            :class="open ? 'translate-y-[7px] rotate-45' : ''"></span>
+                        <span class="absolute left-0 top-[7px] h-0.5 w-6 bg-current rounded transition-all duration-300"
                             :class="open ? 'opacity-0 scale-x-0' : ''"></span>
-                        <span class="absolute left-0 top-[14px] h-0.5 w-6 bg-current rounded transition-[transform,opacity,top] duration-300"
-                            :class="open ? 'top-[7px] -rotate-45' : ''"></span>
+                        <span class="absolute left-0 top-[14px] h-0.5 w-6 bg-current rounded transition-all duration-300"
+                            :class="open ? '-translate-y-[7px] -rotate-45' : ''"></span>
                     </span>
                 </button>
             </div>

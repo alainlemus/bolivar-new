@@ -90,6 +90,8 @@
                 <p class="text-gray-400 text-sm">&copy; {{ date('Y') }} Funeraria García de Bolívar. Todos los derechos reservados.</p>
                 <p class="text-gray-400 text-sm mt-2">
                     <a href="{{ route('aviso-privacidad') }}" class="hover:text-amber-400 transition">Aviso de Privacidad</a>
+                    <span class="mx-2 text-gray-600" aria-hidden="true">·</span>
+                    <a href="{{ route('terminos') }}" class="hover:text-amber-400 transition">Términos y Condiciones</a>
                 </p>
             </div>
         </div>

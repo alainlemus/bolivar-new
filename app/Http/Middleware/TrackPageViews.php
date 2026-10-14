@@ -60,7 +60,7 @@ class TrackPageViews
             return 'articles';
         }
 
-        if (str_starts_with($path, 'aviso-de-privacidad')) {
+        if (str_starts_with($path, 'aviso-de-privacidad') || str_starts_with($path, 'terminos-y-condiciones')) {
             return 'privacy';
         }
 
