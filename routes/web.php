@@ -20,9 +20,11 @@ Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 // Vista previa de un obituario (aunque aún no esté publicado): enlace firmado que genera el panel
 Route::get('/obituario-previa/{previewId}', ObituarioDetalle::class)->middleware('signed')->name('obituario-preview');
 
+// /nosotros duplicaba el contenido del inicio: se consolida en el ancla
+Route::permanentRedirect('/nosotros', '/#nosotros')->name('nosotros');
+
 Route::middleware(['track.page.views'])->group(function () {
     Route::get('/', Home::class)->name('home');
-    Route::get('/nosotros', Home::class)->name('nosotros');
     Route::get('/servicios', Servicios::class)->name('servicios');
     Route::get('/planes', Planes::class)->name('planes');
     Route::get('/obituario', Obituario::class)->name('obituario');

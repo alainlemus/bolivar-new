@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
     <title>404 - Página no encontrada | García de Bolívar</title>
-    @if($siteInfo && $siteInfo->favicon)
-        <link rel="icon" href="{{ asset('storage/' . $siteInfo->favicon) }}" type="image/x-icon" />
-    @else
-        <link rel="icon" href="{{ asset("favicon.ico") }}" />
-    @endif
+    <x-favicons />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased text-white" style="background: linear-gradient(180deg, #1f2937 0%, #111827 100%);">

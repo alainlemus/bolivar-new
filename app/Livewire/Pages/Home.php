@@ -31,7 +31,7 @@ class Home extends Component
 
     protected $seoTitle = 'Funeraria García de Bolívar | Servicios Funerarios de Calidad';
 
-    protected $seoDescription = 'Funeraria García de Bolívar - Más de 50 años de experiencia ofreciendo servicios funerarios integrales, planes de protección familiar y atención personalizada las 24 horas.';
+    protected $seoDescription = 'Más de 50 años de experiencia en servicios funerarios integrales, planes de protección familiar y atención personalizada las 24 horas en CDMX.';
 
     protected $seoKeywords = 'funeraria, servicios funerarios, planes funerarios, inhumación, cremación, ataúdes, atención 24/7, protección familiar, México';
 
@@ -137,7 +137,6 @@ class Home extends Component
             'nosotrosBanner' => $siteInfo->nosotros_banner,
         ])
             ->layout('components.layouts.app', $this->seo(array_merge(
-                request()->routeIs('nosotros') ? ['canonical' => '/'] : [],
                 ['jsonLd' => ! $faqs ? [] : [[
                     '@context' => 'https://schema.org',
                     '@type' => 'FAQPage',

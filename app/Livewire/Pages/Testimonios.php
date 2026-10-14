@@ -19,7 +19,7 @@ class Testimonios extends Component
 
     protected $seoTitle = 'Testimonios | Familias que confiaron en García de Bolívar';
 
-    protected $seoDescription = 'Opiniones y experiencias de familias que han sido acompañadas por Funeraria García de Bolívar en momentos difíciles.';
+    protected $seoDescription = 'Lee las opiniones y experiencias de familias que fueron acompañadas por Funeraria García de Bolívar en momentos difíciles. Atención humana y de confianza.';
 
     protected $seoKeywords = 'testimonios funeraria, opiniones, reseñas servicios funerarios';
 

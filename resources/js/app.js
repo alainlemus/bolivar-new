@@ -190,6 +190,16 @@ function init() {
     }).observe(document.body, { childList: true, subtree: true });
 }
 
+// Livewire sincroniza atributos con el HTML del servidor, que no trae `is-visible`:
+// sin esto, tras cualquier acción (p. ej. encender una vela) el contenido ya revelado vuelve a opacity 0.
+document.addEventListener('livewire:init', () => {
+    window.Livewire.hook('morph.updating', ({ el, toEl }) => {
+        if (el.nodeType !== 1 || !el.hasAttribute('data-reveal')) return;
+        if (el.classList.contains('is-visible')) toEl.classList.add('is-visible');
+        if (el.hasAttribute('data-reveal-bound')) toEl.setAttribute('data-reveal-bound', '');
+    });
+});
+
 if (!cssScroll) {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });

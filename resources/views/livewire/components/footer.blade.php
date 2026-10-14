@@ -48,7 +48,7 @@
                 <div>
                     <h2 class="text-lg font-bold mb-4 text-white">Navegación</h2>
                     <ul class="space-y-2">
-                        <li><a href="{{ route('nosotros') }}" class="text-gray-400 hover:text-amber-400 transition">Nosotros</a></li>
+                        <li><a href="{{ route('home') }}#nosotros" class="text-gray-400 hover:text-amber-400 transition">Nosotros</a></li>
                         <li><a href="{{ route('servicios') }}" class="text-gray-400 hover:text-amber-400 transition">Servicios</a></li>
                         <li><a href="{{ route('planes') }}" class="text-gray-400 hover:text-amber-400 transition">Planes</a></li>
                         <li><a href="{{ route('obituario') }}" class="text-gray-400 hover:text-amber-400 transition">Obituario</a></li>

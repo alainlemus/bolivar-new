@@ -42,7 +42,7 @@ class Obituario extends Component
 
     protected $seoTitle = 'Obituario | Honora a tu ser querido';
 
-    protected $seoDescription = 'Consulta los obituarios y avisos fúnebres de Funeraria García de Bolívar. Información sobre homenaje, capilla, fecha y hora de sepelio.';
+    protected $seoDescription = 'Consulta los obituarios y avisos fúnebres de Funeraria García de Bolívar. Consulta información de homenaje, capilla, fecha y hora de sepelio, y acompaña a las familias.';
 
     protected $seoKeywords = 'obituario, avisos funerarios, homenaje, sepelio, capilla, funeral';
 

@@ -20,7 +20,7 @@ class Articulos extends Component
 
     protected $seoTitle = 'Guía de duelo y orientación funeraria | García de Bolívar';
 
-    protected $seoDescription = 'Artículos y recursos para afrontar el duelo, organizar un servicio funerario y resolver las dudas más comunes.';
+    protected $seoDescription = 'Guía con artículos y recursos para afrontar el duelo, organizar un servicio funerario, conocer trámites y resolver las dudas más comunes de tu familia.';
 
     protected $seoKeywords = 'guía de duelo, trámites funerarios, qué hacer cuando fallece un familiar';
 

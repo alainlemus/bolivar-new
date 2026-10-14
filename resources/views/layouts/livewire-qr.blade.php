@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @php $siteInfo = \App\Models\SiteInfo::getSiteInfo(); @endphp
-    <link rel="icon" href="{{ $siteInfo->favicon ? asset('storage/' . $siteInfo->favicon) : asset('favicon.ico') }}">
+    <x-favicons :site-info="$siteInfo" />
     <title>Deja tu Testimonio - {{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}</title>
     <meta name="robots" content="noindex, nofollow">
     @vite(['resources/css/app.css', 'resources/js/app.js'])

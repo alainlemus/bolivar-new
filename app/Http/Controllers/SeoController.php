@@ -4,11 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Obituary;
+use App\Models\SiteInfo;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
 class SeoController extends Controller
 {
+    /** URL absoluta sobre el dominio canónico (SiteInfo.canonical_url), igual que las etiquetas canonical. */
+    private function canonical(string $routeName, array|string $params = []): string
+    {
+        $base = rtrim(SiteInfo::getSiteInfo()->canonical_url ?: url('/'), '/');
+        $path = route($routeName, $params, false);
+
+        return $path === '/' ? $base : $base.$path;
+    }
+
     public function robots(): Response
     {
         $lines = [
@@ -16,8 +26,9 @@ class SeoController extends Controller
             'Disallow: /admin',
             'Disallow: /livewire',
             'Disallow: /testimonios/formulario',
+            'Disallow: /obituario-previa/',
             '',
-            'Sitemap: '.route('sitemap'),
+            'Sitemap: '.$this->canonical('sitemap'),
         ];
 
         return response(implode("\n", $lines)."\n", 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
@@ -27,19 +38,19 @@ class SeoController extends Controller
     {
         $xml = Cache::remember('sitemap.xml', now()->addHour(), function () {
             $urls = [
-                ['loc' => route('home'), 'priority' => '1.0', 'changefreq' => 'weekly'],
-                ['loc' => route('servicios'), 'priority' => '0.9', 'changefreq' => 'monthly'],
-                ['loc' => route('planes'), 'priority' => '0.9', 'changefreq' => 'monthly'],
-                ['loc' => route('obituario'), 'priority' => '0.8', 'changefreq' => 'daily'],
-                ['loc' => route('testimonios'), 'priority' => '0.6', 'changefreq' => 'weekly'],
-                ['loc' => route('guia'), 'priority' => '0.7', 'changefreq' => 'weekly'],
-                ['loc' => route('contacto'), 'priority' => '0.8', 'changefreq' => 'yearly'],
-                ['loc' => route('aviso-privacidad'), 'priority' => '0.3', 'changefreq' => 'yearly'],
+                ['loc' => $this->canonical('home'), 'priority' => '1.0', 'changefreq' => 'weekly'],
+                ['loc' => $this->canonical('servicios'), 'priority' => '0.9', 'changefreq' => 'monthly'],
+                ['loc' => $this->canonical('planes'), 'priority' => '0.9', 'changefreq' => 'monthly'],
+                ['loc' => $this->canonical('obituario'), 'priority' => '0.8', 'changefreq' => 'daily'],
+                ['loc' => $this->canonical('testimonios'), 'priority' => '0.6', 'changefreq' => 'weekly'],
+                ['loc' => $this->canonical('guia'), 'priority' => '0.7', 'changefreq' => 'weekly'],
+                ['loc' => $this->canonical('contacto'), 'priority' => '0.8', 'changefreq' => 'yearly'],
+                ['loc' => $this->canonical('aviso-privacidad'), 'priority' => '0.3', 'changefreq' => 'yearly'],
             ];
 
             Article::where('is_active', true)->get(['slug', 'updated_at'])->each(function ($article) use (&$urls) {
                 $urls[] = [
-                    'loc' => route('guia-detalle', $article->slug),
+                    'loc' => $this->canonical('guia-detalle', $article->slug),
                     'lastmod' => $article->updated_at?->toAtomString(),
                     'priority' => '0.6',
                     'changefreq' => 'monthly',
@@ -48,7 +59,7 @@ class SeoController extends Controller
 
             Obituary::active()->get(['slug', 'updated_at'])->each(function ($obituary) use (&$urls) {
                 $urls[] = [
-                    'loc' => route('obituario-detalle', $obituary->slug),
+                    'loc' => $this->canonical('obituario-detalle', $obituary->slug),
                     'lastmod' => $obituary->updated_at?->toAtomString(),
                     'priority' => '0.5',
                     'changefreq' => 'weekly',

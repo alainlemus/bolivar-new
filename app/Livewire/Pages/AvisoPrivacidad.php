@@ -12,7 +12,7 @@ class AvisoPrivacidad extends Component
 
     protected $seoTitle = 'Aviso de Privacidad | Funeraria García de Bolívar';
 
-    protected $seoDescription = 'Conoce cómo Funeraria García de Bolívar protege y trata tus datos personales.';
+    protected $seoDescription = 'Conoce cómo Funeraria García de Bolívar protege, trata y resguarda tus datos personales, y cómo ejercer tus derechos ARCO.';
 
     public function render()
     {

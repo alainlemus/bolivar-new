@@ -13,7 +13,7 @@ class Planes extends Component
 
     protected $seoTitle = 'Planes Funerarios | Protege a tu Familia con García de Bolívar';
 
-    protected $seoDescription = 'Elige el plan funerario que mejor se adapte a tus necesidades. Planes desde $1,500 MXN con cobertura familiar, servicios inclusives y pago flexible.';
+    protected $seoDescription = 'Elige el plan funerario que mejor se adapte a tus necesidades. Planes desde $1,500 MXN con cobertura familiar, servicios incluidos y pago flexible. Conoce y compara nuestros planes.';
 
     protected $seoKeywords = 'planes funerarios, seguro funerario, protección familiar, plan económico, plan premium, cremación, inhumación, México';
 

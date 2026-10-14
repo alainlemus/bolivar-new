@@ -9,55 +9,74 @@
     $canonicalBase = rtrim($siteInfo->canonical_url ?: url('/'), '/');
     $pageCanonical = $canonicalBase . '/' . ltrim($canonical ?? request()->path(), '/');
     $pageCanonical = $pageCanonical === $canonicalBase . '/' ? $pageCanonical : rtrim($pageCanonical, '/');
+    // Toda URL absoluta (schema, og:image) sale del dominio canónico, no de APP_URL
+    $abs = fn (string $path) => str_starts_with($path, 'http') ? $path : $canonicalBase . '/' . ltrim($path, '/');
     $pageRobots = ($noindex ?? false) ? 'noindex, nofollow' : ($siteInfo->robots ?: 'index, follow');
     $pageType = $ogType ?? 'website';
 
     $imagePath = $image ?? $siteInfo->og_image ?? $siteInfo->site_logo;
     $pageImage = $imagePath
-        ? (str_starts_with($imagePath, 'http') ? $imagePath : asset('storage/' . $imagePath))
-        : asset('images/logo.png');
-
-    $favicon = $siteInfo->favicon ? asset('storage/' . $siteInfo->favicon) : asset('favicon.ico');
+        ? $abs(str_starts_with($imagePath, 'http') ? $imagePath : 'storage/' . $imagePath)
+        : $abs('images/logo.png');
 
     $sameAs = array_values(array_filter([$siteInfo->facebook ?? null, $siteInfo->instagram ?? null]));
+
+    $coords = $siteInfo->map_coords;
 
     $organization = array_filter([
         '@context' => 'https://schema.org',
         '@type' => 'FuneralHome',
-        '@id' => url('/') . '#organization',
+        '@id' => $canonicalBase . '/#organization',
         'name' => $siteName,
         'description' => $siteInfo->meta_description,
-        'url' => url('/'),
-        'image' => $siteInfo->site_logo ? asset('storage/' . $siteInfo->site_logo) : asset('images/logo.png'),
-        'logo' => $siteInfo->site_logo ? asset('storage/' . $siteInfo->site_logo) : asset('images/logo.png'),
+        'url' => $canonicalBase . '/',
+        'image' => $abs($siteInfo->site_logo ? 'storage/' . $siteInfo->site_logo : 'images/logo.png'),
+        'logo' => $abs($siteInfo->site_logo ? 'storage/' . $siteInfo->site_logo : 'images/logo.png'),
         'telephone' => $siteInfo->phone,
         'email' => $siteInfo->email,
         'address' => $siteInfo->address ? [
             '@type' => 'PostalAddress',
             'streetAddress' => $siteInfo->address,
+            'addressLocality' => 'Ciudad de México',
+            'addressRegion' => 'CDMX',
             'addressCountry' => 'MX',
         ] : null,
+        'geo' => $coords ? ['@type' => 'GeoCoordinates', 'latitude' => $coords[0], 'longitude' => $coords[1]] : null,
+        'hasMap' => $siteInfo->map_url && preg_match('/src="([^"]+)"/', $siteInfo->map_url, $mm) ? $mm[1] : null,
         'openingHoursSpecification' => [
             '@type' => 'OpeningHoursSpecification',
             'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             'opens' => '00:00',
             'closes' => '23:59',
         ],
-        'areaServed' => 'MX',
+        'areaServed' => ['@type' => 'AdministrativeArea', 'name' => 'Ciudad de México'],
         'sameAs' => $sameAs ?: null,
     ]);
 
     $website = [
         '@context' => 'https://schema.org',
         '@type' => 'WebSite',
-        '@id' => url('/') . '#website',
-        'url' => url('/'),
+        '@id' => $canonicalBase . '/#website',
+        'url' => $canonicalBase . '/',
         'name' => $siteName,
         'inLanguage' => 'es-MX',
-        'publisher' => ['@id' => url('/') . '#organization'],
+        'publisher' => ['@id' => $canonicalBase . '/#organization'],
     ];
 
-    $schemas = array_merge([$organization, $website], $jsonLd ?? []);
+    // Migas de pan automáticas para las páginas de primer nivel (las de detalle aportan las suyas)
+    $crumbNames = ['servicios' => 'Servicios', 'planes' => 'Planes', 'obituario' => 'Obituario', 'testimonios' => 'Testimonios', 'guia' => 'Guía', 'contacto' => 'Contacto', 'aviso-de-privacidad' => 'Aviso de privacidad'];
+    $firstSegment = request()->segment(1);
+    $hasCrumbs = collect($jsonLd ?? [])->contains(fn ($s) => ($s['@type'] ?? null) === 'BreadcrumbList');
+    $breadcrumb = ! $hasCrumbs && request()->segment(2) === null && isset($crumbNames[$firstSegment]) ? [[
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Inicio', 'item' => $canonicalBase . '/'],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => $crumbNames[$firstSegment], 'item' => $canonicalBase . '/' . $firstSegment],
+        ],
+    ]] : [];
+
+    $schemas = array_merge([$organization, $website], $breadcrumb, $jsonLd ?? []);
 @endphp
 <!DOCTYPE html>
 <html lang="es-MX" class="scroll-smooth">
@@ -91,8 +110,7 @@
     <meta name="twitter:description" content="{{ $pageDescription }}">
     <meta name="twitter:image" content="{{ $pageImage }}">
 
-    <link rel="icon" href="{{ $favicon }}">
-    <link rel="apple-touch-icon" href="{{ $favicon }}">
+    <x-favicons :site-info="$siteInfo" />
 
 
     @foreach ($schemas as $schema)
