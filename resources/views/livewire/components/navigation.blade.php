@@ -23,8 +23,7 @@
         onScroll() {
             const y = window.scrollY;
             this.atTop = y <= 10;
-            // Se oculta al bajar y reaparece al subir (nunca con el menú abierto)
-            this.hidden = !this.open && y > 400 && y > this.lastY + 4 ? true : (y < this.lastY - 4 ? false : this.hidden);
+            // El navbar permanece siempre visible (antes se ocultaba al bajar)
             this.lastY = y;
         },
         toggle() { this.open = !this.open; document.documentElement.classList.toggle('overflow-hidden', this.open) },
@@ -37,17 +36,19 @@
 >
     <header
         class="vt-header fixed top-0 inset-x-0 z-50 transition-[transform,background-color,box-shadow,padding] duration-500 ease-[var(--ease-soft)] translate-y-0 bg-gradient-to-b from-gray-900/70 to-transparent py-3"
-        :class="[
-            hidden ? '-translate-y-full' : 'translate-y-0',
-            atTop && !open ? 'bg-gradient-to-b from-gray-900/70 to-transparent py-3' : 'bg-white/95 backdrop-blur shadow-md py-2',
-        ]"
+        :class="{
+            '-translate-y-full': hidden,
+            'translate-y-0': !hidden,
+            'bg-gradient-to-b from-gray-900/70 to-transparent py-3': atTop && !open,
+            'bg-white/95 backdrop-blur shadow-md py-2': !(atTop && !open),
+        }"
     >
         <nav class="container mx-auto px-4" aria-label="Principal">
             <div class="flex items-center justify-between gap-4">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0" aria-label="{{ $logoAlt }} - Inicio">
-                    <img src="{{ $logo }}" alt="{{ $logoAlt }}" width="160" height="80"
+                    <img src="{{ asset('images/escudo.webp') }}" alt="{{ $logoAlt }}" width="449" height="297"
                         class="w-auto transition-[height] duration-500 h-14 sm:h-16 xl:h-20"
-                        :class="atTop && !open ? 'h-14 sm:h-16 xl:h-20' : 'h-11 sm:h-12'">
+                        :class="{ 'h-14 sm:h-16 xl:h-20': atTop && !open, 'h-11 sm:h-12': !(atTop && !open) }">
                 </a>
 
                 <ul class="hidden xl:flex items-center gap-6">

@@ -1,3 +1,4 @@
+<div>
 @if($whatsapp)
 <div class="vt-whatsapp fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50" style="margin-bottom: env(safe-area-inset-bottom)">
     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $whatsapp) }}" target="_blank" rel="noopener noreferrer"
@@ -9,3 +10,4 @@
     </a>
 </div>
 @endif
+</div>

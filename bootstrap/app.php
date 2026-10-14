@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Middleware\RedirectToCanonicalHost;
+use App\Http\Middleware\TrackPageViews;
+use App\Models\SiteInfo;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -14,8 +16,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Detrás del proxy de Dokploy (Traefik): confiar en X-Forwarded-* para https e IP real
+        $middleware->trustProxies(at: '*');
+        $middleware->prepend(RedirectToCanonicalHost::class);
+
         $middleware->alias([
-            'track.page.views' => \App\Http\Middleware\TrackPageViews::class,
+            'track.page.views' => TrackPageViews::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -23,13 +29,13 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('admin/*') || $request->is('filament/*')) {
                 return null;
             }
-            
+
             if ($request->expectsJson()) {
                 return response()->json(['message' => 'Página no encontrada'], 404);
             }
 
-            $siteInfo = \App\Models\SiteInfo::getSiteInfo();
-            
+            $siteInfo = SiteInfo::getSiteInfo();
+
             return response()->view('errors.404', [
                 'siteInfo' => $siteInfo,
                 'exception' => $e,

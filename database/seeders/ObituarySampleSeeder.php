@@ -14,6 +14,13 @@ class ObituarySampleSeeder extends Seeder
 {
     public function run(): void
     {
+        // Nunca sembrar obituarios ficticios en producción
+        if (app()->isProduction()) {
+            $this->command?->warn('ObituarySampleSeeder omitido: entorno de producción.');
+
+            return;
+        }
+
         foreach (glob(database_path('seeders/data/images/obituaries/ejemplo-*.jpg')) as $file) {
             Storage::disk('public')->put('obituaries/'.basename($file), file_get_contents($file));
         }

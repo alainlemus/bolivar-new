@@ -72,6 +72,9 @@ class Obituary extends Model
 
     public function scopeActive($query)
     {
+        // Defensa extra: los obituarios de prueba (EJEMPLO) jamás se muestran en producción
+        $query->when(app()->isProduction(), fn ($q) => $q->where('responsible_name', '!=', 'EJEMPLO'));
+
         return $query->where(function ($q) {
             $now = now();
             $q->where('is_active', true)

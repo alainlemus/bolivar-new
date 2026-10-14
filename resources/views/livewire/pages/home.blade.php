@@ -19,14 +19,18 @@
         <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl animate-float" aria-hidden="true"></div>
 
         <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-3xl">
+            <div class="max-w-3xl mx-auto text-center">
                 <p class="hero-rise text-amber-300 uppercase tracking-[0.3em] text-xs sm:text-sm mb-5" style="--i:0">{{ \App\Support\SiteContent::text('home.hero_eyebrow') }}</p>
-                <h1 class="hero-rise text-4xl sm:text-5xl md:text-7xl font-bold mb-6 font-serif leading-[1.1]" style="--i:1">
-                    {{ $siteInfo->site_name ?? 'García de Bolívar' }}</h1>
-                <p class="hero-rise text-lg sm:text-xl md:text-2xl text-gray-200 mb-10 leading-relaxed" style="--i:2">
+                {{-- El logo ocupa el lugar del título; el texto queda para lectores de pantalla y buscadores --}}
+                <h1 class="hero-rise mb-6" style="--i:1">
+                    <span class="sr-only">{{ $siteInfo->site_name ?? 'García de Bolívar' }}</span>
+                    <img src="{{ asset('images/logo-hero.webp') }}" alt="" aria-hidden="true" width="901" height="547"
+                        class="mx-auto w-64 sm:w-80 md:w-[26rem] lg:w-[30rem] h-auto drop-shadow-[0_6px_24px_rgba(0,0,0,0.55)]" fetchpriority="high" decoding="async">
+                </h1>
+                <p class="hero-rise text-lg sm:text-xl md:text-2xl text-gray-200 mb-10 leading-relaxed max-w-2xl mx-auto" style="--i:2">
                     {{ $siteInfo->tagline ?? 'Nace de una necesidad de la familia mexicana ante un acontecimientos que nadie desea; pero sin embargo sucede.' }}
                 </p>
-                <div class="hero-rise flex flex-col sm:flex-row gap-3 sm:gap-4" style="--i:3">
+                <div class="hero-rise flex flex-col sm:flex-row justify-center gap-3 sm:gap-4" style="--i:3">
                     <a href="{{ route('contacto') }}" data-magnetic
                         class="btn inline-flex items-center justify-center px-7 py-3.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium">
                         Contáctanos

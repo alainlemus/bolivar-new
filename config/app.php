@@ -54,6 +54,9 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    // Dominio canónico: los demás hosts (www, .com.mx) redirigen aquí con 301. Vacío = sin redirección.
+    'canonical_host' => env('CANONICAL_HOST'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

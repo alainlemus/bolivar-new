@@ -5,9 +5,9 @@
                 <div>
                     <div class="mb-4">
                         @if($siteInfo && $siteInfo->site_logo)
-                        <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}" width="200" height="64" class="h-16 w-auto max-w-full object-contain" loading="lazy" decoding="async">
+                        <img src="{{ asset('storage/' . $siteInfo->site_logo) }}" alt="{{ $siteInfo->site_name ?? 'Funeraria García de Bolívar' }}" width="901" height="547" class="h-16 w-auto max-w-full object-contain lg:h-auto lg:w-full lg:max-w-[19rem]" loading="lazy" decoding="async">
                         @else
-                        <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" width="200" height="64" class="h-16 w-auto max-w-full object-contain" loading="lazy" decoding="async">
+                        <img src="{{ asset('images/logo.png') }}" alt="García de Bolívar" width="901" height="547" class="h-16 w-auto max-w-full object-contain lg:h-auto lg:w-full lg:max-w-[19rem]" loading="lazy" decoding="async">
                         @endif
                     </div>
                 </div>
