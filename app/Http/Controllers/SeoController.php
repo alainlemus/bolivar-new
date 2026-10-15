@@ -21,6 +21,11 @@ class SeoController extends Controller
 
     public function robots(): Response
     {
+        // Ambientes de pruebas (develop/staging): que ningún buscador los indexe
+        if (! app()->isProduction()) {
+            return response("User-agent: *\nDisallow: /\n", 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
+        }
+
         $lines = [
             'User-agent: *',
             'Disallow: /admin',

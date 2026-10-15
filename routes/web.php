@@ -13,8 +13,10 @@ use App\Livewire\Pages\Servicios;
 use App\Livewire\Pages\TerminosCondiciones;
 use App\Livewire\Pages\TestimonioForm;
 use App\Livewire\Pages\Testimonios;
+use App\Support\AppVersion;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/version.json', fn () => response()->json(AppVersion::toArray()))->name('version');
 Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 

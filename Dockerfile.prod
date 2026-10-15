@@ -1,49 +1,119 @@
-# syntax=docker/dockerfile:1.7
-# Producción (Dokploy): rama principal, dominio garciadebolivar.com / .com.mx
-# Etapas: vendor (Composer sin dev) -> assets (Vite) -> runtime (PHP 8.4 + Nginx, usuario no-root, puerto 8080)
+# syntax=docker/dockerfile:1
 
-FROM composer:2 AS vendor
+FROM composer:2 AS composer-deps
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction --ignore-platform-reqs
-COPY . .
-RUN composer dump-autoload --optimize --classmap-authoritative --no-dev --no-scripts --ignore-platform-reqs
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs
 
-FROM node:22-alpine AS assets
+# Tailwind escanea resources/ (blade y livewire) y las vistas de paginación del framework
+# (@source en resources/css/app.css), por eso este stage también recibe vendor/.
+FROM node:20-alpine AS frontend-builder
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm ci
-COPY . .
-# Tailwind escanea las vistas del framework (paginación) dentro de vendor/
-COPY --from=vendor /app/vendor ./vendor
+COPY resources ./resources
+COPY --from=composer-deps /app/vendor ./vendor
+COPY public ./public
+COPY vite.config.js ./
 RUN npm run build
 
-FROM serversideup/php:8.4-fpm-nginx AS runtime
+FROM php:8.4-fpm-alpine AS app
+WORKDIR /var/www/html
 
-USER root
-RUN install-php-extensions intl exif gd zip bcmath pdo_mysql
-
+# MySQL por defecto (Laravel trae sqlite); se puede sobreescribir en Dokploy.
 ENV APP_ENV=production \
     APP_DEBUG=false \
-    PHP_OPCACHE_ENABLE=1 \
-    PHP_MEMORY_LIMIT=256M \
-    PHP_UPLOAD_MAX_FILE_SIZE=20M \
-    PHP_POST_MAX_SIZE=25M \
-    SSL_MODE=off \
-    AUTORUN_ENABLED=true \
-    AUTORUN_LARAVEL_MIGRATION=true \
-    AUTORUN_LARAVEL_MIGRATION_ISOLATION=true \
-    AUTORUN_LARAVEL_STORAGE_LINK=true \
-    AUTORUN_LARAVEL_OPTIMIZE=true
+    DB_CONNECTION=mysql \
+    VIEW_COMPILED_PATH=/var/www/html/bootstrap/cache/views
 
-WORKDIR /var/www/html
-COPY --chown=www-data:www-data . .
-COPY --chown=www-data:www-data --from=vendor /app/vendor ./vendor
-COPY --chown=www-data:www-data --from=assets /app/public/build ./public/build
+# nginx + supervisor: servidor web de producción en vez de `php artisan serve`, que
+# atendía solo 4 peticiones a la vez. su-exec: correr los comandos de arranque
+# como www-data desde el entrypoint (que corre como root para iniciar supervisor).
+RUN apk add --no-cache \
+        nginx \
+        supervisor \
+        su-exec \
+        libpng-dev \
+        libjpeg-turbo-dev \
+        freetype-dev \
+        libwebp-dev \
+        libxml2-dev \
+        libzip-dev \
+        icu-dev \
+        oniguruma-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install pdo_mysql bcmath exif gd zip intl mbstring opcache pcntl
 
-USER www-data
-RUN php artisan package:discover --ansi
+RUN { \
+        echo 'upload_max_filesize=20M'; \
+        echo 'post_max_size=20M'; \
+        echo 'max_execution_time=300'; \
+        echo 'memory_limit=256M'; \
+        echo 'display_errors=Off'; \
+        echo 'expose_php=Off'; \
+    } > /usr/local/etc/php/conf.d/prod.ini \
+    && { \
+        echo 'opcache.enable=1'; \
+        echo 'opcache.enable_cli=1'; \
+        echo 'opcache.memory_consumption=192'; \
+        echo 'opcache.interned_strings_buffer=16'; \
+        echo 'opcache.max_accelerated_files=20000'; \
+        echo 'opcache.validate_timestamps=0'; \
+        echo 'opcache.jit=tracing'; \
+        echo 'opcache.jit_buffer_size=64M'; \
+    } > /usr/local/etc/php/conf.d/opcache.ini
 
-# Las subidas del panel viven en storage/app/public: monta un volumen persistente aquí
-VOLUME ["/var/www/html/storage/app/public"]
-EXPOSE 8080
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer-deps /app/vendor ./vendor
+
+COPY . .
+COPY --from=frontend-builder /app/public/build ./public/build
+
+# Versión del despliegue: commit, rama y fecha del build (se ven junto al número de
+# VERSION en /version.json y el pie del admin). Opcionalmente, los build args GIT_COMMIT /
+# GIT_BRANCH mandan sobre lo que se lea de .git, que después se elimina de la imagen.
+ARG GIT_COMMIT=""
+ARG GIT_BRANCH=""
+RUN GIT_COMMIT="$GIT_COMMIT" GIT_BRANCH="$GIT_BRANCH" php docker/app/write-build-info.php && rm -rf .git
+
+# Las vistas compiladas viven en la imagen (bootstrap/cache/views), no en el
+# volumen persistente de storage/: cada despliegue arranca sin vistas viejas.
+RUN mkdir -p bootstrap/cache/views \
+    storage/logs \
+    storage/app/public \
+    storage/app/private \
+    storage/app/private/livewire-tmp \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views
+
+RUN composer dump-autoload --optimize --no-scripts \
+    && php artisan package:discover --ansi
+
+# public/storage → storage/app/public: hecho aquí porque en runtime el proceso ya
+# no puede escribir en public/ (y antes `storage:link || true` fallaba en silencio).
+RUN ln -sfn ../storage/app/public public/storage \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R ug+rwx storage bootstrap/cache
+
+COPY docker/app/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/app/supervisord.conf /etc/supervisord.conf
+COPY docker/app/entrypoint.sh /usr/local/bin/entrypoint
+# nginx corre como www-data (igual que php-fpm), así que su carpeta temporal también
+# debe ser suya: ahí escribe los cuerpos de petición de más de 16 KB (un texto largo
+# de términos, por ejemplo) y sin permiso responde 500 antes de llegar a Laravel.
+RUN chmod +x /usr/local/bin/entrypoint \
+    && sed -i 's/^user nginx;/user www-data;/' /etc/nginx/nginx.conf \
+    && mkdir -p /var/lib/nginx/tmp \
+    && chown -R www-data:www-data /var/lib/nginx
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD wget -qO- "http://127.0.0.1:${PORT:-8000}/up" || exit 1
+
+# El entrypoint (docker/app/entrypoint.sh) corre las migraciones y cachea
+# config/rutas/vistas con el .env de runtime (Dokploy lo inyecta antes de arrancar)
+# y luego deja a supervisor a cargo de nginx + php-fpm. Variables opcionales:
+# PORT (8000), FPM_MAX_CHILDREN (8).
+CMD ["/usr/local/bin/entrypoint"]

@@ -11,7 +11,7 @@
     $pageCanonical = $pageCanonical === $canonicalBase . '/' ? $pageCanonical : rtrim($pageCanonical, '/');
     // Toda URL absoluta (schema, og:image) sale del dominio canónico, no de APP_URL
     $abs = fn (string $path) => str_starts_with($path, 'http') ? $path : $canonicalBase . '/' . ltrim($path, '/');
-    $pageRobots = ($noindex ?? false) ? 'noindex, nofollow' : ($siteInfo->robots ?: 'index, follow');
+    $pageRobots = (($noindex ?? false) || ! app()->isProduction()) ? 'noindex, nofollow' : ($siteInfo->robots ?: 'index, follow');
     $pageType = $ogType ?? 'website';
 
     $imagePath = $image ?? $siteInfo->og_image ?? $siteInfo->site_logo;

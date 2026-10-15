@@ -93,6 +93,7 @@
                     <span class="mx-2 text-gray-600" aria-hidden="true">·</span>
                     <a href="{{ route('terminos') }}" class="hover:text-amber-400 transition">Términos y Condiciones</a>
                 </p>
+                <p class="text-gray-600 text-xs mt-2">{{ \App\Support\AppVersion::label() }}</p>
             </div>
         </div>
     </footer>

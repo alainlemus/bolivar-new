@@ -1,46 +1,117 @@
-# syntax=docker/dockerfile:1.7
-# Desarrollo / staging (Dokploy): rama dev, dominio de pruebas (p. ej. dev.garciadebolivar.com)
-# Igual que prod pero con dependencias de desarrollo, sin cachés de config/rutas y con depuración activable.
+# syntax=docker/dockerfile:1
 
-FROM composer:2 AS vendor
+FROM composer:2 AS composer-deps
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-scripts --no-autoloader --prefer-dist --no-interaction --ignore-platform-reqs
-COPY . .
-RUN composer dump-autoload --optimize --no-scripts --ignore-platform-reqs
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs
 
-FROM node:22-alpine AS assets
+# Tailwind escanea resources/ (blade y livewire) y las vistas de paginación del framework
+# (@source en resources/css/app.css), por eso este stage también recibe vendor/.
+FROM node:20-alpine AS frontend-builder
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm ci
-COPY . .
-COPY --from=vendor /app/vendor ./vendor
+COPY resources ./resources
+COPY --from=composer-deps /app/vendor ./vendor
+COPY public ./public
+COPY vite.config.js ./
 RUN npm run build
 
-FROM serversideup/php:8.4-fpm-nginx AS runtime
-
-USER root
-RUN install-php-extensions intl exif gd zip bcmath pdo_mysql
-
-ENV APP_ENV=staging \
-    PHP_OPCACHE_ENABLE=0 \
-    PHP_MEMORY_LIMIT=512M \
-    PHP_UPLOAD_MAX_FILE_SIZE=20M \
-    PHP_POST_MAX_SIZE=25M \
-    SSL_MODE=off \
-    AUTORUN_ENABLED=true \
-    AUTORUN_LARAVEL_MIGRATION=true \
-    AUTORUN_LARAVEL_MIGRATION_ISOLATION=true \
-    AUTORUN_LARAVEL_STORAGE_LINK=true \
-    AUTORUN_LARAVEL_OPTIMIZE=false
-
+FROM php:8.4-fpm-alpine AS app
 WORKDIR /var/www/html
-COPY --chown=www-data:www-data . .
-COPY --chown=www-data:www-data --from=vendor /app/vendor ./vendor
-COPY --chown=www-data:www-data --from=assets /app/public/build ./public/build
 
-USER www-data
-RUN php artisan package:discover --ansi
+# Misma arquitectura que Dockerfile.prod (nginx + php-fpm + supervisor, ver
+# docker/app/) para que el ambiente de pruebas pruebe lo mismo que va a producción.
+# Diferencias a propósito: Xdebug, errores visibles, sin opcache y sin cachear
+# config/rutas/vistas (SKIP_LARAVEL_CACHE).
+# MySQL por defecto (Laravel trae sqlite); se puede sobreescribir en Dokploy.
+ENV APP_ENV=local \
+    APP_DEBUG=true \
+    DB_CONNECTION=mysql \
+    XDEBUG_MODE=off \
+    SKIP_LARAVEL_CACHE=1 \
+    VIEW_COMPILED_PATH=/var/www/html/bootstrap/cache/views
 
-VOLUME ["/var/www/html/storage/app/public"]
-EXPOSE 8080
+RUN apk add --no-cache \
+        nginx \
+        supervisor \
+        su-exec \
+        libpng-dev \
+        libjpeg-turbo-dev \
+        freetype-dev \
+        libwebp-dev \
+        libxml2-dev \
+        libzip-dev \
+        icu-dev \
+        oniguruma-dev \
+        linux-headers \
+        $PHPIZE_DEPS \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install pdo_mysql bcmath exif gd zip intl mbstring pcntl \
+    && pecl channel-update pecl.php.net \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+# Xdebug queda instalado pero apagado por defecto (XDEBUG_MODE=off arriba);
+# se activa sin rebuild cambiando XDEBUG_MODE=debug en las variables de
+# entorno de Dokploy y conectando el IDE a host.docker.internal:9003.
+RUN { \
+        echo 'upload_max_filesize=20M'; \
+        echo 'post_max_size=20M'; \
+        echo 'max_execution_time=300'; \
+        echo 'memory_limit=512M'; \
+        echo 'display_errors=On'; \
+        echo 'error_reporting=E_ALL'; \
+    } > /usr/local/etc/php/conf.d/dev.ini \
+    && { \
+        echo 'xdebug.client_host=host.docker.internal'; \
+        echo 'xdebug.start_with_request=yes'; \
+        echo 'xdebug.discover_client_host=1'; \
+    } > /usr/local/etc/php/conf.d/xdebug.ini
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer-deps /app/vendor ./vendor
+
+COPY . .
+COPY --from=frontend-builder /app/public/build ./public/build
+
+# Versión del despliegue: commit, rama y fecha del build (se ven junto al número de
+# VERSION en /version.json y el pie del admin). Opcionalmente, los build args GIT_COMMIT /
+# GIT_BRANCH mandan sobre lo que se lea de .git, que después se elimina de la imagen.
+ARG GIT_COMMIT=""
+ARG GIT_BRANCH=""
+RUN GIT_COMMIT="$GIT_COMMIT" GIT_BRANCH="$GIT_BRANCH" php docker/app/write-build-info.php && rm -rf .git
+
+# Las vistas compiladas viven en la imagen (bootstrap/cache/views), no en el
+# volumen persistente de storage/: cada despliegue arranca sin vistas viejas.
+RUN mkdir -p bootstrap/cache/views \
+    storage/logs \
+    storage/app/public \
+    storage/app/private \
+    storage/app/private/livewire-tmp \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views
+
+RUN composer dump-autoload --optimize --no-scripts \
+    && php artisan package:discover --ansi
+
+RUN ln -sfn ../storage/app/public public/storage \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R ug+rwx storage bootstrap/cache
+
+COPY docker/app/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/app/supervisord.conf /etc/supervisord.conf
+COPY docker/app/entrypoint.sh /usr/local/bin/entrypoint
+# nginx corre como www-data (igual que php-fpm), así que su carpeta temporal también
+# debe ser suya: ahí escribe los cuerpos de petición de más de 16 KB (un texto largo
+# de términos, por ejemplo) y sin permiso responde 500 antes de llegar a Laravel.
+RUN chmod +x /usr/local/bin/entrypoint \
+    && sed -i 's/^user nginx;/user www-data;/' /etc/nginx/nginx.conf \
+    && mkdir -p /var/lib/nginx/tmp \
+    && chown -R www-data:www-data /var/lib/nginx
+
+EXPOSE 8000
+
+# Ver docker/app/entrypoint.sh: migraciones y luego supervisor con nginx + php-fpm.
+CMD ["/usr/local/bin/entrypoint"]
