@@ -41,7 +41,9 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            // Relativa: el admin (Filament) arma las URLs con esto, y así no depende de que APP_URL
+            // coincida con el dominio desde el que se abre el sitio (staging, sslip.io, etc.).
+            'url' => '/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
