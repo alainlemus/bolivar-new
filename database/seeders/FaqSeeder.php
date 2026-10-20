@@ -31,7 +31,7 @@ class FaqSeeder extends Seeder
 
         foreach ($items as $page => $rows) {
             foreach ($rows as $i => [$q, $a]) {
-                Faq::create(['page' => $page, 'question' => $q, 'answer' => $a, 'order' => $i, 'is_active' => true]);
+                Faq::firstOrCreate(['page' => $page, 'question' => $q], ['answer' => $a, 'order' => $i, 'is_active' => true]);
             }
         }
     }
