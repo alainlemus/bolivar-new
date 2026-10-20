@@ -1,0 +1,571 @@
+{
+    "plans": [
+        {
+            "name": "Plan Básico",
+            "description": "Protección esencial para tu familia con los servicios funerarios fundamentales.",
+            "price": "8500.00",
+            "icon": "plan-images/01KRCNYF0VHVQ3D9NVP001FE2Z.png",
+            "emblem": null,
+            "features": "[\"Atención 24\\/7\",\"Asesoría personalizada\",\"Traslado local\",\"Capilla de velación\",\"Servicio de embalsamado básico\"]",
+            "order": 1,
+            "is_active": 1
+        },
+        {
+            "name": "Plan Completo",
+            "description": "Protección integral con todos los servicios necesarios para un homenaje digno.",
+            "price": "15000.00",
+            "icon": "plan-images/01KRCP3KKHG65BJARGD44WZTDS.png",
+            "emblem": null,
+            "features": "[\"Todo lo del Plan Básico\",\"Traslado nacional\",\"Arreglo est\\u00e9tico\",\"Urna b\\u00e1sica\",\"Acto religioso\",\"Equipo de velaci\\u00f3n completo\"]",
+            "order": 2,
+            "is_active": 1
+        },
+        {
+            "name": "Plan Premium",
+            "description": "Protección total con servicios exclusivos y atención personalizada de lujo.",
+            "price": "25000.00",
+            "icon": "plan-images/01KRCP4V3XTFY4JCYDPWCC5GSC.png",
+            "emblem": null,
+            "features": "[\"Todo lo del Plan Completo\",\"Traslado internacional\",\"Capilla private\",\"Audio y video\",\"Florer\\u00eda completa\",\"Servicio de cafeter\\u00eda\",\"Asistencia jur\\u00eddica\"]",
+            "order": 3,
+            "is_active": 1
+        }
+    ],
+    "testimonials": [
+        {
+            "name": "María González",
+            "text": "Excelente servicio en un momento tan difícil. Me acompañaron en cada paso y me dieron tranquilidad.",
+            "branch": "Casa Prim",
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Juan Pérez",
+            "text": "Muy profesionales y humanos. El trato fue digno y respetuoso en todo momento.",
+            "branch": "Sucursal Norte",
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Ana Martínez",
+            "text": "Encontré en ellos el apoyo que necesitaba. El servicio de cremación fue impecable.",
+            "branch": "Casa Centro",
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Carlos López",
+            "text": "Los recomiendo ampliamente. El plan funerario me dio la tranquilidad de saber que mi familia está protegida.",
+            "branch": "Casa Sur",
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "María Elena González Rodríguez",
+            "text": "Excelente servicio, nos atendieron con mucha humanidad y profesionalismo en momento tan difícil.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "José Luis Hernández Martínez",
+            "text": "Muy agradecidos con todo el equipo por el trato digno y respetuoso que nos brindaron.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Carmen Dolores Flores Sánchez",
+            "text": "El servicio superó todas nuestras expectativas, el personal muy atento y disponible.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Juan Carlos Ramírez López",
+            "text": "Gracias por hacer más llevadero este momento tan doloroso, su apoyo fue invaluable.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Ana María Pérez Vázquez",
+            "text": "Profesionalismo y calidad humana excepcionales, recomendado al 100%.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Francisco Javier Torres Morales",
+            "text": "Muy buen servicio, todo se manejó con puntualidad y respeto.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Rosa María Jiménez García",
+            "text": "El personal nos orientó perfectamente en cada paso del proceso.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Pedro Antonio Castillo Ruiz",
+            "text": "Atención personalizada y respetuosa, sehr recomendada la funeraria.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Lucía Margarita Díaz Hernández",
+            "text": "Servicio integral de primera, gracias por el apoyo emocional también.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Miguel Ángel Vásquez Ortiz",
+            "text": "Buena organización y comunicación durante todo el proceso.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Sofia Guadalupe Reyes Clemente",
+            "text": "Trato muy humano y profesional, thankful for their support.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Ricardo Daniel Moreno Vargas",
+            "text": "Los costos son justos y transparent, ningún sobre precio.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Elena Isabel Contreras Paredes",
+            "text": "Excelente atención desde el primer momento hasta el final.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Arturo Sebastián Núñez Lira",
+            "text": "Muy recomendable, servicio de calidad y precio justo.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Patricia del Rosario Mendoza Aguilar",
+            "text": "Apoyo constante y información clara en todo momento.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Fernando Alberto Salas Castro",
+            "text": "El personal muy capacitado y con mucha empatía.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Gloria María Esperanza Ortega Bravo",
+            "text": "Buen servicio, todo salió según lo planeado.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Roberto Carlos Mendoza Rojas",
+            "text": "Excellent service and great human warmth.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Verónica Patricia Farías Vega",
+            "text": "Muy agradecidos por la paciencia y el apoyo.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Carlos Eduardo Lara Domínguez",
+            "text": "Servicio completo y bien explicado en cada paso.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Martha Beatriz Sánchez Paredes",
+            "text": "Profesionales y humanos, gracias por todo.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Luis Alfonso Moreno Guzman",
+            "text": "Great service with excellent communication.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Adriana Sofía Ramos Martín",
+            "text": "Buen trato y excelente servicio funerario.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Jorge Alejandro Torres Quiroz",
+            "text": "Muy recomendados, servicio de calidad.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Claudia Margarita Ríos Lozano",
+            "text": "Excellent atención y apoyo emocional.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Raúl Enrique Castro Márquez",
+            "text": "Good service, fair prices, very professional.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Irma Yolanda Flores Morales",
+            "text": "Gracias por hacer difícil momento más fácil.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Héctor Manuel Rodríguez Peña",
+            "text": "Professional service with great human touch.",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "Diana Laura Jiménez Vázque",
+            "text": "Muy eficiente y con excelente trato.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "Gustavo Adolfo Martínez Sierra",
+            "text": "El mejor servicio funerario que hemos encontrado.",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        },
+        {
+            "name": "prueba prueba",
+            "text": "esto es una prueba de envio de testimonio",
+            "branch": null,
+            "rating": 4,
+            "is_active": 1
+        },
+        {
+            "name": "prueba 2",
+            "text": "prueba de formulario 2",
+            "branch": null,
+            "rating": 5,
+            "is_active": 1
+        }
+    ],
+    "slides": [
+        {
+            "title": "Capillas",
+            "subtitle": null,
+            "image": "01KRD0FRXXWVTBEVSJM8VH4778.jpg",
+            "order": 0,
+            "is_active": 1
+        },
+        {
+            "title": "Capilla 2",
+            "subtitle": null,
+            "image": "01KRD0GEM43BH96GT64VBYJF86.jpg",
+            "order": 1,
+            "is_active": 1
+        }
+    ],
+    "site_info": {
+        "site_name": "Funeraria García de Bolívar",
+        "tagline": "Compromiso y calidad en cada servicio",
+        "address": "Calle Bolivar 513, colonia Algarin, Alcaldía Cuauhtémoc, Ciudad de México",
+        "map_url": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6536.566347084293!2d-99.14540162297924!3d19.404600181868897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1fee103a499cb%3A0x72b9bc4ded9192f6!2sFunerales%20Garcia%20de%20Bolivar!5e1!3m2!1ses!2smx!4v1778270186008!5m2!1ses!2smx\" width=\"1200\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+        "phone": "(55) 5530 8108",
+        "phone_2": "(55) 5538 2336",
+        "whatsapp": "(55) 5530 8108",
+        "email": "contacto@garciadebolivar.com",
+        "admin_email": "alainttlm@gmail.com",
+        "privacy_notice": "<p><strong>Última actualización: 14 de octubre de 2026</strong></p>\n<p>En cumplimiento de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (en adelante, la «Ley»), Funeraria García de Bolívar pone a su disposición el presente Aviso de Privacidad integral. Le pedimos leerlo con atención: explica quién trata sus datos, cuáles, para qué y cómo puede ejercer sus derechos.</p>\n\n<h2>1. Identidad y domicilio del responsable</h2>\n<p><strong>Funeraria García de Bolívar</strong> (en adelante, «la Funeraria») es responsable del tratamiento de sus datos personales, con domicilio en Calle Bolivar 513, colonia Algarin, Alcaldía Cuauhtémoc, Ciudad de México.</p>\n<p>Las solicitudes relacionadas con sus datos personales las atiende nuestro <strong>Departamento de Datos Personales</strong>, al correo <a href=\"mailto:contacto@garciadebolivar.com\">contacto@garciadebolivar.com</a>, al teléfono (55) 5530 8108 o directamente en nuestras instalaciones.</p>\n\n<h2>2. Datos personales que tratamos</h2>\n<p>Según el medio por el que nos contacte y los servicios que solicite, podemos tratar:</p>\n<ul>\n<li><strong>Identificación y contacto:</strong> nombre, teléfono, correo electrónico, domicilio, parentesco con la persona fallecida y, al contratar, copia de identificación oficial.</li>\n<li><strong>Relacionados con el servicio funerario:</strong> datos de la persona fallecida (nombre, fecha y lugar de fallecimiento, acta o certificado de defunción) y de los familiares o personas que autorizan el servicio, así como sus instrucciones y preferencias para la ceremonia.</li>\n<li><strong>Patrimoniales y financieros:</strong> forma de pago, datos de facturación (RFC y domicilio fiscal) e historial de pagos de contratos o planes de previsión. Su tratamiento requiere su consentimiento expreso, que se recaba en el contrato o solicitud.</li>\n<li><strong>Datos personales sensibles:</strong> estado de salud (por ejemplo, la causa de fallecimiento asentada en el certificado de defunción cuando se vincule con usted o su familia) y creencias religiosas o filosóficas (por ejemplo, el rito o ceremonia solicitada). Para tratarlos, la Ley exige su consentimiento expreso y por escrito (firma autógrafa o electrónica), que recabamos en el contrato o solicitud de servicio. <strong>Este sitio web no solicita datos sensibles</strong>; si usted decide incluirlos en un mensaje, lo hace de manera voluntaria y los trataremos únicamente para atender su solicitud.</li>\n<li><strong>Datos de navegación:</strong> cookies técnicas y registros de visitas agregadas y anónimas a las páginas (sin identificarlo). Para evitar abusos, como encender velas virtuales de forma masiva, su dirección IP se usa de manera temporal únicamente para limitar solicitudes y no se asocia a un perfil.</li>\n</ul>\n<p><strong>Menores de edad.</strong> Este sitio no está dirigido a menores y no recabamos sus datos sin el consentimiento de quien ejerza la patria potestad o tutela.</p>\n\n<h2>3. Finalidades del tratamiento</h2>\n<h3>Finalidades necesarias (derivan de la relación jurídica y no requieren un consentimiento adicional)</h3>\n<ul>\n<li>Cotizar, contratar, prestar y dar seguimiento a servicios funerarios, de inhumación, cremación y planes de previsión.</li>\n<li>Elaborar contratos, cobrar, facturar y administrar pagos.</li>\n<li>Realizar trámites ante autoridades y terceros necesarios para el servicio (Registro Civil, autoridades sanitarias, panteones y crematorios).</li>\n<li>Atender sus consultas y solicitudes por formulario, teléfono, correo o WhatsApp.</li>\n<li>Publicar el aviso de fallecimiento (obituario) y las velas virtuales, a petición de la familia.</li>\n<li>Cumplir obligaciones legales, fiscales y de protección al consumidor, y atender requerimientos de autoridad.</li>\n<li>Mantener la seguridad del sitio y prevenir fraudes o abusos.</li>\n</ul>\n<h3>Finalidades voluntarias (requieren su consentimiento; negarse no afecta el servicio)</h3>\n<ul>\n<li>Enviarle información sobre planes, promociones y comunicaciones sobre nuestros servicios.</li>\n<li>Publicar en el sitio su testimonio (nombre y comentario) cuando usted lo envía.</li>\n<li>Realizar encuestas de calidad y estadísticas para mejorar nuestra atención.</li>\n</ul>\n<p>Si no desea que sus datos se traten para las finalidades voluntarias, puede indicarlo al momento de proporcionarlos o en cualquier momento escribiendo a <a href=\"mailto:contacto@garciadebolivar.com\">contacto@garciadebolivar.com</a>.</p>\n\n<h2>4. Consentimiento y su revocación</h2>\n<p>Por regla general, el consentimiento es tácito: si usted nos proporciona sus datos tras haber puesto a su disposición este aviso y no manifiesta lo contrario, entendemos que lo acepta. Para datos patrimoniales o financieros requerimos consentimiento expreso, y para datos sensibles, expreso y por escrito.</p>\n<p>Puede revocar su consentimiento en cualquier momento, sin efectos retroactivos, enviando una solicitud a <a href=\"mailto:contacto@garciadebolivar.com\">contacto@garciadebolivar.com</a> con su nombre, el medio para contestarle y la descripción de lo que revoca. Tenga en cuenta que, mientras exista una relación jurídica vigente o una obligación legal, algunos datos deberán conservarse.</p>\n\n<h2>5. Transferencias y remisiones de datos</h2>\n<p>No vendemos sus datos personales. Podemos comunicarlos sin requerir su consentimiento cuando la Ley lo permite, por ejemplo, a autoridades competentes que lo requieran de forma fundada y motivada, o cuando sea necesario para cumplir el contrato que usted celebre con nosotros (panteones, crematorios, notarías, autoridades sanitarias o el Registro Civil).</p>\n<p>También utilizamos proveedores tecnológicos que tratan datos por cuenta nuestra y bajo nuestras instrucciones (alojamiento web, correo electrónico y mensajería). Cualquier otra transferencia a terceros que no esté prevista en este aviso solo se hará con su consentimiento; <strong>si no desea que sus datos se transfieran en esos casos, no será necesario que haga nada, ya que no lo haremos sin su autorización</strong>.</p>\n\n<h2>6. Medios para limitar el uso o divulgación de sus datos</h2>\n<p>Puede limitar el uso o divulgación de sus datos solicitándolo a <a href=\"mailto:contacto@garciadebolivar.com\">contacto@garciadebolivar.com</a>, dándose de baja de nuestras comunicaciones comerciales o inscribiéndose en el Registro Público para Evitar Publicidad (REPEP) de la Procuraduría Federal del Consumidor (Profeco).</p>\n\n<h2>7. Derechos ARCO: acceso, rectificación, cancelación y oposición</h2>\n<ul>\n<li><strong>Acceso:</strong> conocer qué datos personales tenemos y las condiciones de su tratamiento.</li>\n<li><strong>Rectificación:</strong> corregir sus datos cuando sean inexactos, incompletos o estén desactualizados.</li>\n<li><strong>Cancelación:</strong> solicitar que eliminemos sus datos de nuestros archivos, registros y sistemas. Procederá un periodo de bloqueo previo a la supresión, y podremos conservarlos cuando la Ley lo permita, por ejemplo, para cumplir obligaciones fiscales o contractuales.</li>\n<li><strong>Oposición:</strong> oponerse al tratamiento de sus datos por causa legítima. No tomamos decisiones automatizadas que produzcan efectos jurídicos sobre usted.</li>\n</ul>\n<p><strong>Cómo ejercerlos.</strong> Envíe su solicitud a <a href=\"mailto:contacto@garciadebolivar.com\">contacto@garciadebolivar.com</a> o preséntela en nuestro domicilio, indicando:</p>\n<ol>\n<li>Su nombre y domicilio u otro medio para recibir notificaciones.</li>\n<li>Los documentos que acrediten su identidad o, en su caso, la de su representante.</li>\n<li>La descripción clara y precisa de los datos respecto de los que busca ejercer el derecho (salvo en el acceso) y del derecho que desea ejercer.</li>\n<li>Cualquier elemento o documento que facilite localizar sus datos. Para rectificar, indique además las modificaciones y adjunte la documentación que las sustente.</li>\n</ol>\n<p><strong>Plazos.</strong> Le comunicaremos la determinación adoptada en un máximo de <strong>veinte días hábiles</strong> contados desde la recepción de la solicitud y, si procede, la haremos efectiva dentro de los <strong>quince días hábiles</strong> siguientes. Estos plazos pueden ampliarse una sola vez por un periodo igual cuando las circunstancias lo justifiquen. El ejercicio de estos derechos es gratuito; solo podrán cobrarse los costos de reproducción, copias o envío conforme a la Ley.</p>\n<p>Si considera que su derecho a la protección de datos personales ha sido vulnerado, puede acudir ante la <strong>Secretaría Anticorrupción y Buen Gobierno</strong>, autoridad en la materia.</p>\n\n<h2>8. Conservación y seguridad</h2>\n<p>Conservamos sus datos durante el tiempo necesario para cumplir las finalidades descritas y las obligaciones legales aplicables. Después, se bloquean durante el plazo de prescripción de las acciones derivadas de la relación jurídica y se suprimen.</p>\n<p>Mantenemos medidas de seguridad administrativas, técnicas y físicas para proteger sus datos contra daño, pérdida, alteración, destrucción o uso no autorizado. Si ocurre una vulneración de seguridad que afecte de forma significativa sus derechos patrimoniales o morales, se lo informaremos de inmediato para que pueda tomar las medidas correspondientes.</p>\n\n<h2>9. Cookies y tecnologías de rastreo</h2>\n<p>Este sitio utiliza únicamente cookies necesarias para su funcionamiento (por ejemplo, la sesión, la seguridad de los formularios y el registro de que usted vio este aviso). No utilizamos cookies publicitarias ni perfilamos a las personas visitantes. Algunos contenidos de terceros incorporados en el sitio, como el mapa de ubicación, pueden establecer sus propias cookies según sus políticas. Puede configurar su navegador para bloquearlas o eliminarlas, aunque algunas funciones podrían dejar de operar.</p>\n\n<h2>10. Cambios a este aviso</h2>\n<p>Este aviso puede modificarse por cambios legales, operativos o en nuestros servicios. Publicaremos la versión vigente en esta página con su fecha de actualización y, cuando los cambios sean sustanciales y contemos con su correo electrónico, se los haremos saber por ese medio.</p>\n\n<h2>11. Aceptación</h2>\n<p>Al proporcionarnos sus datos personales por cualquier medio, usted declara haber leído este Aviso de Privacidad y consiente su tratamiento en los términos descritos. El uso de este sitio se rige además por nuestros <a href=\"/terminos-y-condiciones\">Términos y Condiciones</a>.</p>",
+        "terms_conditions": "<p><strong>Última actualización: 14 de octubre de 2026</strong></p>\n<p>Estos Términos y Condiciones regulan el uso del sitio web de Funeraria García de Bolívar (en adelante, «la Funeraria») y la información que en él se publica. Al navegar o utilizar este sitio usted acepta estos términos. Si no está de acuerdo, le pedimos no utilizarlo.</p>\n\n<h2>1. Datos del proveedor</h2>\n<p><strong>Funeraria García de Bolívar</strong>, con domicilio en Calle Bolivar 513, colonia Algarin, Alcaldía Cuauhtémoc, Ciudad de México. Teléfono: (55) 5530 8108. Correo electrónico: <a href=\"mailto:contacto@garciadebolivar.com\">contacto@garciadebolivar.com</a>. Atención las 24 horas, todos los días del año.</p>\n\n<h2>2. Naturaleza del sitio</h2>\n<p>Este sitio tiene fines informativos y de contacto. <strong>No se contratan servicios funerarios ni se realizan pagos en línea a través de él.</strong> Las solicitudes de información o cotización que usted envíe no obligan a ninguna de las partes hasta que se formalice un contrato por escrito.</p>\n\n<h2>3. Servicios, planes y precios</h2>\n<ul>\n<li>La descripción de servicios y planes publicada en el sitio es orientativa. Los servicios incluidos, su costo final en pesos mexicanos, la forma de pago y las condiciones se establecen en el contrato o cotización que usted reciba y acepte por escrito.</li>\n<li>Los precios y características mostrados pueden cambiar sin previo aviso, sin afectar contratos ya celebrados.</li>\n<li>Los servicios funerarios y los planes de previsión a futuro se formalizan mediante un contrato de adhesión por escrito, sujeto a la Ley Federal de Protección al Consumidor y a la NOM-036-SCFI-2016, cuyo modelo se encuentra registrado ante la Procuraduría Federal del Consumidor (Profeco). Antes de firmar, usted puede leer el contrato completo y pedir que se le aclaren sus dudas.</li>\n<li>Algunos servicios requieren trámites y permisos de autoridades (por ejemplo, acta de defunción, permisos de inhumación o cremación), cuya obtención depende de los documentos que proporcionen los familiares y de los tiempos de la autoridad.</li>\n</ul>\n\n<h2>4. Obituario, velas virtuales y testimonios</h2>\n<ul>\n<li>Los avisos de fallecimiento se publican a solicitud y con autorización de la familia. Quien tenga legitimación familiar puede pedir en cualquier momento que se corrija o se retire una publicación escribiendo a <a href=\"mailto:contacto@garciadebolivar.com\">contacto@garciadebolivar.com</a>.</li>\n<li>Las velas virtuales son un gesto simbólico de acompañamiento; se permite una por persona y por aviso.</li>\n<li>Al enviar un testimonio usted declara que es veraz y de su autoría, y nos autoriza a publicarlo en este sitio con su nombre. Podemos moderar, rechazar o retirar testimonios que sean ofensivos, falsos, ilícitos, publicitarios o que vulneren derechos de terceros. Puede solicitar el retiro de su testimonio cuando lo desee.</li>\n</ul>\n\n<h2>5. Uso adecuado del sitio</h2>\n<p>Usted se compromete a usar el sitio de buena fe y a no: (a) enviar información falsa o suplantar a otra persona; (b) intentar vulnerar la seguridad del sitio, automatizar solicitudes de forma abusiva o interferir con su funcionamiento; (c) publicar o enviar contenido ilícito, ofensivo o que lesione derechos de terceros; ni (d) copiar o reutilizar el contenido del sitio con fines comerciales sin autorización.</p>\n\n<h2>6. Propiedad intelectual</h2>\n<p>Los textos, diseños, logotipos, marcas, fotografías y demás contenidos del sitio pertenecen a la Funeraria o a sus respectivos titulares, y se utilizan conforme a la Ley Federal del Derecho de Autor y a la Ley Federal de Protección a la Propiedad Industrial. Algunas imágenes ilustrativas se utilizan bajo licencias de uso libre. No se otorga licencia sobre ellos salvo para uso personal y no comercial del propio sitio.</p>\n\n<h2>7. Enlaces y servicios de terceros</h2>\n<p>El sitio puede contener enlaces o contenido de terceros (por ejemplo, mapas, redes sociales o WhatsApp). La Funeraria no controla ni es responsable de sus contenidos o políticas; su uso se rige por los términos de cada tercero.</p>\n\n<h2>8. Disponibilidad y limitación de responsabilidad</h2>\n<p>Procuramos que la información del sitio sea correcta y esté actualizada, pero no garantizamos que esté libre de errores ni que el sitio funcione sin interrupciones. La Funeraria no responde por daños derivados de fallas técnicas ajenas a su control ni del uso indebido del sitio. Nada de lo aquí previsto limita los derechos que la Ley Federal de Protección al Consumidor reconoce a las personas consumidoras ni la responsabilidad que la Funeraria tenga conforme a la ley por los servicios contratados.</p>\n\n<h2>9. Privacidad y cookies</h2>\n<p>El tratamiento de sus datos personales se rige por nuestro <a href=\"http://bolivarnew.test/aviso-de-privacidad\">Aviso de Privacidad</a>, que forma parte de estos términos.</p>\n\n<h2>10. Quejas y atención al consumidor</h2>\n<p>Si tiene una duda, queja o aclaración, escríbanos a <a href=\"mailto:contacto@garciadebolivar.com\">contacto@garciadebolivar.com</a> o llámenos al (55) 5530 8108; con gusto le atenderemos. También puede acudir a la Procuraduría Federal del Consumidor (Profeco) en <a href=\"https://www.profeco.gob.mx\" rel=\"noopener noreferrer\" target=\"_blank\">www.profeco.gob.mx</a>.</p>\n\n<h2>11. Modificaciones</h2>\n<p>Podemos actualizar estos términos en cualquier momento. La versión vigente será la publicada en esta página, con su fecha de actualización. El uso del sitio después de una modificación implica su aceptación. Las modificaciones no afectan los contratos de servicios ya celebrados, que se rigen por lo pactado en ellos.</p>\n\n<h2>12. Legislación aplicable y jurisdicción</h2>\n<p>Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Para su interpretación y cumplimiento, las partes se someten a la jurisdicción de los tribunales competentes de la Ciudad de México, sin perjuicio de los derechos y vías que la Ley Federal de Protección al Consumidor otorga a la persona consumidora, incluida la intervención de Profeco.</p>",
+        "about_text": "Agencia 100% mexicana con más de 50 años de experiencia, especializada en asesorar y ayudar a las familias que atraviesan por la pérdida de un ser querido. Siempre comprometidos en brindar soluciones integrales y accesibles, cubriendo los estándares de calidad y servicio.",
+        "gallery_images": "[\"01KRC2WR7EZBETGN2D3G6E1P8E.jpg\", \"01KRC2WR7F90AFCF1F2W2TT450.jpg\", \"01KRC2WR7F90AFCF1F2W2TT451.jpg\", \"01KRC2WR7GNSB3SNPVH1F558H3.jpg\", \"01KRC2WR7GNSB3SNPVH1F558H4.jpg\"]",
+        "nosotros_banner": "01KREHQX62JTBC4C4NW77CDA0V.jpg",
+        "meta_title": "Funeraria García de Bolívar | Servicios Funerarios",
+        "meta_description": "Más de 50 años de experiencia en servicios funerarios integrales, planes de protección familiar y atención 24/7.",
+        "meta_keywords": "funeraria, servicios funerarios, planes funerarios, inhumación, cremación, ataúdes, atención 24/7, protección familiar, México, CDMX, funeral, sepelio",
+        "og_title": "Funeraria García de Bolívar",
+        "og_description": "Servicios funerarios integrales con planes de protección familiar. Atención personalizada las 24 horas.",
+        "og_image": null,
+        "twitter_card": "summary_large_image",
+        "twitter_title": "Funeraria García de Bolívar",
+        "twitter_description": "Servicios funerarios integrales. Planes de protección familiar disponibles.",
+        "twitter_image": null,
+        "canonical_url": "https://garciadebolivar.com",
+        "robots": "index, follow",
+        "schema_markup": null,
+        "mission_text": "Apoyar al núcleo familiar con un servicio eficiente, humano y respetuoso ante la inevitable pérdida de nuestros seres queridos.",
+        "vision_text": "Ser una empresa, con el compromiso de ofrecer excelencia e integridad en los servicios, generado nuevas ideas y acciones que contribuyan al comercio exterior.",
+        "facebook": "https://www.facebook.com/profile.php?id=100066391937402",
+        "instagram": null,
+        "site_logo": "01KRC2XVVHH4CH4E3NVDDCM99V.png",
+        "favicon": "01KR248QY4NC90MEGMA6Z9GBXV.png"
+    },
+    "articles": [
+        {
+            "title": "Guía del duelo",
+            "slug": "guia-del-duelo",
+            "excerpt": "¿Qué es el duelo y cómo enfrentarlo?",
+            "content": "El duelo es un proceso natural de adaptación emocional que ocurre tras una pérdida significativa...",
+            "category": "Duelo",
+            "image": "articles/guia-1.webp",
+            "is_active": 1,
+            "published_at": null
+        },
+        {
+            "title": "¿Qué hacer en caso de fallecimiento?",
+            "slug": "que-hacer-fallecimiento",
+            "excerpt": "Pasos importantes a seguir.",
+            "content": "Perder a un ser querido es un momento difícil. Te acompañamos con esta guía práctica...",
+            "category": "Necesidad Inmediata",
+            "image": "articles/guia-2.webp",
+            "is_active": 1,
+            "published_at": null
+        },
+        {
+            "title": "Cómo acompañar a alguien en duelo",
+            "slug": "como-acompanar-duelo",
+            "excerpt": "Consejos para apoyar a quien pierde a un ser querido.",
+            "content": "Estar presente es lo más importante. Aprende a escuchar y acompañar sin juzgar...",
+            "category": "Duelo",
+            "image": "articles/guia-3.webp",
+            "is_active": 1,
+            "published_at": null
+        },
+        {
+            "title": "¿Qué es el duelo y cómo procesarlo?",
+            "slug": "que-es-el-duelo-y-como-procesarlo",
+            "excerpt": "El duelo es un proceso natural de adaptación ante la pérdida. Conoce sus etapas y cómo manejarlas de manera saludable.",
+            "content": "El duelo es un proceso emocional complejo que todas las personas experimentan ante la pérdida de un ser querido. Este proceso implica un conjunto de reacciones físicas, emocionales, cognitivas y espirituales. Las etapas clásicas del duelo incluyen: negación, que nos protege de la intensidad del dolor inicial; enojo, que emerge cuando comenzamos a aceptar la realidad; negociación, donde intentamos encontrar sentido o soluciones; depresión, que es el dolor profundo de la pérdida; y finalmente la aceptación, donde aprendemos a vivir con la ausencia. Es importante entender que no existe un tiempo fijo para procesar el duelo. Cada persona tiene su propio ritmo y atraviesa estas etapas en diferentes momentos. Durante el proceso de duelo, es fundamental permitirse sentir todas las emociones sin juzgarte. El apoyo de familiares, amigos o profesionales de salud mental puede ser invaluable.",
+            "category": "Duelo",
+            "image": "articles/guia-4.webp",
+            "is_active": 1,
+            "published_at": "2026-02-16 19:52:48"
+        },
+        {
+            "title": "Cómo hablar con niños sobre la muerte",
+            "slug": "como-hablar-con-ninos-sobre-la-muerte",
+            "excerpt": "Acompañar a los niños en la comprensión de la muerte requiere sensibilidad y honestidad adaptada a su edad.",
+            "content": "Hablar con niños sobre la muerte es uno de los conversaciones más difíciles que enfrentan los padres. La clave está en ser honesto, pero adaptando el lenguaje a la edad del niño. Los niños menores de 6 años generalmente no comprenden la muerte como algo permanente. Para ellos, es mejor enfocarse en respuestas simples y concretas. Entre los 6 y 12 años, los niños comienzan a entender que la muerte es irreversible. Pueden tener miedo y hacer muchas preguntas. Los adolescentes comprenden la muerte de manera similar a los adultos. Es fundamental: usar lenguaje claro y honesto, validar sus emociones, permitirles hacer preguntas, mantener rutinas lo más normales posible.",
+            "category": "Familia",
+            "image": "articles/guia-5.webp",
+            "is_active": 1,
+            "published_at": "2026-03-29 19:52:48"
+        },
+        {
+            "title": "Rituales funerarios: significado y importancia",
+            "slug": "rituales-funerarios-significado-y-importancia",
+            "excerpt": "Los rituales funerarios cumplen un papel fundamental en el proceso de sanación colectiva.",
+            "content": "Los rituales funerarios han existido desde el principio de la humanidad y cumplen funciones sociales, emocionales y espirituales cruciales. En la tradición mexicana, los rituales funerarios están profundamente arraigados. Desde la Día de los Muertos hasta las velaciones tradicionales, cada práctica tiene un significado profundo. El velorio representa el último momento de compañía terrenal. Reunir a la familia permite compartir recuerdos y comenzar el proceso de despedida. La cremación y la inhumación son opciones que cada familia elige según sus creencias. Ambas prácticas son válidas y respetables. Los responos y misas son momentos de celebración de la vida del difunto.",
+            "category": "Cultura",
+            "image": "articles/guia-6.webp",
+            "is_active": 1,
+            "published_at": "2026-03-04 19:52:48"
+        },
+        {
+            "title": "Derechos laborales por defunción",
+            "slug": "derechos-laborales-por-defuncion",
+            "excerpt": "Conoce los derechos laborales que asisten a los familiares de un trabajador fallecido en México.",
+            "content": "En México, existen derechos laborales específicos para familiares de trabajadores que fallecen. El seguro de vida grupal es una prestación obligatoria. Este seguro debe cubrir al menos 12 meses del salario base del trabajador. Las cuentas de ahorro para el retiro (AFORE) pueden ser reclamadas por los beneficiarios legales. El patrón debe pagar indemnizaciones según la Ley Federal del Trabajo. Si el trabajador falleció debido a un accidente laboral, la familia tiene derecho a mayores beneficios. Los trámites pueden ser complicados. Se recomienda documentar todo y buscar asesoría legal.",
+            "category": "Legal",
+            "image": "articles/guia-7.webp",
+            "is_active": 1,
+            "published_at": "2026-05-04 19:52:48"
+        },
+        {
+            "title": "Cremación vs. inhumación: ¿cuál elegir?",
+            "slug": "cremacion-vs-inhumacion-cual-elegir",
+            "excerpt": "Una guía para ayudarte a tomar la mejor decisión sobre el destino final de tu ser querido.",
+            "content": "Elegir entre cremación e inhumación es una decisión profundamente personal. La cremación ha ganado popularidad por razones prácticas. El costo es generalmente inferior y ofrece mayor flexibilidad para el manejo de las cenizas. La inhumación tradicional sigue siendo la preference de muchas familias, especialmente aquellas con tradiciones religiosas específicas. Ambas opciones son respetadas y válidas. Lo importante es que la familia esté en paz con la decisión. En nuestra funeraria ofrecemos ambos servicios con el mismo nivel de dignidad y profesionalismo.",
+            "category": "Decisiones",
+            "image": "articles/guia-8.webp",
+            "is_active": 1,
+            "published_at": "2026-03-11 19:52:48"
+        },
+        {
+            "title": "Autoestima en el proceso de duelo",
+            "slug": "autoestima-en-el-proceso-de-duelo",
+            "excerpt": "Cómo cuidar tu autoestima cuando estás atravesando un proceso de duelo.",
+            "content": "El proceso de duelo puede golpear nuestra autoestima de maneras inesperadas. Es común preguntarse si pudimos haber hecho algo diferente. Es fundamental reconocer que estos sentimientos son normales y no reflejan la realidad. El concepto de culpa del sobreviviente es real y afecta a muchas personas. Consejos: Permite sentir todas las emociones, no te compares con otros, busca ayuda profesional si es necesario, mantén un diario de gratitud, y recuerda que cuidarte no es egoísmo.",
+            "category": "Duelo",
+            "image": "articles/guia-9.webp",
+            "is_active": 1,
+            "published_at": "2026-04-05 19:52:48"
+        },
+        {
+            "title": "Cómo crear un álbum de recuerdos",
+            "slug": "como-crear-un-album-de-recuerdos",
+            "excerpt": "Un álbum de recuerdos puede ser un hermoso tributo y una herramienta terapéutica para el duelo.",
+            "content": "Crear un álbum de recuerdos es una forma de honrar la vida de tu ser querido mientras procesas tu dolor. Para comenzar, reúne materiales: un álbum, fotografías, papeles, marcadores y objetos significativos. Organiza el álbum de manera cronológica o por temas. Incluye variedad: fotografías, cartas, recortes. No te preocupes por la perfección estética. Lo que importa es el proceso y las memorias. Considera involucrar a otros miembros de la familia. Crear juntos puede ser una experiencia de sanación colectiva.",
+            "category": "Memorial",
+            "image": "articles/guia-10.webp",
+            "is_active": 1,
+            "published_at": "2026-03-06 19:52:48"
+        },
+        {
+            "title": "Ansiedad y depresión en el duelo",
+            "slug": "ansiedad-y-depresion-en-el-duelo",
+            "excerpt": "Cómo distinguir entre tristeza normal y condiciones que requieren atención profesional.",
+            "content": "Es normal experimentar síntomas de ansiedad y depresión durante el duelo. Sin embargo, cuando son intensos o persistentes, podría ser necesario buscar ayuda profesional. Señales de alarma: pensamientos de hacerse daño, síntomas que no mejoran después de varios meses, aislamiento prolongado, incapacidad para actividades básicas. La terapia cognitivo-conductual y la terapia de duelo han demostrado ser efectivas. No hay vergüenza en buscar ayuda.",
+            "category": "Salud Mental",
+            "image": "articles/guia-11.webp",
+            "is_active": 1,
+            "published_at": "2026-03-25 19:52:48"
+        },
+        {
+            "title": "La importancia del apoyo familiar en el duelo",
+            "slug": "la-importancia-del-apoyo-familiar-en-el-duelo",
+            "excerpt": "Cómo las familias pueden apoyarse mutuamente durante el proceso de duelo.",
+            "content": "El duelo afecta a toda la familia, pero cada miembro lo procesa de manera diferente. Cada persona tiene su propia relación con quien murió y, por lo tanto, su propia experiencia de pérdida. Crear espacios seguros para hablar sobre quien extrañamos es importante. Establecer nuevas tradiciones juntos puede ayudar a mantener el sentimiento de continuidad. Considerar terapia familiar si los conflictos persisten.",
+            "category": "Familia",
+            "image": "articles/guia-12.webp",
+            "is_active": 1,
+            "published_at": "2026-02-17 19:52:48"
+        },
+        {
+            "title": "Finanzas después de una muerte",
+            "slug": "finanzas-despues-de-una-muerte",
+            "excerpt": "Guía básica para manejar las finanzas familiares después de perder a un ser querido.",
+            "content": "La muerte de un ser querido trae consigo desafíos prácticos. No tomes decisiones financieras importantes inmediatamente. Trámites importantes: Obtener copias del acta de defunción, revisar cuentas bancarias conjuntas, contactar empleadores, revisar seguros de vida, notificar al SAT. No temas pedir ayuda. Un abogado de familia puede orientar sobre tus derechos.",
+            "category": "Legal",
+            "image": "articles/guia-13.webp",
+            "is_active": 1,
+            "published_at": "2026-02-27 19:52:48"
+        },
+        {
+            "title": "Superar el miedo a la muerte",
+            "slug": "superar-el-miedo-a-la-muerte",
+            "excerpt": "Estrategias para manejar el miedo natural a la muerte y promover una vida plena.",
+            "content": "El miedo a la muerte es una de las fears más fundamentales del ser humano. Acepta la mortalidad como parte de la vida. Cuando aceptamos esto, tendemos a valorar más cada día. Habla sobre la muerte. Las conversaciones abiertas pueden diminish su poder. Participa en rituales funerarios y de recuerdo. Considera la búsqueda de apoyo espiritual o filosófico. Si el miedo afecta tu vida diaria, considera buscar therapy.",
+            "category": "Bienestar",
+            "image": "articles/guia-14.webp",
+            "is_active": 1,
+            "published_at": "2026-02-15 19:53:35"
+        },
+        {
+            "title": "Niños y adolescentes en duelo",
+            "slug": "ninos-y-adolescentes-en-duelo",
+            "excerpt": "Cómo identificar si un niño o adolescente está teniendo dificultad con el duelo.",
+            "content": "Los niños expresan el duelo de maneras muy diferentes a los adultos. Los niños pueden mostrar regresión de comportamiento, pesadillas, o dificultad para dormir. Los adolescentes pueden isolarse más, experimentar cambios de humor intensos, o asumir roles de adulto prematuramente. Estrategias: No mentir, no evitar el tema, validar sus emociones, mantener rutinas, ser honesto pero age-appropriate. Buscar ayuda profesional si hay decline académico significativo o comportamientos de riesgo.",
+            "category": "Familia",
+            "image": "articles/guia-15.webp",
+            "is_active": 1,
+            "published_at": "2026-02-18 19:53:35"
+        },
+        {
+            "title": "El rol de la fe en el proceso de duelo",
+            "slug": "el-rol-de-la-fe-en-el-proceso-de-duelo",
+            "excerpt": "Cómo la fe y las creencias espirituales pueden proporcionar consuelo durante el duelo.",
+            "content": "Para muchas personas, la fe juega un papel fundamental en cómo procesan el duelo. La religion puede proporcionar un marco de sentido, esperanza y comunidad. La comunidad religiosa ofrece apoyo invaluable. Los rituales como misas, rosarios o ceremonias permiten a las familias reunirse para honrar a quien partió. No importa cuál sea tu fe, encontrar sentido y esperanza puede hacer una diferencia significativa.",
+            "category": "Espiritualidad",
+            "image": "articles/guia-16.webp",
+            "is_active": 1,
+            "published_at": "2026-02-28 19:53:35"
+        },
+        {
+            "title": "Duelo en fechas especiales",
+            "slug": "duelo-en-fechas-especiales",
+            "excerpt": "Cómo enfrentar las primeras navidades, aniversarios y cumpleaños sin tu ser querido.",
+            "content": "Las fechas especiales después de una pérdida pueden ser especialmente difíciles. Planifica con anticipación. Decide cómo quieres pasar la fecha. No tienes que estar solo, pero tampoco tienes que estar rodeando de gente. Crea un ritual de recuerdo. Encender una vela puede ayudar. Honra su memoria. Donar a una causa importante o plantar un árbol son formas de incluirlos. Sé gentil contigo mismo.",
+            "category": "Duelo",
+            "image": "articles/guia-17.webp",
+            "is_active": 1,
+            "published_at": "2026-03-02 19:53:35"
+        },
+        {
+            "title": "Cuando un padre pierde a un hijo",
+            "slug": "cuando-un-padre-pierde-a-un-hijo",
+            "excerpt": "El duelo de un padre que pierde a un hijo es uno de los más intensos. Cómo encontrar apoyo.",
+            "content": "Perder a un hijo es probablemente la experiencia más devastadora que puede enfrentar un padre. El duelo de perder un hijo dura toda la vida. No superamos este tipo de pérdida; aprendemos a vivir con ella. Es crucial encontrar apoyo. Grupos de padres que han perdido hijos pueden proporcionar un espacio único de comprensión. No dejes que otros minimicen tu dolor. Tu relación con tu hijo no termina con su muerte. Cada padre encuentra su propia manera de mantener ese vínculo.",
+            "category": "Duelo",
+            "image": "articles/guia-18.webp",
+            "is_active": 1,
+            "published_at": "2026-05-06 19:53:35"
+        },
+        {
+            "title": "Muerte súbita: cómo enfrentar lo inesperado",
+            "slug": "muerte-subita-como-enfrentar-lo-inesperado",
+            "excerpt": "Cuando la muerte llega sin aviso, el shock y el trauma pueden ser abrumadores.",
+            "content": "La muerte súbita es una de las experiencias más traumáticas que puede enfrentar una familia. El primer impacto es el shock. Es normal sentir entumecimiento y dificultad para procesar. Preguntas sin respuesta pueden consume a los familiares. No tomar decisiones importantes en los primeros días. Buscar apoyo profesional para procesar el trauma. El tiempo ayuda, aunque no elimina el dolor.",
+            "category": "Duelo",
+            "image": "articles/guia-19.webp",
+            "is_active": 1,
+            "published_at": "2026-04-22 19:53:35"
+        },
+        {
+            "title": "Vivir solo después de perder a tu pareja",
+            "slug": "vivir-solo-despues-de-perder-a-tu-pareja",
+            "excerpt": "Cómo adaptarse a la vida cotidiana cuando has perdido a quien era tu compañero.",
+            "content": "Perder a tu pareja significa perder no solo al amor de tu vida, sino también a tu compañero diario. Las cosas simples se vuelven difíciles. Permitete tiempo para adaptarte. Conecta con otros. El aislamiento es tentador pero contraproducente. Encuentra actividades que te interesen. Parte de reinventarte incluye descubrir qué te apasiona. Considera terapia individual o grupos de apoyo para viudos. La vida después de la pérdida es diferente, no necesariamente peor.",
+            "category": "Duelo",
+            "image": "articles/guia-20.webp",
+            "is_active": 1,
+            "published_at": "2026-05-05 19:53:35"
+        },
+        {
+            "title": "Duelo por pérdida de mascota",
+            "slug": "duelo-por-perdida-de-mascota",
+            "excerpt": "El duelo por una mascota es real y significativo. Cómo honrar su memoria y procesar el dolor.",
+            "content": "Para muchas personas, las mascotas son miembros de la familia. No minimices el dolor. Lo que sientes es válido. Para honrar su memoria: crea un espacio con fotos, planta un árbol, crea un álbum. Si tienes otras mascotas, ellas también pueden estar de duelo. No hay timeline para el duelo de una mascota. Si el dolor es overwhelming, busca apoyo profesional.",
+            "category": "Mascotas",
+            "image": "articles/guia-21.webp",
+            "is_active": 1,
+            "published_at": "2026-05-08 19:53:35"
+        },
+        {
+            "title": "Suicidio: navegando el duelo más difícil",
+            "slug": "suicidio-navegando-el-duelo-mas-dificil",
+            "excerpt": "El duelo por suicidio tiene características únicas. Cómo encontrar ayuda y esperanza.",
+            "content": "El duelo por suicidio es complejo. Los familiares enfrentan el dolor de la pérdida más el shock y la confusión. La culpa es particularmente intensa. Recuerda que el suicidio es resultado de una enfermedad mental. El stigma evita que muchos busquen ayuda. Lo que los sobrevivientes necesitan: grupo de apoyo específico, terapia especializada, educación sobre salud mental. Los sobrevivientes están en mayor riesgo de desarrollar problemas de salud mental. Con el tiempo y apoyo adecuado, es posible encontrar paz.",
+            "category": "Duelo",
+            "image": "articles/guia-22.webp",
+            "is_active": 1,
+            "published_at": "2026-02-17 19:53:35"
+        },
+        {
+            "title": "Cómo ayudar a un amigo en duelo",
+            "slug": "como-ayudar-a-un-amigo-en-duelo",
+            "excerpt": "Guía práctica para apoyar a alguien que está pasando por el proceso de duelo.",
+            "content": "Cuando un amigo pierde a un ser querido, a menudo queremos ayudar pero no sabemos qué hacer. Lo que SÍ debes hacer: preguntar cómo está, escuchar sin juzgar, ofrecer ayuda concreta, recordar fechas importantes. Lo que NO debes hacer: no minimizar el dolor, no forzar la conversación, no desaparecer después de las primeras semanas. Los gestos más simples pueden ser los más significativos. El apoyo a largo plazo es crucial. El duelo no termina después del funeral. Si tu amigo muestra señales de preocupación, ayúdale a buscar ayuda profesional.",
+            "category": "Apoyo",
+            "image": "articles/guia-23.webp",
+            "is_active": 1,
+            "published_at": "2026-03-21 19:53:35"
+        }
+    ]
+}
