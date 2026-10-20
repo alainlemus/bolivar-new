@@ -14,10 +14,14 @@
     $pageRobots = (($noindex ?? false) || ! app()->isProduction()) ? 'noindex, nofollow' : ($siteInfo->robots ?: 'index, follow');
     $pageType = $ogType ?? 'website';
 
-    $imagePath = $image ?? $siteInfo->og_image ?? $siteInfo->site_logo;
+    // Imagen al compartir: la de la página, la del panel (og_image) o la imagen de marca 1200×630.
+    // No se usa site_logo: es un PNG transparente de otra proporción y se ve mal en WhatsApp/Facebook.
+    $imagePath = $image ?? $siteInfo->og_image;
+    $isDefaultImage = ! $imagePath;
     $pageImage = $imagePath
         ? $abs(str_starts_with($imagePath, 'http') ? $imagePath : 'storage/' . $imagePath)
-        : $abs('images/logo.png');
+        : $abs('images/og-default.jpg');
+    $logoUrl = $abs($siteInfo->site_logo ? 'storage/' . $siteInfo->site_logo : 'images/escudo.webp');
 
     $sameAs = array_values(array_filter([$siteInfo->facebook ?? null, $siteInfo->instagram ?? null]));
 
@@ -30,8 +34,8 @@
         'name' => $siteName,
         'description' => $siteInfo->meta_description,
         'url' => $canonicalBase . '/',
-        'image' => $abs($siteInfo->site_logo ? 'storage/' . $siteInfo->site_logo : 'images/logo.png'),
-        'logo' => $abs($siteInfo->site_logo ? 'storage/' . $siteInfo->site_logo : 'images/logo.png'),
+        'image' => $pageImage,
+        'logo' => $logoUrl,
         'telephone' => $siteInfo->phone,
         'email' => $siteInfo->email,
         'address' => $siteInfo->address ? [
@@ -103,12 +107,18 @@
     <meta property="og:title" content="{{ $pageTitle }}">
     <meta property="og:description" content="{{ $pageDescription }}">
     <meta property="og:image" content="{{ $pageImage }}">
-    <meta property="og:image:alt" content="{{ $siteName }}">
+    @if ($isDefaultImage)
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+    @endif
+    <meta property="og:image:alt" content="{{ $pageTitle }}">
 
     <meta name="twitter:card" content="{{ $siteInfo->twitter_card ?: 'summary_large_image' }}">
     <meta name="twitter:title" content="{{ $pageTitle }}">
     <meta name="twitter:description" content="{{ $pageDescription }}">
     <meta name="twitter:image" content="{{ $pageImage }}">
+    <meta name="twitter:image:alt" content="{{ $pageTitle }}">
 
     <x-favicons :site-info="$siteInfo" />
 
