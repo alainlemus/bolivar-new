@@ -22,6 +22,7 @@ class ObituariesTable
             ->columns([
                 ImageColumn::make('image')
                     ->label('Foto')
+                    ->disk('public')
                     ->circular(),
                 TextColumn::make('deceased_name')
                     ->label('Nombre del Fallecido')
