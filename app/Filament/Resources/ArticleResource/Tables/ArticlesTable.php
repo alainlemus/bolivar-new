@@ -19,6 +19,7 @@ class ArticlesTable
             ->columns([
                 ImageColumn::make('image')
                     ->label('Portada')
+                    ->disk('public')
                     ->width(90)
                     ->height(48),
                 TextColumn::make('title')

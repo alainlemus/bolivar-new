@@ -23,7 +23,8 @@ class SlidesTable
                     ->label('Subtítulo')
                     ->searchable(),
                 ImageColumn::make('image')
-                    ->label('Imagen'),
+                    ->label('Imagen')
+                    ->disk('public'),
                 TextColumn::make('order')
                     ->label('Orden')
                     ->numeric()
