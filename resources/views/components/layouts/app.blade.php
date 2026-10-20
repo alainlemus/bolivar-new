@@ -14,13 +14,21 @@
     $pageRobots = (($noindex ?? false) || ! app()->isProduction()) ? 'noindex, nofollow' : ($siteInfo->robots ?: 'index, follow');
     $pageType = $ogType ?? 'website';
 
-    // Imagen al compartir: la de la página, la del panel (og_image) o la imagen de marca 1200×630.
+    // Imagen al compartir: la de la página, la del panel (og_image / twitter_image) o la imagen de marca.
     // No se usa site_logo: es un PNG transparente de otra proporción y se ve mal en WhatsApp/Facebook.
+    $toUrl = fn (string $path) => $abs(str_starts_with($path, 'http') ? $path : 'storage/' . $path);
     $imagePath = $image ?? $siteInfo->og_image;
     $isDefaultImage = ! $imagePath;
-    $pageImage = $imagePath
-        ? $abs(str_starts_with($imagePath, 'http') ? $imagePath : 'storage/' . $imagePath)
-        : $abs('images/og-default.jpg');
+    $pageImage = $imagePath ? $toUrl($imagePath) : $abs('images/og-default.jpg');
+    $twitterImage = ($image ?? $siteInfo->twitter_image ?? $siteInfo->og_image)
+        ? $toUrl($image ?? $siteInfo->twitter_image ?? $siteInfo->og_image)
+        : $abs('images/og-default-twitter.jpg');
+
+    // Título/descripción al compartir: el de la página si define uno propio; si no, los del panel.
+    $ogTitle = $title ?? ($siteInfo->og_title ?: $pageTitle);
+    $ogDescription = $description ?? ($siteInfo->og_description ?: $pageDescription);
+    $twitterTitle = $title ?? ($siteInfo->twitter_title ?: $ogTitle);
+    $twitterDescription = $description ?? ($siteInfo->twitter_description ?: $ogDescription);
     $logoUrl = $abs($siteInfo->site_logo ? 'storage/' . $siteInfo->site_logo : 'images/escudo.webp');
 
     $sameAs = array_values(array_filter([$siteInfo->facebook ?? null, $siteInfo->instagram ?? null]));
@@ -104,21 +112,21 @@
     <meta property="og:locale" content="es_MX">
     <meta property="og:site_name" content="{{ $siteName }}">
     <meta property="og:url" content="{{ $pageCanonical }}">
-    <meta property="og:title" content="{{ $pageTitle }}">
-    <meta property="og:description" content="{{ $pageDescription }}">
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
     <meta property="og:image" content="{{ $pageImage }}">
     @if ($isDefaultImage)
         <meta property="og:image:type" content="image/jpeg">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
     @endif
-    <meta property="og:image:alt" content="{{ $pageTitle }}">
+    <meta property="og:image:alt" content="{{ $ogTitle }}">
 
     <meta name="twitter:card" content="{{ $siteInfo->twitter_card ?: 'summary_large_image' }}">
-    <meta name="twitter:title" content="{{ $pageTitle }}">
-    <meta name="twitter:description" content="{{ $pageDescription }}">
-    <meta name="twitter:image" content="{{ $pageImage }}">
-    <meta name="twitter:image:alt" content="{{ $pageTitle }}">
+    <meta name="twitter:title" content="{{ $twitterTitle }}">
+    <meta name="twitter:description" content="{{ $twitterDescription }}">
+    <meta name="twitter:image" content="{{ $twitterImage }}">
+    <meta name="twitter:image:alt" content="{{ $twitterTitle }}">
 
     <x-favicons :site-info="$siteInfo" />
 

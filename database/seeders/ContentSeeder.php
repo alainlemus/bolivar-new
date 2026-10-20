@@ -36,11 +36,18 @@ class ContentSeeder extends Seeder
             $this->upsert('articles', ['slug' => $row['slug']], $row);
         }
 
-        // Una sola fila de datos del sitio.
-        $siteInfoId = DB::table('site_infos')->value('id');
-        $siteInfoId
-            ? DB::table('site_infos')->where('id', $siteInfoId)->update($data['site_info'] + ['updated_at' => now()])
-            : DB::table('site_infos')->insert($data['site_info'] + ['created_at' => now(), 'updated_at' => now()]);
+        // Una sola fila de datos del sitio. Las imágenes para compartir (og/twitter) solo se
+        // cargan si el panel no tiene ya una propia.
+        $siteInfo = DB::table('site_infos')->first();
+        $values = $data['site_info'];
+        foreach (['og_image', 'twitter_image'] as $key) {
+            if ($siteInfo && ! empty($siteInfo->$key)) {
+                unset($values[$key]);
+            }
+        }
+        $siteInfo
+            ? DB::table('site_infos')->where('id', $siteInfo->id)->update($values + ['updated_at' => now()])
+            : DB::table('site_infos')->insert($values + ['created_at' => now(), 'updated_at' => now()]);
 
         $this->call([
             ArticleCoversSeeder::class,
