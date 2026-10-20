@@ -94,6 +94,7 @@ class SiteContentPage extends Page
                     Tab::make('Encabezados')->icon(Heroicon::OutlinedRectangleGroup)->schema([
                         $pageFields('servicios', 'Servicios'),
                         $pageFields('planes', 'Planes'),
+                        $pageFields('panteones', 'Panteones y crematorios'),
                         $pageFields('obituario', 'Obituario'),
                         $pageFields('testimonios', 'Testimonios'),
                         $pageFields('guia', 'Guía'),

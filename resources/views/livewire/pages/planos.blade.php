@@ -119,19 +119,6 @@
             </section>
         @endif
 
-        {{-- Panteones y crematorios de la CDMX --}}
-        <section class="py-14 md:py-20 bg-paper" aria-labelledby="mapa-titulo">
-            <div class="container mx-auto px-4">
-                <div class="text-center max-w-3xl mx-auto mb-10" data-reveal>
-                    @php $m = \App\Support\SiteContent::text('map'); @endphp
-                    <p class="mb-4"><span class="eyebrow">{{ $m['eyebrow'] }}</span></p>
-                    <h2 id="mapa-titulo" class="font-serif text-3xl md:text-4xl font-bold text-gray-800 mb-3">{{ $m['title'] }}</h2>
-                    <p class="text-gray-600">{{ $m['text'] }}</p>
-                </div>
-                <x-places-map />
-            </div>
-        </section>
-
         @if (count($faqs))
         <section class="py-14 md:py-20" aria-labelledby="faq-planes">
             <div class="container mx-auto px-4 max-w-3xl">

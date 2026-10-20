@@ -68,6 +68,7 @@ class SiteContent
             'pages' => [
                 'servicios' => ['eyebrow' => 'Lo que hacemos', 'title' => 'Servicios funerarios integrales', 'subtitle' => 'Todo lo necesario para despedir a tu ser querido con dignidad, en un solo lugar y con una sola llamada.'],
                 'planes' => ['eyebrow' => 'Protección familiar', 'title' => 'Planes para cuidar a quienes más quieres', 'subtitle' => 'Decide hoy con calma para que, llegado el momento, tu familia solo tenga que acompañarse.'],
+                'panteones' => ['eyebrow' => 'Mapa de la Ciudad de México', 'title' => 'Panteones y crematorios cerca de ti', 'subtitle' => 'Consulta dónde se encuentran los panteones y crematorios de la ciudad, filtra por alcaldía o encuentra el más cercano a tu ubicación.'],
                 'obituario' => ['eyebrow' => 'En memoria', 'title' => 'Obituario', 'subtitle' => 'Recordando con cariño a quienes nos han dejado y acompañando a sus familias.'],
                 'testimonios' => ['eyebrow' => 'Voces de familias', 'title' => 'Historias de amor y gratitud', 'subtitle' => 'Las palabras de quienes hemos acompañado son nuestra mayor motivación para seguir cuidando cada detalle.'],
                 'guia' => ['eyebrow' => 'Orientación', 'title' => 'Guía para atravesar el duelo', 'subtitle' => 'Recursos, consejos y respuestas claras para cuando más los necesitas.'],

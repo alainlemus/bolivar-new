@@ -76,7 +76,7 @@
     ];
 
     // Migas de pan automáticas para las páginas de primer nivel (las de detalle aportan las suyas)
-    $crumbNames = ['servicios' => 'Servicios', 'planes' => 'Planes', 'obituario' => 'Obituario', 'testimonios' => 'Testimonios', 'guia' => 'Guía', 'contacto' => 'Contacto', 'aviso-de-privacidad' => 'Aviso de privacidad', 'terminos-y-condiciones' => 'Términos y condiciones'];
+    $crumbNames = ['servicios' => 'Servicios', 'planes' => 'Planes', 'panteones-y-crematorios' => 'Panteones y crematorios', 'obituario' => 'Obituario', 'testimonios' => 'Testimonios', 'guia' => 'Guía', 'contacto' => 'Contacto', 'aviso-de-privacidad' => 'Aviso de privacidad', 'terminos-y-condiciones' => 'Términos y condiciones'];
     $firstSegment = request()->segment(1);
     $hasCrumbs = collect($jsonLd ?? [])->contains(fn ($s) => ($s['@type'] ?? null) === 'BreadcrumbList');
     $breadcrumb = ! $hasCrumbs && request()->segment(2) === null && isset($crumbNames[$firstSegment]) ? [[

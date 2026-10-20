@@ -50,7 +50,10 @@
                     <ul class="space-y-2">
                         <li><a href="{{ route('home') }}#nosotros" class="text-gray-400 hover:text-amber-400 transition">Nosotros</a></li>
                         <li><a href="{{ route('servicios') }}" class="text-gray-400 hover:text-amber-400 transition">Servicios</a></li>
-                        <li><a href="{{ route('planes') }}" class="text-gray-400 hover:text-amber-400 transition">Planes</a></li>
+                        @if (config('site.plans_enabled'))
+                            <li><a href="{{ route('planes') }}" class="text-gray-400 hover:text-amber-400 transition">Planes</a></li>
+                        @endif
+                        <li><a href="{{ route('panteones') }}" class="text-gray-400 hover:text-amber-400 transition">Panteones y crematorios</a></li>
                         <li><a href="{{ route('obituario') }}" class="text-gray-400 hover:text-amber-400 transition">Obituario</a></li>
                         <li><a href="{{ route('testimonios') }}" class="text-gray-400 hover:text-amber-400 transition">Testimonios</a></li>
                         <li><a href="{{ route('guia') }}" class="text-gray-400 hover:text-amber-400 transition">Guía</a></li>

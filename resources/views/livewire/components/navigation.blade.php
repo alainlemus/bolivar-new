@@ -2,7 +2,9 @@
     $links = [
         ['label' => 'Nosotros', 'route' => 'nosotros', 'active' => Route::is('nosotros', 'home')],
         ['label' => 'Servicios', 'route' => 'servicios', 'active' => Route::is('servicios')],
-        ['label' => 'Planes', 'route' => 'planes', 'active' => Route::is('planes')],
+        config('site.plans_enabled')
+            ? ['label' => 'Planes', 'route' => 'planes', 'active' => Route::is('planes')]
+            : ['label' => 'Panteones', 'route' => 'panteones', 'active' => Route::is('panteones')],
         ['label' => 'Obituario', 'route' => 'obituario', 'active' => Route::is('obituario*')],
         ['label' => 'Testimonios', 'route' => 'testimonios', 'active' => Route::is('testimonios*')],
         ['label' => 'Guía', 'route' => 'guia', 'active' => Route::is('guia*')],
