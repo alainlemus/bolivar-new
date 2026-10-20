@@ -25,6 +25,8 @@ class Faq extends Model
     {
         return static::active()->where('page', $page)->orderBy('order')->orderBy('id')
             ->get(['question', 'answer'])
+            // Con los planes ocultos (config/site.php) tampoco se muestran las preguntas que los mencionan.
+            ->reject(fn ($f) => ! config('site.plans_enabled') && preg_match('/\bplanes?\b/iu', $f->question.' '.$f->answer))
             ->map(fn ($f) => ['q' => $f->question, 'a' => $f->answer])
             ->all();
     }

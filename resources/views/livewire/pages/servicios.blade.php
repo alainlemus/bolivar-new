@@ -84,7 +84,7 @@
         </section>
 
         {{-- Planes: acceso directo --}}
-        @if ($plans->count() > 0)
+        @if (config('site.plans_enabled') && $plans->count() > 0)
             <section class="bg-white py-14 md:py-20 border-t border-gray-100">
                 <div class="container mx-auto px-4">
                     <div class="text-center mb-12" data-reveal>
@@ -109,6 +109,19 @@
                 </div>
             </section>
         @endif
+
+        {{-- Acceso corto al mapa de panteones y crematorios --}}
+        <section class="bg-white py-14 md:py-20 border-t border-gray-100">
+            <div class="container mx-auto px-4 max-w-3xl text-center" data-reveal>
+                <p class="mb-4"><span class="eyebrow">Mapa de la Ciudad de México</span></p>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-800 mb-3">Panteones y crematorios cerca de ti</h2>
+                <p class="text-gray-600 mb-8">Consulta dónde se encuentran, filtra por alcaldía o encuentra el más cercano a tu ubicación.</p>
+                <a href="{{ route('panteones') }}" class="btn inline-flex items-center px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition font-medium">
+                    Ver el mapa
+                    <span class="btn-chip" aria-hidden="true"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M9 7h8v8"/></svg></span>
+                </a>
+            </div>
+        </section>
     </main>
 
     <x-process-steps />

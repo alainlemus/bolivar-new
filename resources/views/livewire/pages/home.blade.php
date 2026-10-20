@@ -215,10 +215,9 @@
     <section id="servicios" class="py-14 md:py-20 bg-white">
         <div class="container mx-auto px-4">
             <p class="text-center mb-4" data-reveal><span class="eyebrow">Lo que incluimos</span></p>
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-serif text-gray-800" data-reveal>Planes y Servicios
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 font-serif text-gray-800" data-reveal>{{ config('site.plans_enabled') ? 'Planes y Servicios' : 'Nuestros Servicios' }}
             </h2>
-            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Todos nuestros planes incluyen los siguientes
-                servicios</p>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">{{ config('site.plans_enabled') ? 'Todos nuestros planes incluyen los siguientes servicios' : 'Todo lo necesario para despedir a tu ser querido, en un solo lugar' }}</p>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 @forelse($services as $service)
@@ -246,6 +245,7 @@
         </div>
     </section>
 
+    @if (config('site.plans_enabled'))
     <section id="planes" class="py-14 md:py-20 bg-paper">
         <div class="container mx-auto px-4">
             <p class="text-center mb-4" data-reveal><span class="eyebrow">Protección familiar</span></p>
@@ -298,6 +298,7 @@
             </div>
         </div>
     </section>
+    @endif
 
     <x-cta-band />
 

@@ -45,7 +45,8 @@ class SeoController extends Controller
             $urls = [
                 ['loc' => $this->canonical('home'), 'priority' => '1.0', 'changefreq' => 'weekly'],
                 ['loc' => $this->canonical('servicios'), 'priority' => '0.9', 'changefreq' => 'monthly'],
-                ['loc' => $this->canonical('planes'), 'priority' => '0.9', 'changefreq' => 'monthly'],
+                config('site.plans_enabled') ? ['loc' => $this->canonical('planes'), 'priority' => '0.9', 'changefreq' => 'monthly'] : null,
+                ['loc' => $this->canonical('panteones'), 'priority' => '0.7', 'changefreq' => 'monthly'],
                 ['loc' => $this->canonical('obituario'), 'priority' => '0.8', 'changefreq' => 'daily'],
                 ['loc' => $this->canonical('testimonios'), 'priority' => '0.6', 'changefreq' => 'weekly'],
                 ['loc' => $this->canonical('guia'), 'priority' => '0.7', 'changefreq' => 'weekly'],
@@ -53,6 +54,8 @@ class SeoController extends Controller
                 ['loc' => $this->canonical('aviso-privacidad'), 'priority' => '0.3', 'changefreq' => 'yearly'],
                 ['loc' => $this->canonical('terminos'), 'priority' => '0.3', 'changefreq' => 'yearly'],
             ];
+
+            $urls = array_values(array_filter($urls));
 
             Article::where('is_active', true)->get(['slug', 'updated_at'])->each(function ($article) use (&$urls) {
                 $urls[] = [

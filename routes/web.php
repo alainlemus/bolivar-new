@@ -8,6 +8,7 @@ use App\Livewire\Pages\ContactoPagina;
 use App\Livewire\Pages\Home;
 use App\Livewire\Pages\Obituario;
 use App\Livewire\Pages\ObituarioDetalle;
+use App\Livewire\Pages\Panteones;
 use App\Livewire\Pages\Planes;
 use App\Livewire\Pages\Servicios;
 use App\Livewire\Pages\TerminosCondiciones;
@@ -29,7 +30,11 @@ Route::permanentRedirect('/nosotros', '/#nosotros')->name('nosotros');
 Route::middleware(['track.page.views'])->group(function () {
     Route::get('/', Home::class)->name('home');
     Route::get('/servicios', Servicios::class)->name('servicios');
-    Route::get('/planes', Planes::class)->name('planes');
+    // Planes ocultos a petición del cliente (config/site.php): /planes redirige a Servicios.
+    config('site.plans_enabled')
+        ? Route::get('/planes', Planes::class)->name('planes')
+        : Route::redirect('/planes', '/servicios')->name('planes');
+    Route::get('/panteones-y-crematorios', Panteones::class)->name('panteones');
     Route::get('/obituario', Obituario::class)->name('obituario');
     Route::get('/obituario/{slug}', ObituarioDetalle::class)->name('obituario-detalle');
     Route::get('/contacto', ContactoPagina::class)->name('contacto');
